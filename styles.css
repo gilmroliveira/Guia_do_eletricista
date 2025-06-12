@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #ff6f61, #ffb88c);
+    color: #fff;
+    overflow-x: hidden;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 3em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.slideshow-container {
+    max-width: 600px;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.slide {
+    display: none;
+    width: 100%;
+}
+
+.slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.message {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+.social-buttons {
+    margin: 20px auto;
+}
+
+.social-buttons a {
+    color: #fff;
+    font-size: 2em;
+    margin: 0 15px;
+    transition: transform 0.3s;
+}
+
+.social-buttons a:hover {
+    transform: scale(1.2);
+}
+
+audio {
+    margin: 20px auto;
+    display: block;
+}
+
+footer {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 0.9em;
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .slideshow-container {
+        max-width: 90%;
+    }
+
+    .message {
+        font-size: 1em;
+        padding: 15px;
+    }
+}
