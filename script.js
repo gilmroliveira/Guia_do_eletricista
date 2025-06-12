@@ -1,9 +1,13 @@
 // Carrossel de Fotos
 let slideIndex = 0;
-const slides = document.getElementsByClassName("slide");
 const slideshowWrapper = document.querySelector(".slideshow-wrapper");
+const slides = document.getElementsByClassName("slide");
 
 function showSlides() {
+    if (!slideshowWrapper || slides.length === 0) {
+        console.error("Erro: slideshow-wrapper ou slides não encontrados.");
+        return;
+    }
     slideIndex++;
     if (slideIndex >= slides.length) {
         slideIndex = 0;
@@ -18,22 +22,19 @@ function showSlides() {
     setTimeout(showSlides, 3000); // Muda a cada 3 segundos
 }
 
-// Inicializa o carrossel
-function initSlideshow() {
-    // Cria o wrapper dinamicamente se necessário
-    const slideshowContainer = document.querySelector(".slideshow-container");
-    const wrapper = document.createElement("div");
-    wrapper.className = "slideshow-wrapper";
-    while (slideshowContainer.firstChild) {
-        wrapper.appendChild(slideshowContainer.firstChild);
-    }
-    slideshowContainer.appendChild(wrapper);
+// Inicia o carrossel
+if (slides.length > 0) {
     showSlides();
+} else {
+    console.error("Nenhuma imagem encontrada no carrossel.");
 }
-initSlideshow();
 
 // Animação de Fogos
 function launchFireworks() {
+    if (typeof confetti === "undefined") {
+        console.error("Erro: canvas-confetti não carregado.");
+        return;
+    }
     confetti({
         particleCount: 100,
         spread: 70,
