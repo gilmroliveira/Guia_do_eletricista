@@ -34,6 +34,7 @@ h1 {
     overflow: hidden;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 2px solid #fff; /* Fallback para verificar o contêiner */
 }
 
 .slideshow-wrapper {
@@ -50,6 +51,7 @@ h1 {
     width: 100%;
     height: auto;
     border-radius: 15px;
+    display: block;
 }
 
 .message {
