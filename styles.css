@@ -36,8 +36,13 @@ h1 {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
+.slideshow-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
 .slide {
-    display: none;
+    flex: 0 0 100%;
     width: 100%;
 }
 
