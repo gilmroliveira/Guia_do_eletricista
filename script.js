@@ -1,73 +1,108 @@
+// Tabela de dimensionamento de cabos (NBR 5410)
+const tabelaCabos = [
+    { bitola: 1.5, ampacidade2: 15, ampacidade3: 13 },
+    { bitola: 2.5, ampacidade2: 20, ampacidade3: 18 },
+    { bitola: 4.0, ampacidade2: 28, ampacidade3: 24 },
+    { bitola: 6.0, ampacidade2: 36, ampacidade3: 31 },
+    { bitola: 10.0, ampacidade2: 50, ampacidade3: 42 },
+    { bitola: 16.0, ampacidade2: 68, ampacidade3: 57 },
+    { bitola: 25.0, ampacidade2: 87, ampacidade3: 73 },
+    { bitola: 35.0, ampacidade2: 107, ampacidade3: 90 }
+];
+
+// Função para calcular dimensionamento
 function calcularDimensionamento() {
-    const corrente = parseFloat(document.getElementById('corrente').value) || 0;
-    const comprimento = parseFloat(document.getElementById('comprimento').value) || 0;
-    const tensao = parseFloat(document.getElementById('tensao').value) || 220;
-    const fatorPotencia = parseFloat(document.getElementById('fatorPotencia').value) || 0.9;
-    const metodoInstalacao = parseFloat(document.getElementById('metodoInstalacao').value) || 1;
-    const fatorGrupamento = parseFloat(document.getElementById('fatorGrupamento').value) || 1.0;
+    const sistema = document.getElementById('sistema').value;
+    const potencia = parseFloat(document.getElementById('potencia').value);
+    const tensao = parseFloat(document.getElementById('tensao').value);
+    const fatorPotencia = parseFloat(document.getElementById('fatorPotencia').value);
+    const comprimento = parseFloat(document.getElementById('comprimento').value);
+    const metodoInstalacao = parseFloat(document.getElementById('metodoInstalacao').value);
+    const fatorGrupamento = parseFloat(document.getElementById('fatorGrupamento').value);
     const resultado = document.getElementById('resultado');
 
-    if (corrente <= 0 || comprimento <= 0 || tensao <= 0) {
-        resultado.innerHTML = "Erro: Preencha todos os campos com valores válidos e positivos.";
+    if (!potencia || !tensao || !fatorPotencia || !comprimento) {
+        resultado.innerHTML = "Por favor, preencha todos os campos.";
         return;
     }
 
-    const correnteEfetiva = corrente / fatorPotencia;
-    const quedaTensao = (correnteEfetiva * comprimento * 0.017 * 2) / (tensao * 1000);
-    const quedaMaxima = 0.04;
-    const ampacidadeBase = correnteEfetiva / (metodoInstalacao * fatorGrupamento);
-    const bitolaSugerida = Math.ceil(ampacidadeBase * 2);
-    const disjuntor = Math.ceil((corrente * 1.25) / 5) * 5;
-    const potenciaAparente = corrente * tensao;
-    const potenciaAtiva = potenciaAparente * fatorPotencia;
-    const correcaoFP = fatorPotencia < 0.9 ? "Considere capacitores para corrigir o FP acima de 0.9." : "Fator de potência adequado.";
-
-    if (quedaTensao <= quedaMaxima) {
-        resultado.innerHTML = `
-            <strong>Resultados:</strong><br>
-            Corrente efetiva: ${correnteEfetiva.toFixed(2)} A<br>
-            Queda de tensão: ${quedaTensao.toFixed(2)} (máx. 4%)<br>
-            Bitola sugerida: ${bitolaSugerida} mm²<br>
-            Disjuntor: ${disjuntor} A<br>
-            Potência ativa: ${potenciaAtiva.toFixed(2)} VA<br>
-            ${correcaoFP}<br>
-            <em>Ajuste por temperatura e tabela NBR 5410.</em>
-        `;
+    let corrente;
+    if (sistema === 'trifasico') {
+        corrente = potencia / (Math.sqrt(3) * tensao * fatorPotencia);
     } else {
-        resultado.innerHTML = `Erro: Queda de tensão (${quedaTensao.toFixed(2)}) excede 4%. Aumente a bitola.`;
+        corrente = potencia / (tensao * fatorPotencia);
     }
-}
 
-function calcularLevantamento() {
-    const potIlum = parseFloat(document.getElementById('potIlum').value) || 0;
-    const potTUG = parseFloat(document.getElementById('potTUG').value) || 0;
-    const potTUE = parseFloat(document.getElementById('potTUE').value) || 0;
-    const resultadoCarga = document.getElementById('resultadoCarga');
-    const fatorDemanda = potTUE > 0 ? 0.84 : 1;
+    // Aplicar fatores de correção
+    const correnteCorrigida = corrente / (metodoInstalacao * fatorGrupamento);
 
-    const potTUEAjustada = potTUE * fatorDemanda;
-    const potTotal = potIlum + potTUG + potTUEAjustada;
-    const correnteTotal = potTotal / 220;
+    // Selecionar bitola e disjuntor
+    let bitolaSelecionada = null;
+    let ampacidadeUsada = fatorGrupamento === 0.8 ? 'ampacidade3' : 'ampacidade2';
+    for (const cabo of tabelaCabos) {
+        if (cabo[ampacidadeUsada] >= correnteCorrigida) {
+            bitolaSelecionada = cabo.bitola;
+            break;
+        }
+    }
 
-    resultadoCarga.innerHTML = `
-        <strong>Resultados do Levantamento:</strong><br>
-        Potência Iluminação: ${potIlum} W<br>
-        Potência TUG: ${potTUG} W<br>
-        Potência TUE (ajustada): ${potTUEAjustada.toFixed(2)} W<br>
-        Potência Total: ${potTotal.toFixed(2)} W<br>
-        Corrente Total: ${correnteTotal.toFixed(2)} A<br>
-        <em>Disjuntor sugerido: ${Math.ceil(correnteTotal * 1.25 / 5) * 5} A</em>
+    // Calcular queda de tensão
+    const resistividade = 0.0178; // Resistividade do cobre (ohm·mm²/m)
+    const quedaTensao = (2 * corrente * comprimento * resistividade) / (bitolaSelecionada * tensao) * 100;
+
+    // Selecionar disjuntor
+    const disjuntores = [10, 16, 20, 25, 32, 40, 50, 63, 80, 100];
+    let disjuntorSelecionado = disjuntores.find(d => d >= correnteCorrigida);
+
+    resultado.innerHTML = `
+        <strong>Resultados:</strong><br>
+        Corrente: ${corrente.toFixed(2)} A<br>
+        Bitola do Cabo: ${bitolaSelecionada ? bitolaSelecionada + ' mm²' : 'Não encontrada'}<br>
+        Disjuntor: ${disjuntorSelecionado ? disjuntorSelecionado + ' A' : 'Não encontrado'}<br>
+        Queda de Tensão: ${quedaTensao.toFixed(2)}% (Máximo permitido: 4%)<br>
+        ${quedaTensao > 4 ? '<span style="color: red;">Atenção: Queda de tensão acima do limite!</span>' : ''}
     `;
 }
 
-function resetForm() {
-    document.querySelectorAll('.calculator input, .calculator select').forEach(input => input.value = '');
-    document.getElementById('resultado').innerHTML = '';
-    document.getElementById('resultadoCarga').innerHTML = '';
+// Função para a roseta de cálculos
+function calcularRoseta() {
+    const tipoCalculo = document.getElementById('tipoCalculo').value;
+    const input1 = parseFloat(document.getElementById('rosetaInput1').value);
+    const input2 = parseFloat(document.getElementById('rosetaInput2').value);
+    const resultadoRoseta = document.getElementById('resultadoRoseta');
+
+    if (!input1 || !input2) {
+        resultadoRoseta.innerHTML = "Por favor, preencha ambos os valores.";
+        return;
+    }
+
+    let resultado;
+    switch (tipoCalculo) {
+        case 'corrente':
+            resultado = input1 / (Math.sqrt(3) * input2 * 0.9); // Corrente trifásica (P/V*√3*FP)
+            resultadoRoseta.innerHTML = `Corrente: ${resultado.toFixed(2)} A`;
+            break;
+        case 'potencia':
+            resultado = Math.sqrt(3) * input1 * input2 * 0.9; // Potência trifásica (√3*V*I*FP)
+            resultadoRoseta.innerHTML = `Potência: ${resultado.toFixed(2)} W`;
+            break;
+        case 'secao':
+            resultado = (2 * input1 * input2 * 0.0178) / (0.04 * 220); // Seção com base em I e L
+            resultadoRoseta.innerHTML = `Seção do Cabo: ${resultado.toFixed(2)} mm²`;
+            break;
+        case 'queda':
+            resultado = (2 * input1 * input2 * 0.0178) / (10 * 220) * 100; // Queda de tensão (%)
+            resultadoRoseta.innerHTML = `Queda de Tensão: ${resultado.toFixed(2)}%`;
+            break;
+        default:
+            resultadoRoseta.innerHTML = "Selecione um tipo de cálculo válido.";
+    }
 }
 
-document.querySelectorAll('.calculator input, .calculator select').forEach(input => {
-    input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') calcularDimensionamento() || calcularLevantamento();
-    });
-});
+// Função para limpar formulários
+function resetForm() {
+    document.querySelectorAll('input').forEach(input => input.value = '');
+    document.getElementById('resultado').innerHTML = '';
+    document.getElementById('resultadoCarga').innerHTML = '';
+    document.getElementById('resultadoRoseta').innerHTML = '';
+}
