@@ -43,11 +43,11 @@ function calcularLevantamento() {
     const potTUG = parseFloat(document.getElementById('potTUG').value) || 0;
     const potTUE = parseFloat(document.getElementById('potTUE').value) || 0;
     const resultadoCarga = document.getElementById('resultadoCarga');
-    const fatorDemanda = potTUE > 0 ? 0.84 : 1; // Fator de demanda para TUE (3 circuitos)
+    const fatorDemanda = potTUE > 0 ? 0.84 : 1;
 
     const potTUEAjustada = potTUE * fatorDemanda;
     const potTotal = potIlum + potTUG + potTUEAjustada;
-    const correnteTotal = potTotal / 220; // Supondo 220V
+    const correnteTotal = potTotal / 220;
 
     resultadoCarga.innerHTML = `
         <strong>Resultados do Levantamento:</strong><br>
@@ -66,7 +66,6 @@ function resetForm() {
     document.getElementById('resultadoCarga').innerHTML = '';
 }
 
-// Eventos
 document.querySelectorAll('.calculator input, .calculator select').forEach(input => {
     input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') calcularDimensionamento() || calcularLevantamento();
