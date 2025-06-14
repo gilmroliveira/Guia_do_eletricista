@@ -36,16 +36,16 @@
                     <button class="tab-button" data-tab="nbr5410" aria-selected="true">NBR 5410</button>
                     <button class="tab-button" data-tab="nr10">NR-10</button>
                     <button class="tab-button" data-tab="nbr5419">NBR 5419</button>
-                    <div class="tab-content" id="nbr5410" aria-hidden="false">
-                        <p><strong>NBR 5410 (2015):</strong> Instalações elétricas de baixa tensão (até 1000V CA ou 1500V CC). Exige disjuntores residuais (DR) em áreas molhadas e dimensionamento conforme tabelas de ampacidade.</p>
+                    <div class="tab-content" id="nbr5410">
+                        <p><strong>NBR 5410 (2015):</strong> Instalações elétricas de baixa tensão (até 1000V CA ou 1500V CC). Exige disjuntores residuais (DR) em áreas molhadas.</p>
                         <a href="https://www.abnt.org.br/nbr-5410" target="_blank" rel="noopener">Acesse a norma</a>
                     </div>
                     <div class="tab-content" id="nr10" aria-hidden="true">
-                        <p><strong>NR-10:</strong> Segurança em instalações e serviços em eletricidade. Requer treinamento, manutenção e uso de EPIs.</p>
+                        <p><strong>NR-10:</strong> Segurança em instalações e serviços em eletricidade. Requer treinamento e EPIs.</p>
                         <a href="https://www.gov.br/trabalho/pt-br/normas-regulamentadoras/nr-10" target="_blank" rel="noopener">Acesse a norma</a>
                     </div>
                     <div class="tab-content" id="nbr5419" aria-hidden="true">
-                        <p><strong>NBR 5419:</strong> Proteção contra descargas atmosféricas. Define sistemas de para-raios (SPDA).</p>
+                        <p><strong>NBR 5419:</strong> Proteção contra descargas atmosféricas (SPDA).</p>
                         <a href="https://www.abnt.org.br/nbr-5419" target="_blank" rel="noopener">Acesse a norma</a>
                     </div>
                 </div>
@@ -84,6 +84,30 @@
                     <button type="button" onclick="resetForm()">Limpar</button>
                     <div id="resultado" aria-live="assertive"></div>
                 </form>
+                <h3>Roseta de Cálculos</h3>
+                <div class="roseta">
+                    <label for="tipoCalculo">Tipo de Cálculo:</label>
+                    <select id="tipoCalculo">
+                        <option value="corrente">Corrente (A)</option>
+                        <option value="potencia">Potência (W)</option>
+                        <option value="secao">Seção do Cabo (mm²)</option>
+                        <option value="queda">Queda de Tensão (%)</option>
+                    </select>
+                    <label for="rosetaInput1">Valor 1:</label>
+                    <input type="number" id="rosetaInput1" min="0" step="0.1" required>
+                    <label for="rosetaInput2">Valor 2:</label>
+                    <input type="number" id="rosetaInput2" min="0" step="0.1" required>
+                    <button type="button" onclick="calcularRoseta()">Calcular</button>
+                    <div id="resultadoRoseta" aria-live="assertive"></div>
+                    <svg id="rosetaSvg" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="2"/>
+                        <text x="140" y="50" font-size="12">Corrente</text>
+                        <text x="240" y="150" font-size="12">Potência</text>
+                        <text x="140" y="250" font-size="12">Seção</text>
+                        <text x="40" y="150" font-size="12">Queda</text>
+                        <circle cx="150" cy="150" r="10" fill="blue"/>
+                    </svg>
+                </div>
             </section>
         </div>
 
