@@ -67,23 +67,73 @@
 
             <section id="calculadora" aria-labelledby="calculadora-heading">
                 <h2 id="calculadora-heading">Calculadora de Dimensionamento</h2>
+
+                <h3>Cálculo Simplificado de Circuito</h3>
                 <form class="calculator" aria-label="Formulário de dimensionamento de cabos">
-                    <label for="sistema">Tipo de Sistema:</label>
+                    <label for="sistema">Tipo de Sistema (Circuito):</label>
                     <select id="sistema" required>
                         <option value="monofasico">Monofásico</option>
                         <option value="trifasico">Trifásico</option>
                     </select>
-                    <label for="potencia">Potência (W):</label>
+                    <label for="potencia">Potência do Equipamento (W):</label>
                     <input type="number" id="potencia" min="0" step="1" required aria-describedby="potencia-error">
                     <span id="potencia-error" class="error" aria-live="polite"></span>
                     <label for="tensao">Tensão (V):</label>
                     <input type="number" id="tensao" min="0" value="220" step="1" required>
-                    <label for="comprimento">Comprimento (m):</label>
+                    <label for="comprimento">Comprimento do Circuito (m):</label>
                     <input type="number" id="comprimento" min="0" step="0.1" required>
-                    <button type="button" onclick="calcularDimensionamento()">Calcular</button>
+                    <button type="button" onclick="calcularDimensionamento()">Calcular Circuito</button>
                     <button type="button" onclick="resetForm()">Limpar</button>
                     <div id="resultado" aria-live="assertive"></div>
                 </form>
+
+                <h3>Gerar Projeto Elétrico Completo</h3>
+                <form class="calculator" id="formProjetoCompleto" aria-label="Formulário de Projeto Elétrico Completo">
+                    <label for="tensaoPrincipalProjeto">Tensão Principal da Instalação (V):</label>
+                    <input type="number" id="tensaoPrincipalProjeto" min="0" value="220" step="1" required>
+
+                    <label for="numComodos">Número de Cômodos/Áreas:</label>
+                    <input type="number" id="numComodos" min="1" step="1" value="1" required onchange="gerarCamposComodos()">
+
+                    <div id="containerComodos">
+                        <div class="comodo-item">
+                            <h4>Cômodo 1</h4>
+                            <label for="nomeComodo_0">Nome do Cômodo (Ex: Sala, Cozinha):</label>
+                            <input type="text" id="nomeComodo_0" value="Sala" required>
+
+                            <label for="tipoComodo_0">Tipo de Cômodo:</label>
+                            <select id="tipoComodo_0" required>
+                                <option value="sala">Sala</option>
+                                <option value="quarto">Quarto</option>
+                                <option value="cozinha">Cozinha</option>
+                                <option value="banheiro">Banheiro</option>
+                                <option value="areaServico">Área de Serviço</option>
+                                <option value="circulacao">Corredor/Hall</option>
+                                <option value="garagem">Garagem</option>
+                                <option value="outro">Outro</option>
+                            </select>
+
+                            <label for="areaComodo_0">Área (m²):</label>
+                            <input type="number" id="areaComodo_0" min="1" step="0.1" value="15" required>
+
+                            <label for="perimetroComodo_0">Perímetro (m):</label>
+                            <input type="number" id="perimetroComodo_0" min="1" step="0.1" value="15" required>
+
+                            <div class="tue-container">
+                                <h5>Tomadas de Uso Específico (TUEs) neste cômodo:</h5>
+                                <button type="button" class="add-tue-btn" onclick="addTUEField(0)">+ Adicionar TUE</button>
+                                <div id="tueFields_0">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="calcularDimensionamentoCompleto()">Gerar Projeto Elétrico</button>
+                    <button type="button" onclick="resetProjetoCompletoForm()">Limpar Projeto</button>
+                    <div id="resultadoCompleto" aria-live="assertive"></div>
+                </form>
+
+
                 <h3>Roseta de Cálculos</h3>
                 <div class="roseta">
                     <label for="tipoCalculo">Tipo de Cálculo:</label>
