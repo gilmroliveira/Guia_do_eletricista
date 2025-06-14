@@ -125,7 +125,7 @@ table th, table td {
     font-size: 1rem; /* Padroniza o tamanho da fonte */
 }
 
-.calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn { /* Adicionados os novos botões */
+.calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn, .add-comodo-btn { /* Adicionados os novos botões */
     background-color: var(--cor-primaria);
     color: white;
     border: none;
@@ -137,18 +137,18 @@ table th, table td {
     transition: background-color 0.3s ease; /* Efeito de transição ao hover */
 }
 
-.calculator button:hover, .roseta button:hover, .add-tue-btn:hover, .remove-tue-btn:hover, .remove-comodo-btn:hover {
+.calculator button:hover, .roseta button:hover, .add-tue-btn:hover, .remove-tue-btn:hover, .remove-comodo-btn:hover, .add-comodo-btn:hover {
     background-color: #005bb5; /* Escurece a cor no hover */
 }
 
 /* Estilos específicos para os botões de adicionar/remover dinâmicos */
-.add-tue-btn {
+.add-tue-btn, .add-comodo-btn { /* Botões de adicionar */
     background-color: #28a745; /* Verde para adicionar */
 }
-.add-tue-btn:hover {
+.add-tue-btn:hover, .add-comodo-btn:hover {
     background-color: #218838;
 }
-.remove-tue-btn, .remove-comodo-btn {
+.remove-tue-btn, .remove-comodo-btn { /* Botões de remover */
     background-color: #dc3545; /* Vermelho para remover */
     margin-left: 0.5rem; /* Separar do botão de adicionar */
 }
@@ -375,7 +375,7 @@ footer {
     .calculator input, .calculator select, .roseta input, .roseta select {
         font-size: 0.95rem;
     }
-    .calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn {
+    .calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn, .add-comodo-btn {
         width: 100%; /* Botões ocupam a largura total */
         margin: 0.5rem 0; /* Mais espaçamento vertical */
     }
