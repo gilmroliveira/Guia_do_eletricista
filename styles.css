@@ -121,6 +121,7 @@ table th, table td {
 .roseta svg {
     display: block;
     margin: 1rem auto;
+    max-width: 100%;
 }
 
 .error {
