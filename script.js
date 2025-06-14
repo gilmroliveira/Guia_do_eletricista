@@ -12,46 +12,63 @@ function calcularDimensionamento() {
         return;
     }
 
-    // Corrente efetiva ajustada pelo fator de potência
     const correnteEfetiva = corrente / fatorPotencia;
-
-    // Queda de tensão (aproximada para cobre, resistividade 0.017 Ω/mm²/m)
-    const quedaTensao = (correnteEfetiva * comprimento * 0.017 * 2) / (tensao * 1000); // Fator 2 para ida e volta
-    const quedaMaxima = 0.04; // 4% conforme NBR 5410
-
-    // Ampacidade mínima ajustada por instalação e grupamento
+    const quedaTensao = (correnteEfetiva * comprimento * 0.017 * 2) / (tensao * 1000);
+    const quedaMaxima = 0.04;
     const ampacidadeBase = correnteEfetiva / (metodoInstalacao * fatorGrupamento);
-    const bitolaSugerida = Math.ceil(ampacidadeBase * 2); // Aproximação: 2 mm² por ampère, ajuste via tabela NBR 5410
-
-    // Dimensionamento do disjuntor (125% da corrente, arredondado para múltiplo de 5A)
+    const bitolaSugerida = Math.ceil(ampacidadeBase * 2);
     const disjuntor = Math.ceil((corrente * 1.25) / 5) * 5;
-
-    // Cálculo do fator de potência corrigido (opcional, para compensação)
     const potenciaAparente = corrente * tensao;
     const potenciaAtiva = potenciaAparente * fatorPotencia;
     const correcaoFP = fatorPotencia < 0.9 ? "Considere capacitores para corrigir o FP acima de 0.9." : "Fator de potência adequado.";
 
     if (quedaTensao <= quedaMaxima) {
         resultado.innerHTML = `
-            <strong>Resultados do Dimensionamento:</strong><br>
+            <strong>Resultados:</strong><br>
             Corrente efetiva: ${correnteEfetiva.toFixed(2)} A<br>
-            Queda de tensão: ${quedaTensao.toFixed(2)} (máx. 4% permitido)<br>
-            Bitola sugerida: ${bitolaSugerida} mm² (verifique tabela NBR 5410 para ajuste)<br>
+            Queda de tensão: ${quedaTensao.toFixed(2)} (máx. 4%)<br>
+            Bitola sugerida: ${bitolaSugerida} mm²<br>
             Disjuntor: ${disjuntor} A<br>
             Potência ativa: ${potenciaAtiva.toFixed(2)} VA<br>
             ${correcaoFP}<br>
-            <em>Ajuste por temperatura, isolação e método de instalação conforme NBR 5410.</em>
+            <em>Ajuste por temperatura e tabela NBR 5410.</em>
         `;
     } else {
-        resultado.innerHTML = `
-            Erro: Queda de tensão (${quedaTensao.toFixed(2)}) excede 4%. Aumente a bitola ou reduza o comprimento.
-        `;
+        resultado.innerHTML = `Erro: Queda de tensão (${quedaTensao.toFixed(2)}) excede 4%. Aumente a bitola.`;
     }
 }
 
-// Adicionar evento para calcular ao pressionar Enter
+function calcularLevantamento() {
+    const potIlum = parseFloat(document.getElementById('potIlum').value) || 0;
+    const potTUG = parseFloat(document.getElementById('potTUG').value) || 0;
+    const potTUE = parseFloat(document.getElementById('potTUE').value) || 0;
+    const resultadoCarga = document.getElementById('resultadoCarga');
+    const fatorDemanda = potTUE > 0 ? 0.84 : 1; // Fator de demanda para TUE (3 circuitos)
+
+    const potTUEAjustada = potTUE * fatorDemanda;
+    const potTotal = potIlum + potTUG + potTUEAjustada;
+    const correnteTotal = potTotal / 220; // Supondo 220V
+
+    resultadoCarga.innerHTML = `
+        <strong>Resultados do Levantamento:</strong><br>
+        Potência Iluminação: ${potIlum} W<br>
+        Potência TUG: ${potTUG} W<br>
+        Potência TUE (ajustada): ${potTUEAjustada.toFixed(2)} W<br>
+        Potência Total: ${potTotal.toFixed(2)} W<br>
+        Corrente Total: ${correnteTotal.toFixed(2)} A<br>
+        <em>Disjuntor sugerido: ${Math.ceil(correnteTotal * 1.25 / 5) * 5} A</em>
+    `;
+}
+
+function resetForm() {
+    document.querySelectorAll('.calculator input, .calculator select').forEach(input => input.value = '');
+    document.getElementById('resultado').innerHTML = '';
+    document.getElementById('resultadoCarga').innerHTML = '';
+}
+
+// Eventos
 document.querySelectorAll('.calculator input, .calculator select').forEach(input => {
     input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') calcularDimensionamento();
+        if (e.key === 'Enter') calcularDimensionamento() || calcularLevantamento();
     });
 });
