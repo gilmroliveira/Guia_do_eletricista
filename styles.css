@@ -5,102 +5,139 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #ff6f61, #ffb88c);
-    color: #fff;
-    overflow-x: hidden;
-    text-align: center;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-header {
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-h1 {
-    font-family: 'Baloo 2', cursive;
-    font-size: 3em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.slideshow-container {
-    max-width: 600px;
-    margin: 20px auto;
-    position: relative;
-    overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    border: 2px solid #fff; /* Fallback para verificar o contêiner */
-}
-
-.slideshow-wrapper {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.slide {
-    flex: 0 0 100%;
-    width: 100%;
-}
-
-.slide img {
-    width: 100%;
-    height: auto;
-    border-radius: 15px;
-    display: block;
-}
-
-.message {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    font-size: 1.2em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
     line-height: 1.6;
 }
 
-.social-buttons {
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1.5em;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    background-color: #34495e;
+    padding: 1em;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #e74c3c;
+}
+
+main {
+    max-width: 1200px;
     margin: 20px auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
 }
 
-.social-buttons a {
-    color: #fff;
-    font-size: 2em;
-    margin: 0 15px;
-    transition: transform 0.3s;
+.content {
+    display: contents;
 }
 
-.social-buttons a:hover {
-    transform: scale(1.2);
+section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-audio {
-    margin: 20px auto;
+h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e74c3c;
+    padding-bottom: 5px;
+}
+
+.calculator {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.calculator label {
     display: block;
+    margin: 10px 0 5px;
+}
+
+.calculator input, .calculator select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #e74c3c;
+}
+
+#resultado {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+aside {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 footer {
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.5);
-    font-size: 0.9em;
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    margin-top: 20px;
 }
 
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2em;
+/* Responsividade */
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr;
     }
-
-    .slideshow-container {
-        max-width: 90%;
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 1em;
     }
-
-    .message {
-        font-size: 1em;
-        padding: 15px;
+    .calculator input, .calculator select {
+        width: 100%;
     }
 }
