@@ -87,19 +87,20 @@ table th, table td {
     text-align: center;
 }
 
-.calculator {
+.calculator, .roseta {
     background-color: white;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
 }
 
-.calculator label {
+.calculator label, .roseta label {
     display: block;
     margin: 0.5rem 0 0.2rem;
 }
 
-.calculator input, .calculator select {
+.calculator input, .calculator select, .roseta input, .roseta select {
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
@@ -107,7 +108,7 @@ table th, table td {
     border-radius: 4px;
 }
 
-.calculator button {
+.calculator button, .roseta button {
     background-color: var(--cor-primaria);
     color: white;
     border: none;
@@ -115,6 +116,11 @@ table th, table td {
     margin: 0.5rem 0.2rem 0;
     cursor: pointer;
     border-radius: 4px;
+}
+
+.roseta svg {
+    display: block;
+    margin: 1rem auto;
 }
 
 .error {
@@ -146,7 +152,7 @@ table th, table td {
     background-color: white;
 }
 
-.tab-content[aria-hidden="false"] {
+.tab-content:not([aria-hidden="true"]) {
     display: block;
 }
 
@@ -185,5 +191,9 @@ footer {
     }
     table {
         font-size: 0.9rem;
+    }
+    .roseta svg {
+        width: 100%;
+        height: auto;
     }
 }
