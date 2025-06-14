@@ -1,59 +1,246 @@
-<section id="calculadora">
-    <h2>Calculadora de Dimensionamento</h2>
-    <div class="calculator">
-        <h3>Dimensionamento de Cabos e Disjuntores</h3>
-        <label for="sistema">Tipo de Sistema:</label>
-        <select id="sistema">
-            <option value="monofasico">Monofásico</option>
-            <option value="trifasico">Trifásico</option>
-        </select>
-        <label for="potencia">Potência (W):</label>
-        <input type="number" id="potencia" min="0" step="1" required>
-        <label for="tensao">Tensão (V):</label>
-        <input type="number" id="tensao" min="0" value="220" step="1" required>
-        <label for="fatorPotencia">Fator de Potência:</label>
-        <input type="number" id="fatorPotencia" min="0" max="1" step="0.01" value="0.9" required>
-        <label for="comprimento">Comprimento do Circuito (m):</label>
-        <input type="number" id="comprimento" min="0" step="0.1" required>
-        <label for="metodoInstalacao">Método de Instalação:</label>
-        <select id="metodoInstalacao">
-            <option value="1">Em eletroduto embutido</option>
-            <option value="0.9">Em canaleta aberta</option>
-            <option value="0.8">Em ar livre</option>
-        </select>
-        <label for="fatorGrupamento">Fator de Grupamento:</label>
-        <select id="fatorGrupamento">
-            <option value="1.0">1 condutor</option>
-            <option value="0.9">2 condutores</option>
-            <option value="0.8">3 ou mais condutores</option>
-        </select>
-        <button onclick="calcularDimensionamento()">Calcular</button>
-        <button onclick="resetForm()">Limpar</button>
-        <p id="resultado"></p>
-    </div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guia completo para eletricistas com normas, cálculos, tutoriais e diagramas.">
+    <title>Guia Completo do Eletricista</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Guia Completo do Eletricista</h1>
+        <p>Normas, Cálculos, Tutoriais e Projetos Elétricos</p>
+    </header>
 
-    <h3>Roseta de Cálculos</h3>
-    <div class="roseta">
-        <label for="tipoCalculo">Tipo de Cálculo:</label>
-        <select id="tipoCalculo">
-            <option value="corrente">Corrente (A)</option>
-            <option value="potencia">Potência (W)</option>
-            <option value="secao">Seção do Cabo (mm²)</option>
-            <option value="queda">Queda de Tensão (%)</option>
-        </select>
-        <label for="rosetaInput1">Valor 1:</label>
-        <input type="number" id="rosetaInput1" min="0" step="0.1" required>
-        <label for="rosetaInput2">Valor 2:</label>
-        <input type="number" id="rosetaInput2" min="0" step="0.1" required>
-        <button onclick="calcularRoseta()">Calcular</button>
-        <p id="resultadoRoseta"></p>
-        <svg id="rosetaSvg" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="2"/>
-            <text x="140" y="50" font-size="12">Corrente</text>
-            <text x="240" y="150" font-size="12">Potência</text>
-            <text x="140" y="250" font-size="12">Seção</text>
-            <text x="40" y="150" font-size="12">Queda</text>
-            <circle cx="150" cy="150" r="10" fill="blue"/>
-        </svg>
-    </div>
-</section>
+    <nav>
+        <ul>
+            <li><a href="#normas">Normas</a></li>
+            <li><a href="#calculadora">Calculadora</a></li>
+            <li><a href="#levantamento">Levantamento de Carga</a></li>
+            <li><a href="#padrao-entrada">Padrão de Entrada</a></li>
+            <li><a href="#chuveiro">Instalação de Chuveiro</a></li>
+            <li><a href="#atualizacao">Atualização</a></li>
+            <li><a href="#automacao">Automação</a></li>
+            <li><a href="#tutoriais">Tutoriais</a></li>
+            <li><a href="#manuais">Manuais</a></li>
+            <li><a href="#diagramas">Diagramas</a></li>
+            <li><a href="#luminotecnia">Luminotécnica</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="content">
+            <section id="normas">
+                <h2>Normas NBR e NR</h2>
+                <p>Principais normas para eletricistas:</p>
+                <ul>
+                    <li><strong><a href="https://www.abnt.org.br/nbr-5410" target="_blank">NBR 5410 (2015):</a></strong> Instalações elétricas de baixa tensão (até 1000V CA ou 1500V CC).</li>
+                    <li><strong><a href="https://www.abnt.org.br/nbr-14039" target="_blank">NBR 14039:</a></strong> Instalações elétricas de média tensão (1000V a 34.5kV).</li>
+                    <li><strong><a href="https://www.abnt.org.br/nbr-5419" target="_blank">NBR 5419:</a></strong> Proteção contra descargas atmosféricas.</li>
+                    <li><strong><a href="https://www.gov.br/trabalho/pt-br/normas-regulamentadoras/nr-10" target="_blank">NR 10:</a></strong> Segurança em instalações e serviços em eletricidade.</li>
+                </ul>
+                <h3>Tabelas de Dimensionamento NBR 5410</h3>
+                <h4>Ampacidade de Cabos (Método B1 - Embutido)</h4>
+                <table>
+                    <tr><th>Bitola (mm²)</th><th>Ampacidade (A) - 2 Condutores Carregados</th><th>Ampacidade (A) - 3 Condutores Carregados</th></tr>
+                    <tr><td>1.5</td><td>15</td><td>13</td></tr>
+                    <tr><td>2.5</td><td>20</td><td>18</td></tr>
+                    <tr><td>4.0</td><td>28</td><td>24</td></tr>
+                    <tr><td>6.0</td><td>36</td><td>31</td></tr>
+                    <tr><td>10.0</td><td>50</td><td>42</td></tr>
+                    <tr><td>16.0</td><td>68</td><td>57</td></tr>
+                    <tr><td>25.0</td><td>87</td><td>73</td></tr>
+                    <tr><td>35.0</td><td>107</td><td>90</td></tr>
+                </table>
+                <h4>Queda de Tensão Permitida</h4>
+                <table>
+                    <tr><th>Condição</th><th>Limite de Queda de Tensão (%)</th></tr>
+                    <tr><td>Desde transformador do cliente</td><td>7%</td></tr>
+                    <tr><td>Desde transformador da concessionária</td><td>7%</td></tr>
+                    <tr><td>Circuitos de motores (partida)</td><td>10%</td></tr>
+                    <tr><td>Circuitos gerais (máximo)</td><td>4%</td></tr>
+                </table>
+            </section>
+
+            <section id="calculadora">
+                <h2>Calculadora de Dimensionamento</h2>
+                <div class="calculator">
+                    <h3>Dimensionamento de Cabos e Disjuntores</h3>
+                    <label for="sistema">Tipo de Sistema:</label>
+                    <select id="sistema">
+                        <option value="monofasico">Monofásico</option>
+                        <option value="trifasico">Trifásico</option>
+                    </select>
+                    <label for="potencia">Potência (W):</label>
+                    <input type="number" id="potencia" min="0" step="1" required>
+                    <label for="tensao">Tensão (V):</label>
+                    <input type="number" id="tensao" min="0" value="220" step="1" required>
+                    <label for="fatorPotencia">Fator de Potência:</label>
+                    <input type="number" id="fatorPotencia" min="0" max="1" step="0.01" value="0.9" required>
+                    <label for="comprimento">Comprimento do Circuito (m):</label>
+                    <input type="number" id="comprimento" min="0" step="0.1" required>
+                    <label for="metodoInstalacao">Método de Instalação:</label>
+                    <select id="metodoInstalacao">
+                        <option value="1">Em eletroduto embutido</option>
+                        <option value="0.9">Em canaleta aberta</option>
+                        <option value="0.8">Em ar livre</option>
+                    </select>
+                    <label for="fatorGrupamento">Fator de Grupamento:</label>
+                    <select id="fatorGrupamento">
+                        <option value="1.0">1 condutor</option>
+                        <option value="0.9">2 condutores</option>
+                        <option value="0.8">3 ou mais condutores</option>
+                    </select>
+                    <button onclick="calcularDimensionamento()">Calcular</button>
+                    <button onclick="resetForm()">Limpar</button>
+                    <p id="resultado"></p>
+                </div>
+
+                <h3>Roseta de Cálculos</h3>
+                <div class="roseta">
+                    <label for="tipoCalculo">Tipo de Cálculo:</label>
+                    <select id="tipoCalculo">
+                        <option value="corrente">Corrente (A)</option>
+                        <option value="potencia">Potência (W)</option>
+                        <option value="secao">Seção do Cabo (mm²)</option>
+                        <option value="queda">Queda de Tensão (%)</option>
+                    </select>
+                    <label for="rosetaInput1">Valor 1:</label>
+                    <input type="number" id="rosetaInput1" min="0" step="0.1" required>
+                    <label for="rosetaInput2">Valor 2:</label>
+                    <input type="number" id="rosetaInput2" min="0" step="0.1" required>
+                    <button onclick="calcularRoseta()">Calcular</button>
+                    <p id="resultadoRoseta"></p>
+                    <svg id="rosetaSvg" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="2"/>
+                        <text x="140" y="50" font-size="12">Corrente</text>
+                        <text x="240" y="150" font-size="12">Potência</text>
+                        <text x="140" y="250" font-size="12">Seção</text>
+                        <text x="40" y="150" font-size="12">Queda</text>
+                        <circle cx="150" cy="150" r="10" fill="blue"/>
+                    </svg>
+                </div>
+            </section>
+
+            <section id="levantamento">
+                <h2>Levantamento de Carga Residencial</h2>
+                <div class="calculator">
+                    <h3>Cálculo Passo a Passo</h3>
+                    <label for="potIlum">Potência Iluminação (W):</label>
+                    <input type="number" id="potIlum" min="0" step="1" required>
+                    <label for="potTUG">Potência TUG (W):</label>
+                    <input type="number" id="potTUG" min="0" step="1" required>
+                    <label for="potTUE">Potência TUE (W):</label>
+                    <input type="number" id="potTUE" min="0" step="1" required>
+                    <button onclick="calcularLevantamento()">Calcular Carga</button>
+                    <button onclick="resetForm()">Limpar</button>
+                    <p id="resultadoCarga"></p>
+                </div>
+            </section>
+
+            <section id="padrao-entrada">
+                <h2>Padrão de Entrada Enel (Nordeste)</h2>
+                <h3>Tutorial</h3>
+                <ol>
+                    <li>Levantar a potência total da residência.</li>
+                    <li>Consultar a Enel para tipo de fornecimento.</li>
+                    <li>Dimensionar disjuntor geral (ex.: 40A para 6.67 kW a 220V).</li>
+                    <li>Usar cabo mínimo de 10 mm² (cobre) para ramal.</li>
+                    <li>Instalar medidor e caixa conforme Enel.</li>
+                </ol>
+                <p><strong>Medidas Padrão Nordeste:</strong> Altura do medidor: 1.5m; Distância da parede: 10-15 cm.</p>
+            </section>
+
+            <section id="chuveiro">
+                <h2>Instalação de Chuveiro</h2>
+                <h3>Diagrama</h3>
+                <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="50" y="50" width="200" height="100" fill="none" stroke="black" stroke-width="2"/>
+                    <circle cx="70" cy="100" r="10" fill="yellow" stroke="black"/>
+                    <line x1="80" y1="100" x2="120" y2="100" stroke="black" stroke-width="2"/>
+                    <rect x="130" y="80" width="40" height="40" fill="blue" stroke="black"/>
+                    <line x1="170" y1="100" x2="210" y2="100" stroke="black" stroke-width="2"/>
+                    <circle cx="230" cy="100" r="15" fill="red" stroke="black"/>
+                    <text x="50" y="30" font-size="12">Fonte</text>
+                    <text x="130" y="70" font-size="12">Disjuntor</text>
+                    <text x="220" y="90" font-size="12">Chuveiro</text>
+                </svg>
+                <p><em>Legenda:</em> Círculo amarelo = Fonte, Retângulo azul = Disjuntor, Círculo vermelho = Chuveiro.</p>
+                <h3>Passo a Passo</h3>
+                <ol>
+                    <li>Verifique a potência (ex.: 5400W a 220V).</li>
+                    <li>Calcule corrente: I = P / V = 5400 / 220 ≈ 24.5A.</li>
+                    <li>Escolha bitola (ex.: 6 mm², veja tabelas NBR 5410).</li>
+                    <li>Instale disjuntor de 25A ou 32A.</li>
+                    <li>Conecte fase, neutro e terra.</li>
+                </ol>
+            </section>
+
+            <section id="atualizacao">
+                <h2>Atualização</h2>
+                <p>Última atualização: <time datetime="2025-06-14">14/06/2025</time></p>
+                <p>Novidades na NBR 5410 (em revisão desde 2012):</p>
+                <ul>
+                    <li>Inclusão de harmônicas na corrente.</li>
+                    <li>Novos limites de impedância.</li>
+                </ul>
+            </section>
+
+            <section id="automacao">
+                <h2>Automação</h2>
+                <p>Tecnologias em alta:</p>
+                <ul>
+                    <li>Controle de iluminação.</li>
+                    <li>Portões automáticos.</li>
+                </ul>
+            </section>
+
+            <section id="tutoriais">
+                <h2>Tutoriais</h2>
+                <h3>Como Ler Projetos</h3>
+                <ol>
+                    <li>Analise a planta baixa.</li>
+                    <li>Consulte o diagrama unifilar.</li>
+                    <li>Verifique a legenda.</li>
+                </ol>
+            </section>
+
+            <section id="manuais">
+                <h2>Manuais</h2>
+                <ul>
+                    <li><a href="https://www.abnt.org.br" target="_blank">ABNT - Normas Técnicas</a></li>
+                    <li><a href="https://www.mundodaeletrica.com.br" target="_blank">Mundo da Elétrica</a></li>
+                </ul>
+            </section>
+
+            <section id="diagramas">
+                <h2>Diagramas e Símbolos</h2>
+                <ul>
+                    <li>Traço: Condutor.</li>
+                    <li>Círculo: Ponto de luz.</li>
+                </ul>
+            </section>
+
+            <section id="luminotecnia">
+                <h2>Luminotécnica</h2>
+                <p>Iluminância: 300-500 lux (escritórios).</p>
+            </section>
+        </div>
+
+        <aside>
+            <h3>Dicas Rápidas</h3>
+            <ul>
+                <li>Verifique o aterramento.</li>
+                <li>Consulte tabelas NBR 5410.</li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer>
+        <p>© 2025 Guia Completo do Eletricista | Data: 14/06/2025</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
