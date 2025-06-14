@@ -1,69 +1,153 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aniversário da Geovanna Kelly - 12/06/2013</title>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="Guia completo para eletricistas com normas, cálculos e tutoriais.">
+    <title>Guia Completo do Eletricista</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Feliz 12º Aniversário, Geovanna Kelly!</h1>
+        <h1>Guia Completo do Eletricista</h1>
+        <p>Normas, Cálculos, Tutoriais e Projetos Elétricos</p>
     </header>
 
-    <div class="slideshow-container">
-        <div class="slideshow-wrapper">
-            <div class="slide">
-                <img src="IMG-20160827-WA0001.jpg" alt="Foto da Geovanna Kelly">
-            </div>
-            <div class="slide">
-                <img src="IMG_20211217_214856586.jpg" alt="Foto da Geovanna Kelly">
-            </div>
-            <div class="slide">
-                <img src="IMG-20161009-WA0009.jpg" alt="Foto da Geovanna Kelly">
-            </div>
-            <div class="slide">
-                <img src="IMG-20160619-WA0023.jpg" alt="Foto da Geovanna Kelly">
-            </div>
-            <div class="slide">
-                <img src="IMG_20161004_124933.jpg" alt="Foto da Geovanna Kelly">
-            </div>
-            <div class="slide">
-                <img src="IMG_20240324_152503789.jpg" alt="Foto da Geovanna Kelly">
-            </div>
-            <div class="slide">
-                <img src="IMG_20230623_185633968.jpg" alt="Foto da Geovanna Kelly">
-            </div>
-            <div class="slide">
-                <img src="IMG_20190315_200643.jpg" alt="Foto da Geovanna Kelly">
-            </div>
+    <nav>
+        <ul>
+            <li><a href="#normas">Normas</a></li>
+            <li><a href="#calculadora">Calculadora</a></li>
+            <li><a href="#atualizacao">Atualização</a></li>
+            <li><a href="#automacao">Automação</a></li>
+            <li><a href="#tutoriais">Tutoriais</a></li>
+            <li><a href="#manuais">Manuais</a></li>
+            <li><a href="#diagramas">Diagramas</a></li>
+            <li><a href="#luminotecnia">Luminotécnica</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="content">
+            <section id="normas">
+                <h2>Normas NBR e NR</h2>
+                <p>As normas são essenciais para garantir segurança e qualidade nas instalações elétricas:</p>
+                <ul>
+                    <li><strong>NBR 5410 (2015):</strong> Instalações elétricas de baixa tensão (até 1000V CA ou 1500V CC). Define métodos de dimensionamento, proteção e aterramento.</li>
+                    <li><strong>NBR 14039:</strong> Instalações elétricas de média tensão (acima de 1kV até 34,5kV).</li>
+                    <li><strong>NBR 5419:</strong> Proteção contra descargas atmosféricas (SPDA).</li>
+                    <li><strong>NR 10:</strong> Segurança em instalações e serviços em eletricidade, com foco em prevenção de acidentes.</li>
+                </ul>
+            </section>
+
+            <section id="calculadora">
+                <h2>Calculadora de Dimensionamento</h2>
+                <div class="calculator">
+                    <h3>Dimensionamento de Cabos e Disjuntores</h3>
+                    <label for="corrente">Corrente (A):</label>
+                    <input type="number" id="corrente" min="0" step="0.1" required>
+                    <label for="comprimento">Comprimento (m):</label>
+                    <input type="number" id="comprimento" min="0" step="0.1" required>
+                    <label for="tensao">Tensão (V):</label>
+                    <input type="number" id="tensao" min="0" value="220" step="1" required>
+                    <label for="fatorPotencia">Fator de Potência:</label>
+                    <input type="number" id="fatorPotencia" min="0" max="1" step="0.01" value="0.9" required>
+                    <label for="metodoInstalacao">Método de Instalação:</label>
+                    <select id="metodoInstalacao">
+                        <option value="1">Em eletroduto embutido</option>
+                        <option value="0.9">Em canaleta aberta</option>
+                        <option value="0.8">Em ar livre</option>
+                    </select>
+                    <label for="fatorGrupamento">Fator de Grupamento:</label>
+                    <select id="fatorGrupamento">
+                        <option value="1.0">1 condutor</option>
+                        <option value="0.9">2 condutores</option>
+                        <option value="0.8">3 ou mais condutores</option>
+                    </select>
+                    <button onclick="calcularDimensionamento()">Calcular</button>
+                    <p id="resultado"></p>
+                </div>
+            </section>
+
+            <section id="atualizacao">
+                <h2>Atualização</h2>
+                <p>Última atualização: <time datetime="2025-06-14">14/06/2025</time></p>
+                <p>Novidades na NBR 5410 (em revisão desde 2012):</p>
+                <ul>
+                    <li>Inclusão de harmônicas na corrente.</li>
+                    <li>Novos limites de impedância para proteção.</li>
+                    <li>Atualização de tabelas de ampacidade.</li>
+                </ul>
+            </section>
+
+            <section id="automacao">
+                <h2>Automação</h2>
+                <p>Tecnologias em alta:</p>
+                <ul>
+                    <li>Controle de iluminação via IoT.</li>
+                    <li>Automação de portões com sensores.</li>
+                    <li>Sistemas de segurança com câmeras IP.</li>
+                </ul>
+            </section>
+
+            <section id="tutoriais">
+                <h2>Tutoriais</h2>
+                <h3>Como Ler Projetos Elétricos</h3>
+                <ol>
+                    <li><strong>Planta Baixa:</strong> Identifique paredes, portas e janelas.</li>
+                    <li><strong>Diagrama Unifilar:</strong> Veja o traçado dos condutores e equipamentos.</li>
+                    <li><strong>Legenda:</strong> Consulte símbolos (ex.: círculo = ponto de luz).</li>
+                    <li><strong>Cálculos:</strong> Verifique dimensionamento de cabos e disjuntores.</li>
+                </ol>
+            </section>
+
+            <section id="manuais">
+                <h2>Manuais e Recursos</h2>
+                <ul>
+                    <li><a href="https://www.abnt.org.br" target="_blank">ABNT - Normas Técnicas</a></li>
+                    <li><a href="https://www.mundodaeletrica.com.br" target="_blank">Mundo da Elétrica</a></li>
+                    <li><a href="https://www.engquimicas.com/normas-tecnicas-nbr/" target="_blank">Engenharia Química - NBR</a></li>
+                </ul>
+            </section>
+
+            <section id="diagramas">
+                <h2>Diagramas e Símbolos</h2>
+                <p>Símbolos (baseado em NBR 5444 - uso prático):</p>
+                <ul>
+                    <li>Traço contínuo: Condutor.</li>
+                    <li>Círculo: Ponto de luz ou interruptor.</li>
+                    <li>Triângulo: Tomada (TUG/TUE).</li>
+                    <li>Quadrado: Disjuntores ou caixas de passagem.</li>
+                </ul>
+                <p>Tipos: Unifilar (simplificado), Multifilar (detalhado), Funcional.</p>
+            </section>
+
+            <section id="luminotecnica">
+                <h2>Luminotécnica</h2>
+                <p>Dimensionamento (NBR ISO 8995-1):</p>
+                <ul>
+                    <li>Escritórios: 300-500 lux.</li>
+                    <li>Cozinhas: 200-300 lux.</li>
+                    <li>Áreas externas: 50-100 lux.</li>
+                </ul>
+                <p>Fórmula: N = (E × A) / (Φ × UF × MF)</p>
+                <p>Onde: N = número de luminárias, E = iluminância (lux), A = área (m²), Φ = fluxo luminoso (lumens), UF = fator de utilização, MF = fator de manutenção.</p>
+            </section>
         </div>
-    </div>
 
-    <div class="message">
-        <p>Minha querida Geovanna Kelly, hoje, 12 de junho de 2025, celebramos seus 12 anos! Desde o dia 12 de junho de 2013, você trouxe alegria, amor e luz para nossas vidas. Que seu dia seja cheio de sorrisos, abraços e momentos inesquecíveis. Você é uma menina incrível, e estamos muito orgulhosos de você! Que este novo ano de vida traga muitas aventuras, sonhos realizados e felicidade sem fim. Te amamos muito!</p>
-    </div>
-
-    <audio controls autoplay loop>
-        <source src="A Patotinha - Parabéns à Você (Áudio Oficial)(MP3_160K).mp3" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
-
-    <div class="social-buttons">
-        <a href="https://api.whatsapp.com/send?text=Celebre o aniversário da Geovanna Kelly! Confira esta página especial e mande sua lembrança no dia especial dela.:https://gilmroliveira.github.io/geovannakelly/" target="_blank" title="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=https://gilmroliveira.github.io/geovannakelly/" target="_blank" title="Compartilhar no Facebook"><i class="fab fa-facebook"></i></a>
-        <a href="https://twitter.com/intent/tweet?text=Feliz aniversário, Geovanna Kelly! Veja esta página especial:https://gilmroliveira.github.io/geovannakelly/" target="_blank" title="Compartilhar no Twitter"><i class="fab fa-twitter"></i></a>
-    </div>
+        <aside>
+            <h3>Dicas Rápidas</h3>
+            <ul>
+                <li>Verifique aterramento antes de energizar.</li>
+                <li>Use tabelas NBR 5410 para ampacidade.</li>
+                <li>Inspecione disjuntores periodicamente.</li>
+            </ul>
+        </aside>
+    </main>
 
     <footer>
-        <p>Criado com amor para Geovanna Kelly - 12/06/2025</p>
-        <p><a href="sobre.html">Sobre o Autor</a></p>
-        <p>Desenvolvido por Devenvolvedor José Gilmar 💻</p>
+        <p>© 2025 Guia Completo do Eletricista | Data: 14/06/2025</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
