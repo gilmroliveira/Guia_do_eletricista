@@ -1,3 +1,4 @@
+/* Seu CSS existente (mantenha tudo que você já tem) */
 :root {
     --cor-primaria: #0070f3;
     --cor-secundaria: #f9f9f9;
@@ -23,6 +24,7 @@ header {
     color: white;
     text-align: center;
     padding: 1rem;
+    position: relative; /* Adicionado para posicionamento do menu-toggle */
 }
 
 .menu-toggle {
@@ -35,6 +37,7 @@ header {
     position: absolute;
     top: 1rem;
     right: 1rem;
+    z-index: 1000; /* Garante que o botão fique acima de outros elementos */
 }
 
 nav ul {
@@ -53,6 +56,8 @@ nav ul a {
     color: white;
     text-decoration: none;
     font-size: 1.1rem;
+    padding: 0.5rem 0; /* Adicionado para melhorar a área clicável */
+    display: block; /* Para que o padding funcione em toda a área */
 }
 
 nav ul a[aria-current="page"] {
@@ -79,6 +84,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 1rem 0;
+    font-size: 0.95rem; /* Ajuste para melhor visualização em telas maiores */
 }
 
 table th, table td {
@@ -98,35 +104,62 @@ table th, table td {
 .calculator label, .roseta label {
     display: block;
     margin: 0.5rem 0 0.2rem;
+    font-weight: bold; /* Adicionado para destaque dos labels */
 }
 
 .calculator input, .calculator select, .roseta input, .roseta select {
     width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
+    padding: 0.6rem; /* Aumentado um pouco o padding */
+    margin-bottom: 0.8rem; /* Aumentado a margem para espaçamento */
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 1rem; /* Padroniza o tamanho da fonte */
 }
 
-.calculator button, .roseta button {
+.calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn { /* Adicionados os novos botões */
     background-color: var(--cor-primaria);
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
-    margin: 0.5rem 0.2rem 0;
+    padding: 0.7rem 1.2rem; /* Aumentado padding para melhor clique */
+    margin: 0.5rem 0.2rem 0.5rem 0; /* Ajuste para espaçamento entre botões */
     cursor: pointer;
     border-radius: 4px;
+    font-size: 1rem; /* Padroniza o tamanho da fonte */
+    transition: background-color 0.3s ease; /* Efeito de transição ao hover */
 }
+
+.calculator button:hover, .roseta button:hover, .add-tue-btn:hover, .remove-tue-btn:hover, .remove-comodo-btn:hover {
+    background-color: #005bb5; /* Escurece a cor no hover */
+}
+
+/* Estilos específicos para os botões de adicionar/remover dinâmicos */
+.add-tue-btn {
+    background-color: #28a745; /* Verde para adicionar */
+}
+.add-tue-btn:hover {
+    background-color: #218838;
+}
+.remove-tue-btn, .remove-comodo-btn {
+    background-color: #dc3545; /* Vermelho para remover */
+    margin-left: 0.5rem; /* Separar do botão de adicionar */
+}
+.remove-tue-btn:hover, .remove-comodo-btn:hover {
+    background-color: #c82333;
+}
+
 
 .roseta svg {
     display: block;
     margin: 1rem auto;
     max-width: 100%;
+    height: auto; /* Garante que o SVG seja responsivo */
 }
 
 .error {
     color: red;
     font-size: 0.9rem;
+    margin-top: -0.5rem; /* Ajusta a margem para ficar mais próximo do input */
+    margin-bottom: 0.5rem;
 }
 
 .tabs {
@@ -136,21 +169,26 @@ table th, table td {
 .tab-button {
     background-color: #f1f1f1;
     border: 1px solid #ddd;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1.2rem; /* Aumentado padding */
     cursor: pointer;
     margin-right: 0.2rem;
+    border-radius: 4px 4px 0 0; /* Arredonda apenas os cantos superiores */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .tab-button[aria-selected="true"] {
     background-color: var(--cor-primaria);
     color: white;
+    border-color: var(--cor-primaria);
 }
 
 .tab-content {
     display: none;
-    padding: 1rem;
+    padding: 1.5rem; /* Aumentado padding */
     border: 1px solid #ddd;
+    border-top: none; /* Remove a borda superior para se unir ao botão ativo */
     background-color: white;
+    border-radius: 0 0 8px 8px; /* Arredonda apenas os cantos inferiores */
 }
 
 .tab-content:not([aria-hidden="true"]) {
@@ -159,10 +197,23 @@ table th, table td {
 
 aside {
     background-color: #f1f1f1;
-    padding: 1rem;
+    padding: 1.5rem; /* Aumentado padding */
     margin: 2rem;
     border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra mais suave */
 }
+aside h3 {
+    color: var(--cor-primaria);
+    margin-bottom: 0.8rem;
+}
+aside ul {
+    list-style: disc inside;
+    padding-left: 1rem;
+}
+aside li {
+    margin-bottom: 0.5rem;
+}
+
 
 footer {
     background-color: #333;
@@ -170,31 +221,157 @@ footer {
     text-align: center;
     padding: 1rem;
     margin-top: 2rem;
+    font-size: 0.9rem;
 }
 
+/* Novos estilos para os campos de cômodos dinâmicos */
+#containerComodos {
+    border: 1px dashed #ccc;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+}
+
+.comodo-item {
+    border: 1px solid #eee;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.comodo-item h4 {
+    color: var(--cor-primaria);
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.tue-container {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #ddd;
+}
+.tue-container h5 {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    color: #555;
+}
+
+.tue-item {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+    border-radius: 4px;
+}
+
+.circuit-details {
+    margin-bottom: 0.5rem;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #fdfdfd;
+}
+
+.circuit-details summary {
+    padding: 0.8rem;
+    background-color: #e9e9e9;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.circuit-details ul {
+    padding: 1rem;
+    list-style: none; /* Remove bullet points */
+}
+.circuit-details li {
+    margin-bottom: 0.3rem;
+}
+
+/* Media Queries para Responsividade */
 @media (max-width: 768px) {
     .menu-toggle {
         display: block;
     }
     nav ul {
-        display: none;
+        display: none; /* Esconde o menu por padrão */
         flex-direction: column;
         background-color: #333;
+        position: absolute; /* Para que o menu cubra a área de conteúdo */
+        top: 60px; /* Abaixo do header */
+        left: 0;
+        width: 100%;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 999;
     }
-    nav ul.show {
+    nav ul.active { /* Mostra o menu quando a classe 'active' é adicionada pelo JS */
         display: flex;
     }
     nav ul li {
         margin: 0.5rem 0;
+        text-align: center;
+    }
+    nav ul a {
+        padding: 0.8rem 0; /* Aumenta a área de toque */
     }
     .content {
         padding: 1rem;
     }
     table {
-        font-size: 0.9rem;
+        font-size: 0.8rem; /* Diminui a fonte da tabela em telas menores */
+        display: block; /* Permite scroll horizontal se necessário */
+        overflow-x: auto; /* Adiciona scroll horizontal */
+        white-space: nowrap; /* Impede que o texto quebre */
+    }
+    table thead, table tbody, table th, table td, table tr {
+        display: block; /* Empilha os elementos da tabela para melhor visualização */
+    }
+    table th, table td {
+        text-align: left; /* Alinha o texto à esquerda */
+        width: 100%; /* Ocupa toda a largura disponível */
+        box-sizing: border-box; /* Garante que o padding não cause overflow */
+    }
+    table tr {
+        margin-bottom: 0.5rem; /* Espaço entre as linhas empilhadas */
+        border: 1px solid #ddd; /* Adiciona borda para separar as linhas */
+    }
+    table th:before, table td:before {
+        content: attr(data-label); /* Adiciona o label do cabeçalho como pseudo-elemento */
+        font-weight: bold;
+        display: inline-block;
+        width: 80px; /* Largura para o label */
+        margin-right: 10px;
     }
     .roseta svg {
         width: 100%;
         height: auto;
     }
+
+    /* Ajustes para os formulários em telas menores */
+    .calculator input, .calculator select, .roseta input, .roseta select {
+        font-size: 0.95rem;
+    }
+    .calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn {
+        width: 100%; /* Botões ocupam a largura total */
+        margin: 0.5rem 0; /* Mais espaçamento vertical */
+    }
+    .comodo-item, .tue-item {
+        padding: 0.8rem;
+        margin-bottom: 0.8rem;
+    }
 }
+
+/* Correção para o bug do menu-toggle em desktops */
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none; /* Garante que o botão esteja escondido em telas maiores */
+    }
+    nav ul.active { /* Remove a classe active que só é usada para mobile */
+        display: flex;
+    }
+}
+
