@@ -109,7 +109,7 @@ button:hover {
     background-color: #e74c3c;
 }
 
-#resultado, #resultadoCarga {
+#resultado, #resultadoCarga, #resultadoRoseta {
     margin-top: 10px;
     font-weight: bold;
 }
@@ -135,11 +135,13 @@ table {
     margin-top: 10px;
     overflow-x: auto;
 }
+
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
 }
+
 th {
     background-color: #34495e;
     color: white;
@@ -148,6 +150,23 @@ th {
 svg {
     margin: 10px 0;
     border: 1px solid #ddd;
+}
+
+.roseta {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.roseta svg {
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.roseta select, .roseta input, .roseta button {
+    margin: 10px;
+    padding: 5px;
 }
 
 /* Responsividade */
@@ -194,21 +213,4 @@ svg {
     table {
         font-size: 0.8em;
     }
-}
-.roseta {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.roseta svg {
-    margin: 20px auto;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-}
-
-.roseta select, .roseta input, .roseta button {
-    margin: 10px;
-    padding: 5px;
- }
 }
