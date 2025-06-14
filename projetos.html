@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Projetos elétricos, incluindo levantamento de carga e instalação de chuveiros.">
+    <title>Projetos - Guia do Eletricista</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>Projetos Elétricos</h1>
+        <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    </header>
+
+    <nav role="navigation" aria-label="Menu principal" id="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="index.html#normas">Normas</a></li>
+            <li><a href="index.html#calculadora">Calculadora</a></li>
+            <li><a href="tutoriais.html">Tutoriais</a></li>
+            <li><a href="projetos.html" aria-current="page">Projetos</a></li>
+            <li><a href="atualizacoes.html">Atualizações</a></li>
+        </ul>
+    </nav>
+
+    <main role="main">
+        <div class="content">
+            <section id="levantamento" aria-labelledby="levantamento-heading">
+                <h2 id="levantamento-heading">Levantamento de Carga Residencial</h2>
+                <form class="calculator" aria-label="Formulário de levantamento de carga">
+                    <label for="potIlum">Potência Iluminação (W):</label>
+                    <input type="number" id="potIlum" min="0" step="1" required>
+                    <label for="potTUG">Potência TUG (W):</label>
+                    <input type="number" id="potTUG" min="0" step="1" required>
+                    <label for="potTUE">Potência TUE (W):</label>
+                    <input type="number" id="potTUE" min="0" step="1" required>
+                    <button type="button" onclick="calcularLevantamento()">Calcular</button>
+                    <button type="button" onclick="resetForm()">Limpar</button>
+                    <div id="resultadoCarga" aria-live="assertive"></div>
+                </form>
+            </section>
+
+            <section id="padrao-entrada" aria-labelledby="padrao-entrada-heading">
+                <h2 id="padrao-entrada-heading">Padrão de Entrada Enel (Nordeste)</h2>
+                <ol>
+                    <li>Levante a potência total da residência.</li>
+                    <li>Consulte a Enel para tipo de fornecimento.</li>
+                    <li>Dimensionar disjuntor geral (ex.: 40A para 6.67 kW a 220V).</li>
+                </ol>
+            </section>
+
+            <section id="chuveiro" aria-labelledby="chuveiro-heading">
+                <h2 id="chuveiro-heading">Instalação de Chuveiro</h2>
+                <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg" aria-labelledby="chuveiro-diagram-title">
+                    <title id="chuveiro-diagram-title">Diagrama de instalação de chuveiro</title>
+                    <rect x="0" y="50" width="300" height="100" fill="none" stroke="black"/>
+                    <circle cx="0" cy="40" r="40" fill="none" stroke="black"/>
+                    <line x1="150" y1="100" x2="0" y2="100" stroke="black"/>
+                    <rect x="130" y="80" width="40" height="40" fill="blue" stroke="black"/>
+                    <text x="50" y="0" font="Arial" font-size="12">Fonte</text>
+                    <text x="130" y="0" font="Arial" font-size="12">Disjuntor</text>
+                    <text x="0" y="0" font="Arial" font-size="12">Chuveiro</text>
+                </svg>
+                <p aria-hidden="true"><em>Legenda:</em> Círculo amarelo = Fonte, Retângulo azul = Disjuntor, Círculo vermelho = Chuveiro.</p>
+                <h3>Passo a Passo</h3>
+                <ol>
+                    <li>Verifique a potência (ex.: 5400W a 220V).</li>
+                    <li>Calcule a corrente: I = P / V = 5400 / 220 ≈ 24.5A.</li>
+                    <li>Escolha a bitola (ex.: 6.4 mm², veja tabelas NBR 5410).</li>
+                    <li>Instale o disjuntor de 25A ou 32A.</li>
+                    <li>Conecte fase, neutro e terra.</li>
+                </ol>
+            </section>
+
+            <section id="automacao" aria-labelledby="automacao-heading">
+                <h2 id="automacao-heading">Automação</h2>
+                <p>Tecnologias em alta:</p>
+                <ul>
+                    <li>Controle de iluminação.</li>
+                    <li><li>Portões automáticos.</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-14">14/06/2025</time></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
