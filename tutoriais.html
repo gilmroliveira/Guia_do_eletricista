@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tutoriais, manuais, diagramas e luminotécnica para eletricistas.">
+    <title>Tutoriais - Guia do Eletricista</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>Tutoriais e Recursos</h1>
+        <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    </header>
+
+    <nav role="navigation" aria-label="Menu principal" id="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="index.html#normas">Normas</a></li>
+            <li><a href="index.html#calculadora">Calculadora</a></li>
+            <li><a href="tutoriais.html" aria-current="page">Tutoriais</a></li>
+            <li><a href="projetos.html">Projetos</a></li>
+            <li><a href="atualizacoes.html">Atualizações</a></li>
+        </ul>
+    </nav>
+
+    <main role="main">
+        <div class="content">
+            <section id="tutoriais" aria-labelledby="tutoriais-heading">
+                <h2 id="tutoriais-heading">Tutoriais</h2>
+                <h3>Como Ler Projetos Elétricos</h3>
+                <ol>
+                    <li>Analise a planta baixa e identifique pontos de carga.</li>
+                    <li>Consulte o diagrama unifilar para conexões.</li>
+                    <li>Verifique a legenda para símbolos.</li>
+                </ol>
+            </section>
+
+            <section id="manuais" aria-labelledby="manuais-heading">
+                <h2 id="manuais-heading">Manuais</h2>
+                <ul>
+                    <li><a href="https://www.abnt.org.br" target="_blank" rel="noopener">ABNT - Normas Técnicas</a></li>
+                    <li><a href="https://www.mundodaeletrica.com.br" target="_blank" rel="noopener">Mundo da Elétrica</a></li>
+                </ul>
+            </section>
+
+            <section id="diagramas" aria-labelledby="diagramas-heading">
+                <h2 id="diagramas-heading">Diagramas e Símbolos</h2>
+                <ul>
+                    <li>Traço contínuo: Condutor elétrico.</li>
+                    <li>Círculo: Ponto de luz ou tomada.</li>
+                </ul>
+            </section>
+
+            <section id="luminotecnia" aria-labelledby="luminotecnia-heading">
+                <h2 id="luminotecnia-heading">Luminotécnica</h2>
+                <p>Iluminância recomendada: 300-500 lux para escritórios, 100-200 lux para áreas residenciais.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-14">14/06/2025</time></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
