@@ -133,6 +133,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    overflow-x: auto;
 }
 th, td {
     border: 1px solid #ddd;
@@ -175,6 +176,9 @@ svg {
         width: 100%;
         margin-bottom: 10px;
     }
+    table {
+        font-size: 0.9em;
+    }
 }
 
 @media (max-width: 480px) {
@@ -186,5 +190,8 @@ svg {
     }
     h2 {
         font-size: 1.2em;
+    }
+    table {
+        font-size: 0.8em;
     }
 }
