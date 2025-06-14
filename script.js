@@ -22,6 +22,32 @@ tabButtons.forEach(button => {
     });
 });
 
+// Atualizar labels da roseta
+function updateRosetaLabels() {
+    const tipo = document.getElementById('tipoCalculo').value;
+    const labelValor1 = document.getElementById('labelValor1');
+    const labelValor2 = document.getElementById('labelValor2');
+
+    switch (tipo) {
+        case 'corrente':
+            labelValor1.textContent = 'Potência (W):';
+            labelValor2.textContent = 'Tensão (V):';
+            break;
+        case 'potencia':
+            labelValor1.textContent = 'Tensão (V):';
+            labelValor2.textContent = 'Corrente (A):';
+            break;
+        case 'secao':
+            labelValor1.textContent = 'Corrente (A):';
+            labelValor2.textContent = 'Comprimento (m):';
+            break;
+        case 'queda':
+            labelValor1.textContent = 'Corrente (A):';
+            labelValor2.textContent = 'Comprimento (m):';
+            break;
+    }
+}
+
 // Calculadora de dimensionamento
 function calcularDimensionamento() {
     const sistema = document.getElementById('sistema').value;
@@ -55,12 +81,12 @@ function calcularLevantamento() {
     const potTUE = parseFloat(document.getElementById('potTUE').value);
     const resultado = document.getElementById('resultadoCarga');
 
-    if (!potIlum || !potTUG || !potTUE || potIlum < 0 || potTUG < 0 || potTUE < 0) {
-        resultado.innerHTML = '<p class="error">Preencha todos os campos com valores válidos.</p>';
+    if (!potIlum || !potTUG || !potTUE || potIlum <= 0 || potTUG <= 0 || potTUE <= 0) {
+        resultado.innerHTML = '<p class="error">Preencha todos os valores com números válidos.</p>';
         return;
     }
 
-    const cargaTotal = potIlum + potTUG + potTUE;
+    const cargaTotal = potIlum + potIlum + potTUG + potTUE;
     resultado.innerHTML = `<p>Carga Total: ${cargaTotal.toFixed(2)} W</p>`;
 }
 
@@ -72,15 +98,25 @@ function calcularRoseta() {
     const resultado = document.getElementById('resultadoRoseta');
 
     if (!valor1 || !valor2 || valor1 <= 0 || valor2 <= 0) {
-        resultado.innerHTML = '<p class="error">Preencha ambos os valores com números válidos.</p>';
+        resultado.innerHTML = '<p class="error">Preencha ambos os campos com valores válidos.</p>';
         return;
     }
 
     let res;
-    if (tipo === 'corrente') res = valor1 / valor2; // I = P / V
-    else if (tipo === 'potencia') res = valor1 * valor2; // P = V * I
-    else if (tipo === 'secao') res = valor1 * valor2 / 100; // Exemplo simplificado
-    else if (tipo === 'queda') res = (valor1 * valor2) / 100; // Exemplo simplificado
+    switch (tipo) {
+        case 'corrente':
+            res = valor1 / valor2; // I = P / V
+            break;
+        case 'potencia':
+            res = valor1 * valor2; // P = V * I
+            break;
+        case 'secao':
+            res = (2 * valor1 * valor2 * 0.0176) / (0.04 * 220); // Simplificado: S ≈ (2*I*L*ρ)/(ΔV*V), ΔV=4%
+            break;
+        case 'queda':
+            res = (2 * valor1 * valor2 * 0.0176 * 100) / (6 * valor1); // ΔV% = (2*I*L*ρ*100)/(S*V), S=6mm²
+            break;
+    }
 
     resultado.innerHTML = `<p>Resultado: ${res.toFixed(2)} ${tipo === 'corrente' ? 'A' : tipo === 'potencia' ? 'W' : tipo === 'secao' ? 'mm²' : '%'}</p>`;
 }
@@ -90,7 +126,10 @@ function resetForm() {
     document.querySelectorAll('form input, form select').forEach(input => {
         if (input.type !== 'button') input.value = '';
     });
-    document.querySelectorAll('div[aria-live]').forEach(div => {
+    document.querySelectorAll('.error, div[aria-live]').forEach(div => {
         div.innerHTML = '';
     });
 }
+
+// Inicializar labels da roseta
+document.addEventListener('DOMContentLoaded', updateRosetaLabels);
