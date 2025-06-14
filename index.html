@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <h3>Tabelas de Dimensionamento (NBR 5410)</h3>
-                <p>Valores de ampacidade (capacidade de corrente) de cabos de cobre isolados em PVC 70°C, instalados em eletroduto de seção circular embutido em parede (Método B1 da NBR 5410). **Valores nominais para temperatura ambiente de 30°C.**</p>
+                <p>Valores de ampacidade (capacidade de corrente) de cabos de cobre isolados em PVC 70°C, instalados em eletroduto de seção circular embutido em parede (Método B1 da NBR 5410). <strong>Valores nominais para temperatura ambiente de 30°C.</strong></p>
                 <table aria-label="Tabela de ampacidade de cabos por bitola e número de condutores">
                     <caption>Ampacidade de Cabos (A) - Método B1</caption>
                     <thead>
@@ -75,7 +75,7 @@
                         <tr><td data-label="Bitola">120.0</td><td data-label="2 Condutores">233</td><td data-label="3 Condutores">202</td></tr>
                     </tbody>
                 </table>
-                <p class="table-note">**Nota:** Para outras condições de instalação (tipo de condutor, temperatura, agrupamento), consulte a NBR 5410 completa. Esta tabela é um guia simplificado.</p>
+                <p class="table-note"><strong>Nota:</strong> Para outras condições de instalação (tipo de condutor, temperatura, agrupamento), consulte a NBR 5410 completa. Esta tabela é um guia simplificado.</p>
             </section>
 
             <section id="calculadora" aria-labelledby="calculadora-heading">
@@ -107,6 +107,7 @@
 
                     <label for="numComodos">Número de Cômodos/Áreas:</label>
                     <input type="number" id="numComodos" min="1" step="1" value="1" required onchange="gerarCamposComodos()">
+                    <button type="button" onclick="addComodoField()">+ Adicionar Cômodo</button>
 
                     <div id="containerComodos">
                         <div class="comodo-item">
