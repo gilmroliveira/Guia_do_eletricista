@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Guia completo para eletricistas com normas, cálculos e tutoriais.">
+    <meta name="description" content="Guia completo para eletricistas com normas, cálculos, tutoriais e diagramas.">
     <title>Guia Completo do Eletricista</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -17,6 +17,9 @@
         <ul>
             <li><a href="#normas">Normas</a></li>
             <li><a href="#calculadora">Calculadora</a></li>
+            <li><a href="#levantamento">Levantamento de Carga</a></li>
+            <li><a href="#padrao-entrada">Padrão de Entrada</a></li>
+            <li><a href="#chuveiro">Instalação de Chuveiro</a></li>
             <li><a href="#atualizacao">Atualização</a></li>
             <li><a href="#automacao">Automação</a></li>
             <li><a href="#tutoriais">Tutoriais</a></li>
@@ -30,13 +33,22 @@
         <div class="content">
             <section id="normas">
                 <h2>Normas NBR e NR</h2>
-                <p>As normas são essenciais para garantir segurança e qualidade nas instalações elétricas:</p>
+                <p>Principais normas para eletricistas:</p>
                 <ul>
-                    <li><strong>NBR 5410 (2015):</strong> Instalações elétricas de baixa tensão (até 1000V CA ou 1500V CC). Define métodos de dimensionamento, proteção e aterramento.</li>
-                    <li><strong>NBR 14039:</strong> Instalações elétricas de média tensão (acima de 1kV até 34,5kV).</li>
-                    <li><strong>NBR 5419:</strong> Proteção contra descargas atmosféricas (SPDA).</li>
-                    <li><strong>NR 10:</strong> Segurança em instalações e serviços em eletricidade, com foco em prevenção de acidentes.</li>
+                    <li><strong>NBR 5410 (2015):</strong> Instalações elétricas de baixa tensão.</li>
+                    <li><strong>NBR 14039:</strong> Instalações de média tensão.</li>
+                    <li><strong>NBR 5419:</strong> Proteção contra descargas atmosféricas.</li>
+                    <li><strong>NR 10:</strong> Segurança em eletricidade.</li>
                 </ul>
+                <h3>Tabelas NBR 5410</h3>
+                <table>
+                    <tr><th>Bitola (mm²)</th><th>Ampacidade (A) - Método B1</th></tr>
+                    <tr><td>1.5</td><td>15</td></tr>
+                    <tr><td>2.5</td><td>20</td></tr>
+                    <tr><td>4.0</td><td>28</td></tr>
+                    <tr><td>6.0</td><td>36</td></tr>
+                    <tr><td>10.0</td><td>50</td></tr>
+                </table>
             </section>
 
             <section id="calculadora">
@@ -64,18 +76,73 @@
                         <option value="0.8">3 ou mais condutores</option>
                     </select>
                     <button onclick="calcularDimensionamento()">Calcular</button>
+                    <button onclick="resetForm()">Limpar</button>
                     <p id="resultado"></p>
                 </div>
+            </section>
+
+            <section id="levantamento">
+                <h2>Levantamento de Carga Residencial</h2>
+                <div class="calculator">
+                    <h3>Cálculo Passo a Passo</h3>
+                    <label for="potIlum">Potência Iluminação (W):</label>
+                    <input type="number" id="potIlum" min="0" step="1" required>
+                    <label for="potTUG">Potência TUG (W):</label>
+                    <input type="number" id="potTUG" min="0" step="1" required>
+                    <label for="potTUE">Potência TUE (W):</label>
+                    <input type="number" id="potTUE" min="0" step="1" required>
+                    <button onclick="calcularLevantamento()">Calcular Carga</button>
+                    <button onclick="resetForm()">Limpar</button>
+                    <p id="resultadoCarga"></p>
+                </div>
+            </section>
+
+            <section id="padrao-entrada">
+                <h2>Padrão de Entrada Enel (Nordeste)</h2>
+                <h3>Tutorial</h3>
+                <ol>
+                    <li>Levantar a potência total da residência (ex.: 6.67 kW).</li>
+                    <li>Consultar a Enel para verificar o tipo de fornecimento (monofásico, bifásico ou trifásico).</li>
+                    <li>Dimensionar o disjuntor geral (ex.: 40A para 6.67 kW a 220V).</li>
+                    <li>Usar cabo com bitola mínima de 10 mm² (cobre) para o ramal de entrada.</li>
+                    <li>Instalar medidor e caixa de proteção conforme especificações da Enel.</li>
+                </ol>
+                <p><strong>Medidas Padrão Nordeste:</strong> Altura do medidor: 1.5m do solo; Distância da parede: 10-15 cm.</p>
+            </section>
+
+            <section id="chuveiro">
+                <h2>Instalação de Chuveiro</h2>
+                <h3>Diagrama</h3>
+                <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="50" y="50" width="200" height="100" fill="none" stroke="black" stroke-width="2"/>
+                    <circle cx="70" cy="100" r="10" fill="yellow" stroke="black"/>
+                    <line x1="80" y1="100" x2="120" y2="100" stroke="black" stroke-width="2"/>
+                    <rect x="130" y="80" width="40" height="40" fill="blue" stroke="black"/>
+                    <line x1="170" y1="100" x2="210" y2="100" stroke="black" stroke-width="2"/>
+                    <circle cx="230" cy="100" r="15" fill="red" stroke="black"/>
+                    <text x="50" y="30" font-size="12">Fonte</text>
+                    <text x="130" y="70" font-size="12">Disjuntor</text>
+                    <text x="220" y="90" font-size="12">Chuveiro</text>
+                </svg>
+                <p><em>Legenda:</em> Círculo amarelo = Fonte, Retângulo azul = Disjuntor, Círculo vermelho = Chuveiro.</p>
+                <h3>Passo a Passo</h3>
+                <ol>
+                    <li>Verifique a potência do chuveiro (ex.: 5400W a 220V).</li>
+                    <li>Calcule a corrente: I = P / V = 5400 / 220 ≈ 24.5A.</li>
+                    <li>Escolha bitola mínima (ex.: 6 mm², tabela NBR 5410).</li>
+                    <li>Instale disjuntor de 25A ou 32A (125% de 24.5A).</li>
+                    <li>Conecte os condutores (fase, neutro, terra) ao chuveiro.</li>
+                </ol>
+                <!-- Inserir imagem real aqui: <img src="chuveiro_instalacao.jpg" alt="Instalação de Chuveiro"> -->
             </section>
 
             <section id="atualizacao">
                 <h2>Atualização</h2>
                 <p>Última atualização: <time datetime="2025-06-14">14/06/2025</time></p>
-                <p>Novidades na NBR 5410 (em revisão desde 2012):</p>
+                <p>Novidades na NBR 5410:</p>
                 <ul>
-                    <li>Inclusão de harmônicas na corrente.</li>
-                    <li>Novos limites de impedância para proteção.</li>
-                    <li>Atualização de tabelas de ampacidade.</li>
+                    <li>Inclusão de harmônicas.</li>
+                    <li>Novos limites de impedância.</li>
                 </ul>
             </section>
 
@@ -83,63 +150,48 @@
                 <h2>Automação</h2>
                 <p>Tecnologias em alta:</p>
                 <ul>
-                    <li>Controle de iluminação via IoT.</li>
-                    <li>Automação de portões com sensores.</li>
-                    <li>Sistemas de segurança com câmeras IP.</li>
+                    <li>Controle de iluminação.</li>
+                    <li>Portões automáticos.</li>
                 </ul>
             </section>
 
             <section id="tutoriais">
                 <h2>Tutoriais</h2>
-                <h3>Como Ler Projetos Elétricos</h3>
+                <h3>Como Ler Projetos</h3>
                 <ol>
-                    <li><strong>Planta Baixa:</strong> Identifique paredes, portas e janelas.</li>
-                    <li><strong>Diagrama Unifilar:</strong> Veja o traçado dos condutores e equipamentos.</li>
-                    <li><strong>Legenda:</strong> Consulte símbolos (ex.: círculo = ponto de luz).</li>
-                    <li><strong>Cálculos:</strong> Verifique dimensionamento de cabos e disjuntores.</li>
+                    <li>Analise a planta baixa.</li>
+                    <li>Consulte o diagrama unifilar.</li>
+                    <li>Verifique a legenda.</li>
                 </ol>
             </section>
 
             <section id="manuais">
-                <h2>Manuais e Recursos</h2>
+                <h2>Manuais</h2>
                 <ul>
-                    <li><a href="https://www.abnt.org.br" target="_blank">ABNT - Normas Técnicas</a></li>
+                    <li><a href="https://www.abnt.org.br" target="_blank">ABNT</a></li>
                     <li><a href="https://www.mundodaeletrica.com.br" target="_blank">Mundo da Elétrica</a></li>
-                    <li><a href="https://www.engquimicas.com/normas-tecnicas-nbr/" target="_blank">Engenharia Química - NBR</a></li>
                 </ul>
             </section>
 
             <section id="diagramas">
                 <h2>Diagramas e Símbolos</h2>
-                <p>Símbolos (baseado em NBR 5444 - uso prático):</p>
                 <ul>
-                    <li>Traço contínuo: Condutor.</li>
-                    <li>Círculo: Ponto de luz ou interruptor.</li>
-                    <li>Triângulo: Tomada (TUG/TUE).</li>
-                    <li>Quadrado: Disjuntores ou caixas de passagem.</li>
+                    <li>Traço: Condutor.</li>
+                    <li>Círculo: Ponto de luz.</li>
                 </ul>
-                <p>Tipos: Unifilar (simplificado), Multifilar (detalhado), Funcional.</p>
             </section>
 
             <section id="luminotecnica">
                 <h2>Luminotécnica</h2>
-                <p>Dimensionamento (NBR ISO 8995-1):</p>
-                <ul>
-                    <li>Escritórios: 300-500 lux.</li>
-                    <li>Cozinhas: 200-300 lux.</li>
-                    <li>Áreas externas: 50-100 lux.</li>
-                </ul>
-                <p>Fórmula: N = (E × A) / (Φ × UF × MF)</p>
-                <p>Onde: N = número de luminárias, E = iluminância (lux), A = área (m²), Φ = fluxo luminoso (lumens), UF = fator de utilização, MF = fator de manutenção.</p>
+                <p>Iluminância: 300-500 lux (escritórios).</p>
             </section>
         </div>
 
         <aside>
             <h3>Dicas Rápidas</h3>
             <ul>
-                <li>Verifique aterramento antes de energizar.</li>
-                <li>Use tabelas NBR 5410 para ampacidade.</li>
-                <li>Inspecione disjuntores periodicamente.</li>
+                <li>Verifique o aterramento.</li>
+                <li>Consulte tabelas NBR 5410.</li>
             </ul>
         </aside>
     </main>
