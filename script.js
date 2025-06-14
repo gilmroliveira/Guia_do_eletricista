@@ -99,6 +99,27 @@ function calcularRoseta() {
     }
 }
 
+// Função para calcular levantamento de carga
+function calcularLevantamento() {
+    const potIlum = parseFloat(document.getElementById('potIlum').value);
+    const potTUG = parseFloat(document.getElementById('potTUG').value);
+    const potTUE = parseFloat(document.getElementById('potTUE').value);
+    const resultadoCarga = document.getElementById('resultadoCarga');
+
+    if (!potIlum || !potTUG || !potTUE) {
+        resultadoCarga.innerHTML = "Por favor, preencha todos os campos.";
+        return;
+    }
+
+    const potenciaTotal = potIlum + potTUG + potTUE;
+    const correnteTotal = potenciaTotal / (220 * 0.9); // Assumindo 220V e FP=0.9
+    resultadoCarga.innerHTML = `
+        <strong>Resultados:</strong><br>
+        Potência Total: ${potenciaTotal.toFixed(2)} W<br>
+        Corrente Total: ${correnteTotal.toFixed(2)} A
+    `;
+}
+
 // Função para limpar formulários
 function resetForm() {
     document.querySelectorAll('input').forEach(input => input.value = '');
