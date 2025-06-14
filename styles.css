@@ -93,6 +93,15 @@ table th, table td {
     text-align: center;
 }
 
+.table-note { /* Estilo para a nota da tabela */
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+
 .calculator, .roseta {
     background-color: white;
     padding: 1rem;
@@ -326,25 +335,36 @@ footer {
         display: block; /* Permite scroll horizontal se necessário */
         overflow-x: auto; /* Adiciona scroll horizontal */
         white-space: nowrap; /* Impede que o texto quebre */
+        border: none; /* Remove a borda da tabela principal */
     }
-    table thead, table tbody, table th, table td, table tr {
+    table thead {
+        display: none; /* Esconde o cabeçalho original em telas pequenas */
+    }
+    table tbody {
+        display: block;
+        width: 100%;
+    }
+    table tr {
         display: block; /* Empilha os elementos da tabela para melhor visualização */
+        margin-bottom: 0.8rem; /* Espaço entre as linhas empilhadas */
+        border: 1px solid #ddd; /* Adiciona borda para separar as linhas */
+        border-radius: 4px;
     }
     table th, table td {
         text-align: left; /* Alinha o texto à esquerda */
-        width: 100%; /* Ocupa toda a largura disponível */
-        box-sizing: border-box; /* Garante que o padding não cause overflow */
+        display: block; /* Cada célula ocupa uma linha */
+        padding: 0.5rem 1rem;
+        border: none; /* Remove bordas individuais das células */
+        position: relative; /* Para posicionar o data-label */
     }
-    table tr {
-        margin-bottom: 0.5rem; /* Espaço entre as linhas empilhadas */
-        border: 1px solid #ddd; /* Adiciona borda para separar as linhas */
-    }
-    table th:before, table td:before {
-        content: attr(data-label); /* Adiciona o label do cabeçalho como pseudo-elemento */
+    table td:before { /* Adiciona o label do cabeçalho como pseudo-elemento */
+        content: attr(data-label);
         font-weight: bold;
         display: inline-block;
-        width: 80px; /* Largura para o label */
-        margin-right: 10px;
+        width: 120px; /* Largura fixa para o label */
+        min-width: 120px; /* Garante largura mínima */
+        margin-right: 1rem;
+        color: var(--cor-primaria); /* Cor para o label */
     }
     .roseta svg {
         width: 100%;
@@ -374,4 +394,3 @@ footer {
         display: flex;
     }
 }
-
