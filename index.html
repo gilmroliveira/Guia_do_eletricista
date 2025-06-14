@@ -87,19 +87,20 @@
                 <h3>Roseta de Cálculos</h3>
                 <div class="roseta">
                     <label for="tipoCalculo">Tipo de Cálculo:</label>
-                    <select id="tipoCalculo">
+                    <select id="tipoCalculo" onchange="updateRosetaLabels()">
                         <option value="corrente">Corrente (A)</option>
                         <option value="potencia">Potência (W)</option>
                         <option value="secao">Seção do Cabo (mm²)</option>
                         <option value="queda">Queda de Tensão (%)</option>
                     </select>
-                    <label for="rosetaInput1">Valor 1:</label>
+                    <label for="rosetaInput1" id="labelValor1">Potência (W):</label>
                     <input type="number" id="rosetaInput1" min="0" step="0.1" required>
-                    <label for="rosetaInput2">Valor 2:</label>
+                    <label for="rosetaInput2" id="labelValor2">Tensão (V):</label>
                     <input type="number" id="rosetaInput2" min="0" step="0.1" required>
                     <button type="button" onclick="calcularRoseta()">Calcular</button>
                     <div id="resultadoRoseta" aria-live="assertive"></div>
-                    <svg id="rosetaSvg" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+                    <svg id="rosetaSvg" width="300" height="300" xmlns="http://www.w3.org/2000/svg" aria-labelledby="roseta-title">
+                        <title id="roseta-title">Diagrama da roseta de cálculos elétricos</title>
                         <circle cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="2"/>
                         <text x="140" y="50" font-size="12">Corrente</text>
                         <text x="240" y="150" font-size="12">Potência</text>
