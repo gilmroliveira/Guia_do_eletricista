@@ -29,7 +29,7 @@
             <section id="levantamento" aria-labelledby="levantamento-heading">
                 <h2 id="levantamento-heading">Levantamento de Carga Residencial</h2>
                 <form class="calculator" aria-label="Formulário de levantamento de carga">
-                    <label for="potIlum">Potência Iluminação (W):</label>
+                    <label for="potIlum">Potência de Iluminação (W):</label>
                     <input type="number" id="potIlum" min="0" step="1" required>
                     <label for="potTUG">Potência TUG (W):</label>
                     <input type="number" id="potTUG" min="0" step="1" required>
@@ -52,23 +52,25 @@
 
             <section id="chuveiro" aria-labelledby="chuveiro-heading">
                 <h2 id="chuveiro-heading">Instalação de Chuveiro</h2>
-                <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg" aria-labelledby="chuveiro-diagram-title">
-                    <title id="chuveiro-diagram-title">Diagrama de instalação de chuveiro</title>
-                    <rect x="0" y="50" width="300" height="100" fill="none" stroke="black"/>
-                    <circle cx="0" cy="40" r="40" fill="none" stroke="black"/>
-                    <line x1="150" y1="100" x2="0" y2="100" stroke="black"/>
+                <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg" aria-labelledby="chuveiro-diagram">
+                    <title id="chuveiro-diagram">Diagrama de instalação de chuveiro</title>
+                    <rect x="50" y="50" width="200" height="100" fill="none" stroke="black"/>
+                    <circle cx="70" cy="100" r="10" fill="green" stroke="black"/>
+                    <line x1="80" y1="100" x2="120" y2="100" stroke="black"/>
                     <rect x="130" y="80" width="40" height="40" fill="blue" stroke="black"/>
-                    <text x="50" y="0" font="Arial" font-size="12">Fonte</text>
-                    <text x="130" y="0" font="Arial" font-size="12">Disjuntor</text>
-                    <text x="0" y="0" font="Arial" font-size="12">Chuveiro</text>
+                    <line x1="170" y1="100" x2="210" y2="100" stroke="black"/>
+                    <circle cx="230" cy="100" r="15" fill="red" stroke="black"/>
+                    <text x="60" y="90" font-size="12">Fonte</text>
+                    <text x="130" y="70" font-size="12">Disjuntor</text>
+                    <text x="220" y="90" font-size="12">Chuveiro</text>
                 </svg>
-                <p aria-hidden="true"><em>Legenda:</em> Círculo amarelo = Fonte, Retângulo azul = Disjuntor, Círculo vermelho = Chuveiro.</p>
+                <p><em>Legenda:</em> Círculo verde = Fonte, Retângulo azul = Disjuntor, Círculo vermelho = Chuveiro.</p>
                 <h3>Passo a Passo</h3>
                 <ol>
                     <li>Verifique a potência (ex.: 5400W a 220V).</li>
-                    <li>Calcule a corrente: I = P / V = 5400 / 220 ≈ 24.5A.</li>
-                    <li>Escolha a bitola (ex.: 6.4 mm², veja tabelas NBR 5410).</li>
-                    <li>Instale o disjuntor de 25A ou 32A.</li>
+                    <li>Calcule a corrente: I = P / V ≈ 24.5A.</li>
+                    <li>Escolha a bitola: 6 mm² (NBR 5410).</li>
+                    <li>Instale disjuntor de 25A ou 32A.</li>
                     <li>Conecte fase, neutro e terra.</li>
                 </ol>
             </section>
@@ -77,8 +79,8 @@
                 <h2 id="automacao-heading">Automação</h2>
                 <p>Tecnologias em alta:</p>
                 <ul>
-                    <li>Controle de iluminação.</li>
-                    <li><li>Portões automáticos.</li>
+                    <li>Controle de iluminação</li>
+                    <li>Portões automáticos</li>
                 </ul>
             </section>
         </div>
