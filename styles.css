@@ -195,3 +195,20 @@ svg {
         font-size: 0.8em;
     }
 }
+.roseta {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.roseta svg {
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.roseta select, .roseta input, .roseta button {
+    margin: 10px;
+    padding: 5px;
+ }
+}
