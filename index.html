@@ -35,19 +35,31 @@
                 <h2>Normas NBR e NR</h2>
                 <p>Principais normas para eletricistas:</p>
                 <ul>
-                    <li><strong>NBR 5410 (2015):</strong> Instalações elétricas de baixa tensão.</li>
-                    <li><strong>NBR 14039:</strong> Instalações de média tensão.</li>
-                    <li><strong>NBR 5419:</strong> Proteção contra descargas atmosféricas.</li>
-                    <li><strong>NR 10:</strong> Segurança em eletricidade.</li>
+                    <li><strong><a href="https://www.abnt.org.br/nbr-5410" target="_blank">NBR 5410 (2015):</a></strong> Instalações elétricas de baixa tensão (até 1000V CA ou 1500V CC).</li>
+                    <li><strong><a href="https://www.abnt.org.br/nbr-14039" target="_blank">NBR 14039:</a></strong> Instalações elétricas de média tensão (1000V a 34.5kV).</li>
+                    <li><strong><a href="https://www.abnt.org.br/nbr-5419" target="_blank">NBR 5419:</a></strong> Proteção contra descargas atmosféricas.</li>
+                    <li><strong><a href="https://www.gov.br/trabalho/pt-br/normas-regulamentadoras/nr-10" target="_blank">NR 10:</a></strong> Segurança em instalações e serviços em eletricidade.</li>
                 </ul>
-                <h3>Tabelas NBR 5410</h3>
+                <h3>Tabelas de Dimensionamento NBR 5410</h3>
+                <h4>Ampacidade de Cabos (Método B1 - Embutido)</h4>
                 <table>
-                    <tr><th>Bitola (mm²)</th><th>Ampacidade (A) - Método B1</th></tr>
-                    <tr><td>1.5</td><td>15</td></tr>
-                    <tr><td>2.5</td><td>20</td></tr>
-                    <tr><td>4.0</td><td>28</td></tr>
-                    <tr><td>6.0</td><td>36</td></tr>
-                    <tr><td>10.0</td><td>50</td></tr>
+                    <tr><th>Bitola (mm²)</th><th>Ampacidade (A) - 2 Condutores Carregados</th><th>Ampacidade (A) - 3 Condutores Carregados</th></tr>
+                    <tr><td>1.5</td><td>15</td><td>13</td></tr>
+                    <tr><td>2.5</td><td>20</td><td>18</td></tr>
+                    <tr><td>4.0</td><td>28</td><td>24</td></tr>
+                    <tr><td>6.0</td><td>36</td><td>31</td></tr>
+                    <tr><td>10.0</td><td>50</td><td>42</td></tr>
+                    <tr><td>16.0</td><td>68</td><td>57</td></tr>
+                    <tr><td>25.0</td><td>87</td><td>73</td></tr>
+                    <tr><td>35.0</td><td>107</td><td>90</td></tr>
+                </table>
+                <h4>Queda de Tensão Permitida</h4>
+                <table>
+                    <tr><th>Condição</th><th>Limite de Queda de Tensão (%)</th></tr>
+                    <tr><td>Desde transformador do cliente</td><td>7%</td></tr>
+                    <tr><td>Desde transformador da concessionária</td><td>7%</td></tr>
+                    <tr><td>Circuitos de motores (partida)</td><td>10%</td></tr>
+                    <tr><td>Circuitos gerais (máximo)</td><td>4%</td></tr>
                 </table>
             </section>
 
@@ -101,13 +113,13 @@
                 <h2>Padrão de Entrada Enel (Nordeste)</h2>
                 <h3>Tutorial</h3>
                 <ol>
-                    <li>Levantar a potência total da residência (ex.: 6.67 kW).</li>
-                    <li>Consultar a Enel para verificar o tipo de fornecimento (monofásico, bifásico ou trifásico).</li>
-                    <li>Dimensionar o disjuntor geral (ex.: 40A para 6.67 kW a 220V).</li>
-                    <li>Usar cabo com bitola mínima de 10 mm² (cobre) para o ramal de entrada.</li>
-                    <li>Instalar medidor e caixa de proteção conforme especificações da Enel.</li>
+                    <li>Levantar a potência total da residência.</li>
+                    <li>Consultar a Enel para tipo de fornecimento.</li>
+                    <li>Dimensionar disjuntor geral (ex.: 40A para 6.67 kW a 220V).</li>
+                    <li>Usar cabo mínimo de 10 mm² (cobre) para ramal.</li>
+                    <li>Instalar medidor e caixa conforme Enel.</li>
                 </ol>
-                <p><strong>Medidas Padrão Nordeste:</strong> Altura do medidor: 1.5m do solo; Distância da parede: 10-15 cm.</p>
+                <p><strong>Medidas Padrão Nordeste:</strong> Altura do medidor: 1.5m; Distância da parede: 10-15 cm.</p>
             </section>
 
             <section id="chuveiro">
@@ -127,21 +139,20 @@
                 <p><em>Legenda:</em> Círculo amarelo = Fonte, Retângulo azul = Disjuntor, Círculo vermelho = Chuveiro.</p>
                 <h3>Passo a Passo</h3>
                 <ol>
-                    <li>Verifique a potência do chuveiro (ex.: 5400W a 220V).</li>
-                    <li>Calcule a corrente: I = P / V = 5400 / 220 ≈ 24.5A.</li>
-                    <li>Escolha bitola mínima (ex.: 6 mm², tabela NBR 5410).</li>
-                    <li>Instale disjuntor de 25A ou 32A (125% de 24.5A).</li>
-                    <li>Conecte os condutores (fase, neutro, terra) ao chuveiro.</li>
+                    <li>Verifique a potência (ex.: 5400W a 220V).</li>
+                    <li>Calcule corrente: I = P / V = 5400 / 220 ≈ 24.5A.</li>
+                    <li>Escolha bitola (ex.: 6 mm², veja tabelas NBR 5410).</li>
+                    <li>Instale disjuntor de 25A ou 32A.</li>
+                    <li>Conecte fase, neutro e terra.</li>
                 </ol>
-                <!-- Inserir imagem real aqui: <img src="chuveiro_instalacao.jpg" alt="Instalação de Chuveiro"> -->
             </section>
 
             <section id="atualizacao">
                 <h2>Atualização</h2>
                 <p>Última atualização: <time datetime="2025-06-14">14/06/2025</time></p>
-                <p>Novidades na NBR 5410:</p>
+                <p>Novidades na NBR 5410 (em revisão desde 2012):</p>
                 <ul>
-                    <li>Inclusão de harmônicas.</li>
+                    <li>Inclusão de harmônicas na corrente.</li>
                     <li>Novos limites de impedância.</li>
                 </ul>
             </section>
@@ -168,7 +179,7 @@
             <section id="manuais">
                 <h2>Manuais</h2>
                 <ul>
-                    <li><a href="https://www.abnt.org.br" target="_blank">ABNT</a></li>
+                    <li><a href="https://www.abnt.org.br" target="_blank">ABNT - Normas Técnicas</a></li>
                     <li><a href="https://www.mundodaeletrica.com.br" target="_blank">Mundo da Elétrica</a></li>
                 </ul>
             </section>
