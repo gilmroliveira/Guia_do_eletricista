@@ -1,6 +1,5 @@
-/* styles.css - Versão consolidada e corrigida */
+/* styles.css - Versão integrada para todas as páginas */
 
-/* Variáveis globais */
 :root {
     --cor-primaria: #005bb5;
     --cor-secundaria: #f9f9f9;
@@ -9,7 +8,6 @@
     --fonte-principal: 'Arial', sans-serif;
 }
 
-/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -23,7 +21,6 @@ body {
     line-height: 1.6;
 }
 
-/* Header */
 header {
     background-color: var(--cor-primaria);
     color: white;
@@ -44,7 +41,6 @@ header {
     right: 1rem;
 }
 
-/* Navegação */
 nav {
     background-color: #333;
 }
@@ -77,7 +73,6 @@ nav ul a[aria-current="page"] {
     border-bottom: 2px solid var(--cor-primaria);
 }
 
-/* Conteúdo principal */
 .content {
     max-width: 1200px;
     margin: 0 auto;
@@ -93,7 +88,7 @@ h2, h3, h4 {
     margin-bottom: 1rem;
 }
 
-/* Formulários genéricos */
+/* Estilos genéricos para formulários */
 .form-container {
     background-color: white;
     padding: 1.5rem;
@@ -126,7 +121,7 @@ h2, h3, h4 {
     outline: none;
 }
 
-/* Botões genéricos */
+/* Botões */
 .btn {
     border: none;
     padding: 0.7rem 1.2rem;
@@ -179,25 +174,7 @@ h2, h3, h4 {
     flex-wrap: wrap;
 }
 
-/* Tabelas */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1rem 0;
-}
-
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    text-align: left;
-}
-
-table th {
-    background-color: var(--cor-primaria);
-    color: white;
-}
-
-/* Estilos para projeto-online */
+/* Estilos específicos para projeto-online */
 .comodos-container {
     border: 1px dashed #ccc;
     padding: 1rem;
@@ -252,6 +229,29 @@ table th {
     padding: 0;
 }
 
+.error {
+    color: var(--cor-erro);
+    margin: 0.5rem 0;
+}
+
+/* Tabelas genéricas (usadas em calculadora e projeto) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+table th {
+    background-color: var(--cor-primaria);
+    color: white;
+}
+
 /* Footer */
 footer {
     background-color: #333;
@@ -265,12 +265,6 @@ footer {
 footer small {
     display: block;
     margin-top: 0.5rem;
-}
-
-/* Animações */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }
 
 /* Responsividade */
