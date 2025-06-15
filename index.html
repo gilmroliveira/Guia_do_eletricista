@@ -25,6 +25,7 @@
             <li><a href="projetos.html">Projetos</a></li>
             <li><a href="atualizacoes.html">Atualizações</a></li>
             <li><a href="projeto-online.html">Projeto Online</a></li>
+            <li><a href="projeto-imagem.html">Projeto com Imagem</a></li>
         </ul>
     </nav>
 
@@ -110,59 +111,6 @@
                     </div>
                     <div id="resultado" class="result-box" aria-live="assertive"></div>
                 </form>
-
-                <h3>Gerar Projeto Elétrico Completo</h3>
-                <form class="calculator" id="formProjetoCompleto" aria-label="Formulário de Projeto Elétrico Completo">
-                    <div class="form-group">
-                        <label for="tensaoPrincipalProjeto">Tensão Principal da Instalação (V):</label>
-                        <input type="number" id="tensaoPrincipalProjeto" min="0" value="220" step="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="numComodos">Número de Cômodos/Áreas:</label>
-                        <input type="number" id="numComodos" min="1" step="1" value="1" required onchange="gerarCamposComodos()">
-                    </div>
-                    <button type="button" class="btn btn-add" onclick="addComodoField()">+ Adicionar Cômodo</button>
-                    <div id="containerComodos" class="comodos-container"></div>
-                    <div class="button-group">
-                        <button type="button" class="btn btn-primary" onclick="calcularDimensionamentoCompleto()">Gerar Projeto Elétrico</button>
-                        <button type="button" class="btn btn-secondary" onclick="resetProjetoCompletoForm()">Limpar Projeto</button>
-                    </div>
-                    <div id="resultadoCompleto" class="result-box" aria-live="assertive"></div>
-                </form>
-
-                <h3>Roseta de Cálculos</h3>
-                <div class="roseta form-container">
-                    <div class="form-group">
-                        <label for="tipoCalculo">Tipo de Cálculo:</label>
-                        <select id="tipoCalculo" onchange="updateRosetaLabels()">
-                            <option value="corrente">Corrente (A)</option>
-                            <option value="potencia">Potência (W)</option>
-                            <option value="secao">Seção do Cabo (mm²)</option>
-                            <option value="queda">Queda de Tensão (%)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="rosetaInput1" id="labelValor1">Potência (W):</label>
-                        <input type="number" id="rosetaInput1" min="0" step="0.1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="rosetaInput2" id="labelValor2">Tensão (V):</label>
-                        <input type="number" id="rosetaInput2" min="0" step="0.1" required>
-                    </div>
-                    <div class="button-group">
-                        <button type="button" class="btn btn-primary" onclick="calcularRoseta()">Calcular</button>
-                    </div>
-                    <div id="resultadoRoseta" class="result-box" aria-live="assertive"></div>
-                    <svg id="rosetaSvg" width="300" height="300" xmlns="http://www.w3.org/2000/svg" aria-labelledby="roseta-title">
-                        <title id="roseta-title">Diagrama da roseta de cálculos elétricos</title>
-                        <circle cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="2"/>
-                        <text x="140" y="50" font-size="12">Corrente</text>
-                        <text x="240" y="150" font-size="12">Potência</text>
-                        <text x="140" y="250" font-size="12">Seção</text>
-                        <text x="40" y="150" font-size="12">Queda</text>
-                        <circle cx="150" cy="150" r="10" fill="blue"/>
-                    </svg>
-                </div>
             </section>
         </div>
 
