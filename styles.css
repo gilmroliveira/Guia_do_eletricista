@@ -1,8 +1,7 @@
-/* Seu CSS existente (mantenha tudo que você já tem) */
 :root {
-    --cor-primaria: #0070f3;
+    --cor-primaria: #005bb5;
     --cor-secundaria: #f9f9f9;
-    --cor-texto: #333;
+    --cor-texto: #222;
     --fonte-principal: 'Arial', sans-serif;
 }
 
@@ -24,7 +23,7 @@ header {
     color: white;
     text-align: center;
     padding: 1rem;
-    position: relative; /* Adicionado para posicionamento do menu-toggle */
+    position: relative;
 }
 
 .menu-toggle {
@@ -37,7 +36,7 @@ header {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    z-index: 1000; /* Garante que o botão fique acima de outros elementos */
+    z-index: 1000;
 }
 
 nav ul {
@@ -56,8 +55,8 @@ nav ul a {
     color: white;
     text-decoration: none;
     font-size: 1.1rem;
-    padding: 0.5rem 0; /* Adicionado para melhorar a área clicável */
-    display: block; /* Para que o padding funcione em toda a área */
+    padding: 0.5rem 0;
+    display: block;
 }
 
 nav ul a[aria-current="page"] {
@@ -84,7 +83,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 1rem 0;
-    font-size: 0.95rem; /* Ajuste para melhor visualização em telas maiores */
+    font-size: 0.95rem;
 }
 
 table th, table td {
@@ -93,14 +92,13 @@ table th, table td {
     text-align: center;
 }
 
-.table-note { /* Estilo para a nota da tabela */
+.table-note {
     font-size: 0.85rem;
     color: #666;
     margin-top: -0.5rem;
     margin-bottom: 1rem;
     text-align: center;
 }
-
 
 .calculator, .roseta {
     background-color: white;
@@ -113,62 +111,65 @@ table th, table td {
 .calculator label, .roseta label {
     display: block;
     margin: 0.5rem 0 0.2rem;
-    font-weight: bold; /* Adicionado para destaque dos labels */
+    font-weight: bold;
 }
 
 .calculator input, .calculator select, .roseta input, .roseta select {
     width: 100%;
-    padding: 0.6rem; /* Aumentado um pouco o padding */
-    margin-bottom: 0.8rem; /* Aumentado a margem para espaçamento */
+    padding: 0.6rem;
+    margin-bottom: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 1rem; /* Padroniza o tamanho da fonte */
+    font-size: 1rem;
 }
 
-.calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn, .add-comodo-btn { /* Adicionados os novos botões */
+.calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn, .add-comodo-btn {
     background-color: var(--cor-primaria);
     color: white;
     border: none;
-    padding: 0.7rem 1.2rem; /* Aumentado padding para melhor clique */
-    margin: 0.5rem 0.2rem 0.5rem 0; /* Ajuste para espaçamento entre botões */
+    padding: 0.7rem 1.2rem;
+    margin: 0.5rem 0.2rem 0.5rem 0;
     cursor: pointer;
     border-radius: 4px;
-    font-size: 1rem; /* Padroniza o tamanho da fonte */
-    transition: background-color 0.3s ease; /* Efeito de transição ao hover */
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
 }
 
 .calculator button:hover, .roseta button:hover, .add-tue-btn:hover, .remove-tue-btn:hover, .remove-comodo-btn:hover, .add-comodo-btn:hover {
-    background-color: #005bb5; /* Escurece a cor no hover */
+    background-color: #004494;
 }
 
-/* Estilos específicos para os botões de adicionar/remover dinâmicos */
-.add-tue-btn, .add-comodo-btn { /* Botões de adicionar */
-    background-color: #28a745; /* Verde para adicionar */
+.add-tue-btn, .add-comodo-btn {
+    background-color: #28a745;
 }
+
 .add-tue-btn:hover, .add-comodo-btn:hover {
     background-color: #218838;
 }
-.remove-tue-btn, .remove-comodo-btn { /* Botões de remover */
-    background-color: #dc3545; /* Vermelho para remover */
-    margin-left: 0.5rem; /* Separar do botão de adicionar */
+
+.remove-tue-btn, .remove-comodo-btn {
+    background-color: #dc3545;
+    margin-left: 0.5rem;
 }
+
 .remove-tue-btn:hover, .remove-comodo-btn:hover {
     background-color: #c82333;
 }
-
 
 .roseta svg {
     display: block;
     margin: 1rem auto;
     max-width: 100%;
-    height: auto; /* Garante que o SVG seja responsivo */
+    height: auto;
 }
 
 .error {
     color: red;
     font-size: 0.9rem;
-    margin-top: -0.5rem; /* Ajusta a margem para ficar mais próximo do input */
+    margin-top: -0.5rem;
     margin-bottom: 0.5rem;
+    display: block;
+    animation: fadeIn 0.3s ease-in;
 }
 
 .tabs {
@@ -178,10 +179,10 @@ table th, table td {
 .tab-button {
     background-color: #f1f1f1;
     border: 1px solid #ddd;
-    padding: 0.7rem 1.2rem; /* Aumentado padding */
+    padding: 0.7rem 1.2rem;
     cursor: pointer;
     margin-right: 0.2rem;
-    border-radius: 4px 4px 0 0; /* Arredonda apenas os cantos superiores */
+    border-radius: 4px 4px 0 0;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -193,11 +194,12 @@ table th, table td {
 
 .tab-content {
     display: none;
-    padding: 1.5rem; /* Aumentado padding */
+    padding: 1.5rem;
     border: 1px solid #ddd;
-    border-top: none; /* Remove a borda superior para se unir ao botão ativo */
+    border-top: none;
     background-color: white;
-    border-radius: 0 0 8px 8px; /* Arredonda apenas os cantos inferiores */
+    border-radius: 0 0 8px 8px;
+    animation: fadeIn 0.3s ease-in;
 }
 
 .tab-content:not([aria-hidden="true"]) {
@@ -206,23 +208,25 @@ table th, table td {
 
 aside {
     background-color: #f1f1f1;
-    padding: 1.5rem; /* Aumentado padding */
+    padding: 1.5rem;
     margin: 2rem;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra mais suave */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
+
 aside h3 {
     color: var(--cor-primaria);
     margin-bottom: 0.8rem;
 }
+
 aside ul {
     list-style: disc inside;
     padding-left: 1rem;
 }
+
 aside li {
     margin-bottom: 0.5rem;
 }
-
 
 footer {
     background-color: #333;
@@ -233,7 +237,6 @@ footer {
     font-size: 0.9rem;
 }
 
-/* Novos estilos para os campos de cômodos dinâmicos */
 #containerComodos {
     border: 1px dashed #ccc;
     padding: 1rem;
@@ -250,6 +253,7 @@ footer {
     background-color: #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
+
 .comodo-item h4 {
     color: var(--cor-primaria);
     margin-top: 0;
@@ -263,6 +267,7 @@ footer {
     padding-top: 1rem;
     border-top: 1px dashed #ddd;
 }
+
 .tue-container h5 {
     margin-top: 0;
     margin-bottom: 0.8rem;
@@ -295,89 +300,211 @@ footer {
 
 .circuit-details ul {
     padding: 1rem;
-    list-style: none; /* Remove bullet points */
+    list-style: none;
 }
+
 .circuit-details li {
     margin-bottom: 0.3rem;
 }
 
-/* Media Queries para Responsividade */
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* Video Grid */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.video-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.video-card a {
+    text-decoration: none;
+    color: var(--cor-texto);
+    display: block;
+}
+
+.video-placeholder {
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+}
+
+.video-card h4 {
+    margin: 0.8rem;
+    font-size: 1.1rem;
+    color: var(--cor-primaria);
+}
+
+.video-card p {
+    margin: 0 0.8rem 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Tooltips */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 1000;
+}
+
+[data-tooltip]:hover:after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Result Box */
+.result-box {
+    background-color: #e9f7ff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border: 1px solid var(--cor-primaria);
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Back to Top */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: opacity 0.3s ease;
+}
+
+.back-to-top.show {
+    display: block;
+}
+
+/* Media Queries */
 @media (max-width: 768px) {
     .menu-toggle {
         display: block;
     }
     nav ul {
-        display: none; /* Esconde o menu por padrão */
+        display: none;
         flex-direction: column;
         background-color: #333;
-        position: absolute; /* Para que o menu cubra a área de conteúdo */
-        top: 60px; /* Abaixo do header */
+        position: absolute;
+        top: 60px;
         left: 0;
         width: 100%;
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         z-index: 999;
     }
-    nav ul.active { /* Mostra o menu quando a classe 'active' é adicionada pelo JS */
+    nav ul.active {
         display: flex;
+        animation: slideIn 0.3s ease-out;
     }
     nav ul li {
         margin: 0.5rem 0;
         text-align: center;
     }
     nav ul a {
-        padding: 0.8rem 0; /* Aumenta a área de toque */
+        padding: 0.8rem 0;
     }
     .content {
         padding: 1rem;
     }
     table {
-        font-size: 0.8rem; /* Diminui a fonte da tabela em telas menores */
-        display: block; /* Permite scroll horizontal se necessário */
-        overflow-x: auto; /* Adiciona scroll horizontal */
-        white-space: nowrap; /* Impede que o texto quebre */
-        border: none; /* Remove a borda da tabela principal */
+        font-size: 0.8rem;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        border: none;
     }
     table thead {
-        display: none; /* Esconde o cabeçalho original em telas pequenas */
+        display: none;
     }
     table tbody {
         display: block;
         width: 100%;
     }
     table tr {
-        display: block; /* Empilha os elementos da tabela para melhor visualização */
-        margin-bottom: 0.8rem; /* Espaço entre as linhas empilhadas */
-        border: 1px solid #ddd; /* Adiciona borda para separar as linhas */
+        display: block;
+        margin-bottom: 0.8rem;
+        border: 1px solid #ddd;
         border-radius: 4px;
     }
     table th, table td {
-        text-align: left; /* Alinha o texto à esquerda */
-        display: block; /* Cada célula ocupa uma linha */
+        text-align: left;
+        display: block;
         padding: 0.5rem 1rem;
-        border: none; /* Remove bordas individuais das células */
-        position: relative; /* Para posicionar o data-label */
+        border: none;
+        position: relative;
     }
-    table td:before { /* Adiciona o label do cabeçalho como pseudo-elemento */
+    table td:before {
         content: attr(data-label);
         font-weight: bold;
         display: inline-block;
-        width: 120px; /* Largura fixa para o label */
-        min-width: 120px; /* Garante largura mínima */
+        width: 120px;
+        min-width: 120px;
         margin-right: 1rem;
-        color: var(--cor-primaria); /* Cor para o label */
+        color: var(--cor-primaria);
     }
     .roseta svg {
         width: 100%;
         height: auto;
     }
-
-    /* Ajustes para os formulários em telas menores */
     .calculator input, .calculator select, .roseta input, .roseta select {
         font-size: 0.95rem;
     }
     .calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn, .add-comodo-btn {
-        width: 100%; /* Botões ocupam a largura total */
-        margin: 0.5rem 0; /* Mais espaçamento vertical */
+        width: 100%;
+        margin: 0.5rem 0;
     }
     .comodo-item, .tue-item {
         padding: 0.8rem;
@@ -385,12 +512,11 @@ footer {
     }
 }
 
-/* Correção para o bug do menu-toggle em desktops */
 @media (min-width: 769px) {
     .menu-toggle {
-        display: none; /* Garante que o botão esteja escondido em telas maiores */
+        display: none;
     }
-    nav ul.active { /* Remove a classe active que só é usada para mobile */
+    nav ul.active {
         display: flex;
     }
 }
