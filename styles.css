@@ -1,8 +1,8 @@
-/* styles.css - Versão corrigida e otimizada */
+/* styles.css - Versão revisada e corrigida */
 
 /* Variáveis globais */
 :root {
-    --cor-primaria: #005bb5; /* Azul escuro para contraste */
+    --cor-primaria: #005bb5; /* Azul escuro */
     --cor-secundaria: #f9f9f9; /* Fundo claro */
     --cor-texto: #222; /* Texto escuro */
     --fonte-principal: 'Arial', sans-serif;
@@ -41,7 +41,6 @@ header {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    z-index: 1000;
 }
 
 /* Navegação */
@@ -65,7 +64,6 @@ nav ul a {
     text-decoration: none;
     font-size: 1.1rem;
     padding: 0.5rem;
-    display: block;
     transition: color 0.2s ease;
 }
 
@@ -94,34 +92,7 @@ h2, h3, h4 {
     margin-bottom: 1rem;
 }
 
-/* Tabelas */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1rem 0;
-    font-size: 0.95rem;
-}
-
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    text-align: center;
-}
-
-table th {
-    background-color: var(--cor-primaria);
-    color: white;
-}
-
-.table-note {
-    font-size: 0.85rem;
-    color: #666;
-    margin-top: -0.5rem;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-/* Formulários (calculadora, roseta, projeto online) */
+/* Formulários */
 .calculator, .roseta, #formProjetoOnline {
     background-color: white;
     padding: 1.5rem;
@@ -143,12 +114,10 @@ table th {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .calculator input:focus, .calculator select:focus, .roseta input:focus, .roseta select:focus, #formProjetoOnline input:focus, #formProjetoOnline select:focus {
     border-color: var(--cor-primaria);
-    box-shadow: 0 0 5px rgba(0,112,243,0.3);
     outline: none;
 }
 
@@ -162,111 +131,91 @@ table th {
     cursor: pointer;
     border-radius: 4px;
     font-size: 1rem;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.calculator button:hover, .roseta button:hover, .add-tue-btn:hover, .remove-tue-btn:hover, .remove-comodo-btn:hover, .add-comodo-btn:hover {
-    background-color: #004494;
-    transform: translateY(-2px);
 }
 
 .add-tue-btn, .add-comodo-btn {
     background-color: #28a745;
 }
 
-.add-tue-btn:hover, .add-comodo-btn:hover {
-    background-color: #218838;
-}
-
 .remove-tue-btn, .remove-comodo-btn {
     background-color: #dc3545;
 }
 
-.remove-tue-btn:hover, .remove-comodo-btn:hover {
-    background-color: #c82333;
-}
-
-/* Grupo de botões */
 .button-group {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
 }
 
-/* SVG da roseta */
-.roseta svg {
-    display: block;
-    margin: 1rem auto;
-    max-width: 100%;
-    height: auto;
-}
-
-/* Mensagens de erro */
-.error {
-    color: red;
-    font-size: 0.9rem;
-    margin-top: -0.5rem;
-    margin-bottom: 0.5rem;
-    display: block;
-    animation: fadeIn 0.3s ease-in;
-}
-
-/* Abas */
-.tabs {
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin: 1rem 0;
 }
 
-.tab-button {
-    background-color: #f1f1f1;
+table th, table td {
     border: 1px solid #ddd;
-    padding: 0.7rem 1.2rem;
-    cursor: pointer;
-    margin-right: 0.2rem;
-    border-radius: 4px 4px 0 0;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    padding: 0.5rem;
+    text-align: left;
 }
 
-.tab-button[aria-selected="true"] {
+table th {
     background-color: var(--cor-primaria);
     color: white;
-    border-color: var(--cor-primaria);
 }
 
-.tab-content {
-    display: none;
-    padding: 1.5rem;
-    border: 1px solid #ddd;
-    border-top: none;
+/* Estilos específicos para projeto-online.html */
+#formProjetoOnline .comodo-item {
+    border: 1px solid #eee;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
     background-color: white;
-    border-radius: 0 0 8px 8px;
-    animation: fadeIn 0.3s ease-in;
+    transition: transform 0.2s ease;
 }
 
-.tab-content:not([aria-hidden="true"]) {
-    display: block;
+#formProjetoOnline .comodo-item:hover {
+    transform: translateY(-3px);
 }
 
-/* Aside */
-aside {
-    background-color: #f1f1f1;
-    padding: 1.5rem;
-    margin: 2rem 0;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+#formProjetoOnline .tue-container {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #ddd;
 }
 
-aside h3 {
-    color: var(--cor-primaria);
+#formProjetoOnline .tue-item {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 0.8rem;
     margin-bottom: 0.8rem;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
 }
 
-aside ul {
-    list-style: disc inside;
-    padding-left: 1rem;
+#formProjetoOnline .tue-item input {
+    flex: 1;
+    min-width: 150px;
 }
 
-aside li {
-    margin-bottom: 0.5rem;
+#formProjetoOnline .tue-item button {
+    flex-shrink: 0;
+}
+
+#formProjetoOnline .result-box {
+    background-color: #e9f7ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border: 1px solid var(--cor-primaria);
+}
+
+#formProjetoOnline .result-box table {
+    margin: 1rem 0;
 }
 
 /* Footer */
@@ -285,189 +234,10 @@ footer small {
     font-size: 0.85rem;
 }
 
-/* Estilos específicos para projeto-online.html */
-#containerComodos {
-    border: 1px dashed #ccc;
-    padding: 1rem;
-    margin-top: 1rem;
-    border-radius: 8px;
-    background-color: #fdfdfd;
-}
-
-.comodo-item {
-    border: 1px solid #eee;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 6px;
-    background-color: white;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.comodo-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.tue-container {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px dashed #ddd;
-}
-
-.tue-item {
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
-    padding: 0.8rem;
-    margin-bottom: 0.8rem;
-    border-radius: 4px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-}
-
-.tue-item input {
-    flex: 1;
-    min-width: 150px;
-}
-
-.tue-item button {
-    flex-shrink: 0;
-}
-
-/* Resultado do projeto online */
-.result-box {
-    background-color: #e9f7ff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-top: 1rem;
-    border: 1px solid var(--cor-primaria);
-    animation: fadeIn 0.3s ease-in;
-}
-
-.result-box table {
-    margin: 1rem 0;
-}
-
-.result-box details {
-    margin-bottom: 0.5rem;
-}
-
-.result-box summary {
-    cursor: pointer;
-    padding: 0.5rem;
-    background-color: #e9e9e9;
-    border-radius: 4px;
-}
-
-.result-box ul {
-    list-style: none;
-    padding: 0.5rem 1rem;
-}
-
-/* Grade de vídeos (atualizacoes.html) */
-.video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
-}
-
-.video-card {
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.video-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.video-card a {
-    text-decoration: none;
-    color: var(--cor-texto);
-    display: block;
-}
-
-.video-placeholder {
-    height: 150px;
-    background-size: cover;
-    background-position: center;
-}
-
-.video-card h4 {
-    margin: 0.8rem;
-    font-size: 1.1rem;
-    color: var(--cor-primaria);
-}
-
-.video-card p {
-    margin: 0 0.8rem 1rem;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-/* Tooltips */
-[data-tooltip] {
-    position: relative;
-    cursor: help;
-}
-
-[data-tooltip]::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: white;
-    padding: 0.5rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    z-index: 1000;
-}
-
-[data-tooltip]:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Botão voltar ao topo */
-.back-to-top {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background-color: var(--cor-primaria);
-    color: white;
-    border: none;
-    padding: 0.8rem;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: opacity 0.3s ease;
-}
-
-.back-to-top.show {
-    display: block;
-}
-
 /* Animações */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
 }
 
 /* Responsividade */
@@ -484,13 +254,11 @@ footer small {
         left: 0;
         width: 100%;
         background-color: #333;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         z-index: 999;
     }
 
     nav ul.active {
         display: flex;
-        animation: slideIn 0.3s ease-out;
     }
 
     nav ul li {
@@ -503,65 +271,25 @@ footer small {
     }
 
     table {
-        font-size: 0.8rem;
         display: block;
         overflow-x: auto;
-        white-space: nowrap;
     }
 
-    table thead {
-        display: none;
-    }
-
-    table tbody {
-        display: block;
-    }
-
-    table tr {
-        display: block;
-        margin-bottom: 0.8rem;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-
-    table td {
-        display: block;
-        padding: 0.5rem 1rem;
-        text-align: left;
-        position: relative;
-    }
-
-    table td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        display: inline-block;
-        width: 120px;
-        min-width: 120px;
-        margin-right: 1rem;
-        color: var(--cor-primaria);
-    }
-
-    .comodo-item, .tue-item {
+    #formProjetoOnline .comodo-item, #formProjetoOnline .tue-item {
         padding: 0.8rem;
     }
 
-    .tue-item {
+    #formProjetoOnline .tue-item {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .tue-item input, .tue-item button {
+    #formProjetoOnline .tue-item input, #formProjetoOnline .tue-item button {
         width: 100%;
     }
 
     .calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn, .add-comodo-btn {
         width: 100%;
         margin: 0.5rem 0;
-    }
-}
-
-@media (min-width: 769px) {
-    nav ul {
-        display: flex !important;
     }
 }
