@@ -1,93 +1,44 @@
+<!-- projetos.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Projetos elétricos, incluindo levantamento de carga e instalação de chuveiros.">
+    <meta name="description" content="Projetos de instalações elétricas para inspiração e aprendizado.">
     <title>Projetos - Guia do Eletricista</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header role="banner">
-        <h1>Projetos Elétricos</h1>
+        <h1>Projetos</h1>
         <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
     </header>
 
     <nav role="navigation" aria-label="Menu principal" id="main-nav">
         <ul>
-            <li><a href="index.html">Início</a></li>
-            <li><a href="index.html#normas">Normas</a></li>
+            <li><a href="index.html">Início</a></a>
+            <li><a href="index.html#normas">Normas</a></a>
             <li><a href="index.html#calculadora">Calculadora</a></li>
-            <li><a href="tutoriais.html">Tutoriais</a></li>
-            <li><a href="projetos.html" aria-current="page">Projetos</a></li>
+            <li><a href="tutoriais.html">Tutoriais</a></a>
+            </li><li><a href="projetos.html" aria-current="page">Projetos</a></li>
             <li><a href="atualizacoes.html">Atualizações</a></li>
+            <li><a href="projeto-online.html">Projeto Online</a></li>
         </ul>
     </nav>
 
     <main role="main">
         <div class="content">
-            <section id="levantamento" aria-labelledby="levantamento-heading">
-                <h2 id="levantamento-heading">Levantamento de Carga Residencial</h2>
-                <form class="calculator" aria-label="Formulário de levantamento de carga">
-                    <label for="potIlum">Potência de Iluminação (W):</label>
-                    <input type="number" id="potIlum" min="0" step="1" required>
-                    <label for="potTUG">Potência TUG (W):</label>
-                    <input type="number" id="potTUG" min="0" step="1" required>
-                    <label for="potTUE">Potência TUE (W):</label>
-                    <input type="number" id="potTUE" min="0" step="1" required>
-                    <button type="button" onclick="calcularLevantamento()">Calcular</button>
-                    <button type="button" onclick="resetForm()">Limpar</button>
-                    <div id="resultadoCarga" aria-live="assertive"></div>
-                </form>
-            </section>
-
-            <section id="padrao-entrada" aria-labelledby="padrao-entrada-heading">
-                <h2 id="padrao-entrada-heading">Padrão de Entrada Enel (Nordeste)</h2>
-                <ol>
-                    <li>Levante a potência total da residência.</li>
-                    <li>Consulte a Enel para tipo de fornecimento.</li>
-                    <li>Dimensionar disjuntor geral (ex.: 40A para 6.67 kW a 220V).</li>
-                </ol>
-            </section>
-
-            <section id="chuveiro" aria-labelledby="chuveiro-heading">
-                <h2 id="chuveiro-heading">Instalação de Chuveiro</h2>
-                <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg" aria-labelledby="chuveiro-diagram">
-                    <title id="chuveiro-diagram">Diagrama de instalação de chuveiro</title>
-                    <rect x="50" y="50" width="200" height="100" fill="none" stroke="black"/>
-                    <circle cx="70" cy="100" r="10" fill="green" stroke="black"/>
-                    <line x1="80" y1="100" x2="120" y2="100" stroke="black"/>
-                    <rect x="130" y="80" width="40" height="40" fill="blue" stroke="black"/>
-                    <line x1="170" y1="100" x2="210" y2="100" stroke="black"/>
-                    <circle cx="230" cy="100" r="15" fill="red" stroke="black"/>
-                    <text x="60" y="90" font-size="12">Fonte</text>
-                    <text x="130" y="70" font-size="12">Disjuntor</text>
-                    <text x="220" y="90" font-size="12">Chuveiro</text>
-                </svg>
-                <p><em>Legenda:</em> Círculo verde = Fonte, Retângulo azul = Disjuntor, Círculo vermelho = Chuveiro.</p>
-                <h3>Passo a Passo</h3>
-                <ol>
-                    <li>Verifique a potência (ex.: 5400W a 220V).</li>
-                    <li>Calcule a corrente: I = P / V ≈ 24.5A.</li>
-                    <li>Escolha a bitola: 6 mm² (NBR 5410).</li>
-                    <li>Instale disjuntor de 25A ou 32A.</li>
-                    <li>Conecte fase, neutro e terra.</li>
-                </ol>
-            </section>
-
-            <section id="automacao" aria-labelledby="automacao-heading">
-                <h2 id="automacao-heading">Automação</h2>
-                <p>Tecnologias em alta:</p>
-                <ul>
-                    <li>Controle de iluminação</li>
-                    <li>Portões automáticos</li>
-                </ul>
+            <section id="projetos" aria-labelledby="projeto-heading">
+                <h2 id="projetos-heading">Projetos</h2>
+                <p>Confira exemplos de instalações elétricas para diferentes tipos de residências.</p>
+                <!-- Conteúdo (ex.: galeria de projetos, descrições) -->
             </section>
         </div>
     </main>
 
     <footer role="contentinfo">
-        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-14">14/06/2025</time></p>
+        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-15">15/06/2025</time></p>
+        <p><small>Os cálculos fornecidos são baseados na NBR 5410 e destinam-se a fins educacionais. Consulte um engenheiro eletricista para projetos reais.</small></p>
     </footer>
 
     <script src="script.js"></script>
