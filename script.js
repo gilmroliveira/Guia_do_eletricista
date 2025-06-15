@@ -1,19 +1,25 @@
-// script.js - Adições para projeto-online.html (adicionar ao final do arquivo)
+// script.js - Script completo e integrado para projeto-online.html
 
-// Contadores isolados para projeto-online
+// Estado global para o projeto online
 const projetoOnline = {
-    comodoCount: 1,
-    tueCounts: [0]
+    comodoCount: 0,
+    tueCounts: []
 };
 
-// Inicializar primeiro cômodo
+// Inicializar o formulário ao carregar a página
 function initProjetoOnline() {
-    resetProjetoOnlineForm();
+    projetoOnline.comodoCount = 0;
+    projetoOnline.tueCounts = [];
+    addComodoField(); // Cria o primeiro cômodo
+    document.getElementById('formProjetoOnline').reset();
+    document.getElementById('resultadoProjetoOnline').innerHTML = '';
 }
 
 // Adicionar campo de TUE
 function addTUEField(comodoIndex) {
     const tueFields = document.getElementById(`tueFields_${comodoIndex}`);
+    if (!tueFields) return;
+
     const tueIndex = projetoOnline.tueCounts[comodoIndex] || 0;
     projetoOnline.tueCounts[comodoIndex] = tueIndex + 1;
 
@@ -35,13 +41,17 @@ function addTUEField(comodoIndex) {
 
 // Remover campo de TUE
 function removeTUEField(comodoIndex, button) {
-    button.parentElement.remove();
-    projetoOnline.tueCounts[comodoIndex]--;
+    if (button.parentElement) {
+        button.parentElement.remove();
+        projetoOnline.tueCounts[comodoIndex]--;
+    }
 }
 
 // Adicionar cômodo
 function addComodoField() {
     const containerComodos = document.getElementById('containerComodos');
+    if (!containerComodos) return;
+
     const comodoItem = document.createElement('div');
     comodoItem.className = 'comodo-item';
     comodoItem.dataset.comodoId = projetoOnline.comodoCount;
@@ -86,29 +96,45 @@ function addComodoField() {
 
 // Remover cômodo
 function removeComodoField(button) {
-    button.parentElement.remove();
-    projetoOnline.comodoCount--;
+    if (button.parentElement) {
+        button.parentElement.remove();
+        projetoOnline.comodoCount--;
+        // Ajustar tueCounts se necessário (não é crítico aqui, mas pode ser otimizado)
+    }
 }
 
 // Calcular projeto
 function calcularProjetoOnline() {
-    const tensaoPrincipal = parseFloat(document.getElementById('tensaoPrincipalProjeto').value);
+    const tensaoPrincipal = parseFloat(document.getElementById('tensaoPrincipalProjeto')?.value);
     const comodos = [];
+    const resultadoDiv = document.getElementById('resultadoProjetoOnline');
+
+    // Validação inicial
+    if (!tensaoPrincipal || isNaN(tensaoPrincipal)) {
+        resultadoDiv.innerHTML = '<p class="error">Selecione uma tensão principal válida.</p>';
+        return;
+    }
 
     for (let i = 0; i < projetoOnline.comodoCount; i++) {
         const nome = document.getElementById(`nomeComodo_${i}`)?.value;
         if (!nome) continue;
 
-        const tipo = document.getElementById(`tipoComodo_${i}`).value;
-        const area = parseFloat(document.getElementById(`areaComodo_${i}`).value);
-        const perimetro = parseFloat(document.getElementById(`perimetroComodo_${i}`).value);
+        const tipo = document.getElementById(`tipoComodo_${i}`)?.value;
+        const area = parseFloat(document.getElementById(`areaComodo_${i}`)?.value);
+        const perimetro = parseFloat(document.getElementById(`perimetroComodo_${i}`)?.value);
         const tueFields = document.getElementById(`tueFields_${i}`)?.children || [];
         const tue = [];
+
+        // Validação de cômodo
+        if (isNaN(area) || isNaN(perimetro) || area <= 0 || perimetro <= 0) {
+            resultadoDiv.innerHTML = '<p class="error">Verifique os valores de área e perímetro do cômodo.</p>';
+            return;
+        }
 
         for (let j = 0; j < tueFields.length; j++) {
             const tueNome = document.getElementById(`tueNome_${i}_${j}`)?.value;
             const tuePotencia = parseFloat(document.getElementById(`tuePotencia_${i}_${j}`)?.value);
-            if (tueNome && !isNaN(tuePotencia)) {
+            if (tueNome && !isNaN(tuePotencia) && tuePotencia > 0) {
                 tue.push({ nome: tueNome, potencia: tuePotencia });
             }
         }
@@ -116,22 +142,31 @@ function calcularProjetoOnline() {
         comodos.push({ nome, tipo, area, perimetro, tue });
     }
 
-    const resultadoDiv = document.getElementById('resultadoProjetoOnline');
-    if (comodos.length === 0 || isNaN(tensaoPrincipal)) {
-        resultadoDiv.innerHTML = '<p class="error">Preencha todos os campos obrigatórios.</p>';
+    if (comodos.length === 0) {
+        resultadoDiv.innerHTML = '<p class="error">Adicione pelo menos um cômodo.</p>';
         return;
     }
+
+    // Depuração
+    console.log('Projeto enviado para dimensionamento:', { tensaoPrincipal, comodos });
 
     try {
         const projeto = { tensaoPrincipal, comodos };
         const relatorio = DimensionadorEletrico.dimensionar(projeto);
 
+        // Depuração do relatorio recebido
+        console.log('Relatório retornado:', relatorio);
+
+        if (!relatorio || typeof relatorio !== 'object') {
+            throw new Error('Relatório inválido retornado por DimensionadorEletrico');
+        }
+
         let html = `
             <h3>Relatório do Projeto Elétrico</h3>
-            <p><strong>Tensão Principal:</strong> ${relatorio.tensaoPrincipal} V</p>
-            <p><strong>Tipo de Sistema:</strong> ${relatorio.tipoSistemaNecessario}</p>
-            <p><strong>Demanda Total:</strong> ${(relatorio.demandaTotalVA / 1000).toFixed(2)} kVA</p>
-            <p><strong>Corrente Total:</strong> ${relatorio.correnteTotalA.toFixed(2)} A</p>
+            <p><strong>Tensão Principal:</strong> ${relatorio.tensaoPrincipal || tensaoPrincipal} V</p>
+            <p><strong>Tipo de Sistema:</strong> ${relatorio.tipoSistemaNecessario || 'Não especificado'}</p>
+            <p><strong>Demanda Total:</strong> ${(relatorio.demandaTotalVA / 1000 || 0).toFixed(2)} kVA</p>
+            <p><strong>Corrente Total:</strong> ${relatorio.correnteTotalA?.toFixed(2) || 'N/A'} A</p>
             <h4>Circuitos:</h4>
             <table aria-label="Resumo dos circuitos">
                 <thead>
@@ -148,81 +183,58 @@ function calcularProjetoOnline() {
                 </thead>
                 <tbody>
         `;
-        relatorio.circuitos.forEach(circuito => {
-            html += `
-                <tr>
-                    <td>${circuito.nome}</td>
-                    <td>${circuito.tipo}</td>
-                    <td>${circuito.potenciaVA}</td>
-                    <td>${circuito.correnteA.toFixed(2)}</td>
-                    <td>${circuito.bitolaFio}</td>
-                    <td>${circuito.disjuntorRecomendadoA}</td>
-                    <td>${circuito.eletrodutoMm || 'Consultar'}</td>
-                    <td>${circuito.quedaTensaoPercentual.toFixed(2)}</td>
-                </tr>
-            `;
-        });
+
+        if (Array.isArray(relatorio.circuitos)) {
+            relatorio.circuitos.forEach(circuito => {
+                html += `
+                    <tr>
+                        <td>${circuito.nome || 'N/A'}</td>
+                        <td>${circuito.tipo || 'N/A'}</td>
+                        <td>${circuito.potenciaVA || 0}</td>
+                        <td>${(circuito.correnteA || 0).toFixed(2)}</td>
+                        <td>${circuito.bitolaFio || 'N/A'}</td>
+                        <td>${circuito.disjuntorRecomendadoA || 'N/A'}</td>
+                        <td>${circuito.eletrodutoMm || 'Consultar'}</td>
+                        <td>${(circuito.quedaTensaoPercentual || 0).toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+        } else {
+            html += '<tr><td colspan="8">Nenhum circuito calculado.</td></tr>';
+        }
+
         html += `
                 </tbody>
             </table>
             <h4>Recomendações Gerais:</h4>
             <ul>
-                <li><strong>Bitola do Alimentador:</strong> ${relatorio.recomendacoesFioGeral.bitolaMm2} mm² (${relatorio.recomendacoesFioGeral.tipoFio})</li>
-                <li><strong>Eletroduto Principal:</strong> ${relatorio.recomendacoesEletrodutoGeral.diametroMm} mm</li>
+                <li><strong>Bitola do Alimentador:</strong> ${relatorio.recomendacoesFioGeral?.bitolaMm2 || 'N/A'} mm² (${relatorio.recomendacoesFioGeral?.tipoFio || 'N/A'})</li>
+                <li><strong>Eletroduto Principal:</strong> ${relatorio.recomendacoesEletrodutoGeral?.diametroMm || 'N/A'} mm</li>
             </ul>
-            ${relatorio.automacaoRecomendada && relatorio.automacaoRecomendada.observacoes?.length > 0 ? `<p><strong>Automação Recomendada:</strong> ${relatorio.automacaoRecomendada.observacoes.join(' ')}</p>` : ''}
+            ${relatorio.automacaoRecomendada?.observacoes?.length > 0 ? `<p><strong>Automação Recomendada:</strong> ${relatorio.automacaoRecomendada.observacoes.join(' ')}</p>` : ''}
             <p class="error">Nota: Consulte um engenheiro eletricista para validar o projeto (NBR 5410).</p>
         `;
         resultadoDiv.innerHTML = html;
     } catch (error) {
         console.error('Erro ao calcular projeto:', error);
-        resultadoDiv.innerHTML = '<p class="error">Erro ao processar o projeto. Verifique os dados e tente novamente.</p>';
+        resultadoDiv.innerHTML = '<p class="error">Erro ao processar o projeto. Verifique os dados e tente novamente. Detalhes no console.</p>';
     }
 }
 
 // Resetar formulário
 function resetProjetoOnlineForm() {
-    projetoOnline.comodoCount = 1;
-    projetoOnline.tueCounts = [0];
+    projetoOnline.comodoCount = 0;
+    projetoOnline.tueCounts = [];
     const containerComodos = document.getElementById('containerComodos');
-    containerComodos.innerHTML = `
-        <div class="comodo-item" data-comodo-id="0">
-            <h3>Cômodo 1</h3>
-            <div class="form-group">
-                <label for="nomeComodo_0">Nome do Cômodo:</label>
-                <input type="text" id="nomeComodo_0" value="Sala" required placeholder="Ex.: Sala">
-            </div>
-            <div class="form-group">
-                <label for="tipoComodo_0">Tipo de Cômodo:</label>
-                <select id="tipoComodo_0" required>
-                    <option value="sala">Sala</option>
-                    <option value="quarto">Quarto</option>
-                    <option value="cozinha">Cozinha</option>
-                    <option value="banheiro">Banheiro</option>
-                    <option value="areaServico">Área de Serviço</option>
-                    <option value="circulacao">Corredor/Hall</option>
-                    <option value="garagem">Garagem</option>
-                    <option value="outro">Outro</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="areaComodo_0">Área (m²):</label>
-                <input type="number" id="areaComodo_0" min="1" step="0.1" value="15" required placeholder="Ex.: 15">
-            </div>
-            <div class="form-group">
-                <label for="perimetroComodo_0">Perímetro (m):</label>
-                <input type="number" id="perimetroComodo_0" min="1" step="0.1" value="15" required placeholder="Ex.: 15">
-            </div>
-            <div class="tue-container">
-                <h4>Tomadas de Uso Específico (TUEs):</h4>
-                <button type="button" class="btn btn-add" onclick="addTUEField(0)">+ Adicionar TUE</button>
-                <div id="tueFields_0"></div>
-            </div>
-        </div>
-    `;
-    document.getElementById('resultadoProjetoOnline').innerHTML = '';
-    document.getElementById('formProjetoOnline').reset();
+    if (containerComodos) {
+        containerComodos.innerHTML = '';
+        addComodoField(); // Recria o primeiro cômodo
+    }
+    const resultadoDiv = document.getElementById('resultadoProjetoOnline');
+    if (resultadoDiv) resultadoDiv.innerHTML = '';
+    const form = document.getElementById('formProjetoOnline');
+    if (form) form.reset();
 }
 
-// Inicializar ao carregar
+// Inicializar ao carregar a página
 document.addEventListener('DOMContentLoaded', initProjetoOnline);
