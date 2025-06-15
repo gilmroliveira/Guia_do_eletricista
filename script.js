@@ -352,3 +352,137 @@ if (typeof DimensionadorEletrico === 'undefined') {
         }
     };
 }
+// Adicionar ao final de script.js
+
+// Estado para projeto com imagem
+const ImageProjectState = {
+    annotations: [],
+    canvas: null,
+    context: null,
+    image: null,
+    isDrawing: false
+};
+
+// Funções para projeto com imagem
+function loadImage() {
+    const file = document.getElementById('plantaUpload').files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                ImageProjectState.image = img;
+                const canvas = document.getElementById('annotationCanvas');
+                const container = document.getElementById('canvasContainer');
+                canvas.width = container.offsetWidth;
+                canvas.height = img.height * (container.offsetWidth / img.width);
+                ImageProjectState.canvas = canvas;
+                ImageProjectState.context = canvas.getContext('2d');
+                document.getElementById('plantaImagem').src = e.target.result;
+                document.getElementById('plantaImagem').style.display = 'block';
+                redrawCanvas();
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function addAnnotation() {
+    if (ImageProjectState.canvas && ImageProjectState.image) {
+        const canvas = ImageProjectState.canvas;
+        const rect = canvas.getBoundingClientRect();
+        const x = (canvas.width / 2) - (rect.left + rect.right) / 2 + rect.width / 2;
+        const y = (canvas.height / 2) - (rect.top + rect.bottom) / 2 + rect.height / 2;
+        ImageProjectState.annotations.push({ x, y, type: 'ponto', label: 'Ponto de Luz' });
+        redrawCanvas();
+    }
+}
+
+function redrawCanvas() {
+    if (ImageProjectState.context && ImageProjectState.image) {
+        const ctx = ImageProjectState.context;
+        ctx.clearRect(0, 0, ImageProjectState.canvas.width, ImageProjectState.canvas.height);
+        ctx.drawImage(ImageProjectState.image, 0, 0, ImageProjectState.canvas.width, ImageProjectState.canvas.height);
+        ImageProjectState.annotations.forEach((ann, index) => {
+            ctx.beginPath();
+            ctx.arc(ann.x, ann.y, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
+            ctx.fill();
+            ctx.fillStyle = 'black';
+            ctx.fillText(ann.label, ann.x + 10, ann.y - 5);
+        });
+    }
+}
+
+function generateImageProject() {
+    const tensao = parseFloat(document.getElementById('tensaoImagem').value);
+    const resultado = document.getElementById('resultadoImagem');
+
+    if (!tensao || isNaN(tensao)) {
+        resultado.innerHTML = '<p class="error">Selecione uma tensão principal válida.</p>';
+        return;
+    }
+
+    if (!ImageProjectState.annotations.length) {
+        resultado.innerHTML = '<p class="error">Adicione pelo menos uma anotação.</p>';
+        return;
+    }
+
+    const totalPotencia = 0; // Placeholder, a ser calculado com base nas anotações
+    const correnteTotal = totalPotencia / tensao;
+
+    resultado.innerHTML = `
+        <h3>Relatório do Projeto com Imagem</h3>
+        <p><strong>Tensão Principal:</strong> ${tensao} V</p>
+        <p><strong>Número de Anotações:</strong> ${ImageProjectState.annotations.length}</p>
+        <p><strong>Corrente Total (Estimada):</strong> ${correnteTotal.toFixed(2)} A</p>
+        <p class="error">Nota: Consulte um engenheiro eletricista para validação (NBR 5410).</p>
+    `;
+}
+
+function resetImageForm() {
+    if (document.getElementById('projeto-imagem')) {
+        document.getElementById('plantaUpload').value = '';
+        document.getElementById('tensaoImagem').value = '';
+        document.getElementById('plantaImagem').style.display = 'none';
+        document.getElementById('annotationCanvas').width = 0;
+        document.getElementById('annotationCanvas').height = 0;
+        ImageProjectState.annotations = [];
+        document.getElementById('resultadoImagem').innerHTML = '';
+    }
+}
+
+// Interatividade (drag and drop)
+document.getElementById('annotationCanvas')?.addEventListener('mousedown', (e) => {
+    const rect = ImageProjectState.canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    ImageProjectState.annotations.forEach((ann, index) => {
+        if (Math.hypot(x - ann.x, y - ann.y) < 10) {
+            ImageProjectState.isDrawing = true;
+            ImageProjectState.draggingIndex = index;
+        }
+    });
+});
+
+document.getElementById('annotationCanvas')?.addEventListener('mousemove', (e) => {
+    if (ImageProjectState.isDrawing && ImageProjectState.draggingIndex !== undefined) {
+        const rect = ImageProjectState.canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        ImageProjectState.annotations[ImageProjectState.draggingIndex].x = x;
+        ImageProjectState.annotations[ImageProjectState.draggingIndex].y = y;
+        redrawCanvas();
+    }
+});
+
+document.getElementById('annotationCanvas')?.addEventListener('mouseup', () => {
+    ImageProjectState.isDrawing = false;
+    ImageProjectState.draggingIndex = undefined;
+});
+
+document.getElementById('annotationCanvas')?.addEventListener('mouseleave', () => {
+    ImageProjectState.isDrawing = false;
+    ImageProjectState.draggingIndex = undefined;
+});
