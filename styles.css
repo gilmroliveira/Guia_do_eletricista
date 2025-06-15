@@ -1,6 +1,6 @@
-/* styles.css - Adições para projeto-online.html */
+/* styles.css - Trechos adicionados anteriormente para projeto-online.html */
 
-/* Estilo para o formulário de projeto online */
+/* Estilo para formulário de projeto online */
 #formProjetoOnline {
     background-color: white;
     padding: 1.5rem;
@@ -9,12 +9,13 @@
     margin-bottom: 2rem;
 }
 
+/* Estilo para itens de cômodo */
 .comodo-item {
-    border: 1px solid #eee;
+    border: 1.5px solid #eee;
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 6px;
-    background-color: #fff;
+    background-color: white;
     position: relative;
     transition: transform 0.2s ease;
 }
@@ -23,12 +24,14 @@
     transform: translateY(-3px);
 }
 
+/* Estilo para container */
 .tue-container {
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px dashed #ddd;
 }
 
+/* Estilo para itens de TUE */
 .tue-item {
     background-color: #f9f9f9;
     border: 1px solid #eee;
@@ -50,10 +53,21 @@
     flex-shrink: 0;
 }
 
+/* Resultado */
+.result-box {
+    background-color: #e9f7ff;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2px;
+    border: 1px solid var(--cor-primaria);
+    box-shadow: 0 0 5px rgba(0,112,243,0.3);
+    animation: fadeIn 0.3s ease-in;
+}
+
 .result-box table {
     width: 100%;
     border-collapse: collapse;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
 }
 
 .result-box th, .result-box td {
@@ -87,16 +101,44 @@
     margin-bottom: 0.3rem;
 }
 
-/* Responsividade */
+/* Responsividade para projeto online */
 @media (max-width: 768px) {
     .comodo-item {
         padding: 0.8rem;
     }
-    .tue-item {
+
+    .tua-tue-item {
         flex-direction: column;
         align-items: stretch;
     }
+
     .tue-item input, .tue-item button {
         width: 100%;
     }
+}
+
+/* Garantindo consistência no menu em todas as páginas */
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 1rem;
+}
+
+nav ul li {
+    margin: 1rem;
+}
+
+nav ul a {
+    color: 0.8rem;
+    white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 0.5rem;
+}
+
+nav ul a[aria-current="page"] {
+    font-weight: bold;
+    border-bottom: 2px solid var(--cor-primaria);
 }
