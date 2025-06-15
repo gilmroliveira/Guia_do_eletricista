@@ -6,14 +6,6 @@ const ProjetoOnlineState = {
     tueCounts: []
 };
 
-// Estado para calculadora (isolado)
-const CalculadoraState = {
-    sistema: 'monofasico',
-    potencia: 0,
-    tensao: 220,
-    comprimento: 0
-};
-
 // Funções para tabs (normas)
 document.addEventListener('DOMContentLoaded', () => {
     const tabButtons = document.querySelectorAll('.tab-button');
@@ -27,9 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById(button.dataset.tab).setAttribute('aria-hidden', 'false');
         });
     });
+
+    // Inicializa projeto online apenas na página correspondente
+    if (document.getElementById('projeto-online')) {
+        initProjetoOnline();
+        updateRosetaLabels(); // Inicializa labels da roseta
+    }
 });
 
-// Calculadora Simplificada
+// Calculadora Simplificada (index.html)
 function calcularDimensionamento() {
     const potencia = parseFloat(document.getElementById('potencia').value) || 0;
     const tensao = parseFloat(document.getElementById('tensao').value) || 220;
@@ -65,53 +63,11 @@ function resetForm() {
     document.getElementById('potencia-error').textContent = '';
 }
 
-// Roseta
-function updateRosetaLabels() {
-    const tipo = document.getElementById('tipoCalculo').value;
-    const labels = {
-        corrente: ['Potência (W)', 'Tensão (V)'],
-        potencia: ['Corrente (A)', 'Tensão (V)'],
-        secao: ['Corrente (A)', 'Comprimento (m)'],
-        queda: ['Corrente (A)', 'Tensão (V)']
-    };
-    document.getElementById('labelValor1').textContent = labels[tipo][0] + ':';
-    document.getElementById('labelValor2').textContent = labels[tipo][1] + ':';
-}
-
-function calcularRoseta() {
-    const tipo = document.getElementById('tipoCalculo').value;
-    const valor1 = parseFloat(document.getElementById('rosetaInput1').value) || 0;
-    const valor2 = parseFloat(document.getElementById('rosetaInput2').value) || 0;
-    const resultado = document.getElementById('resultadoRoseta');
-
-    let calculo;
-    switch (tipo) {
-        case 'corrente':
-            calculo = valor1 / valor2;
-            resultado.innerHTML = `<p>Corrente: ${calculo.toFixed(2)} A</p>`;
-            break;
-        case 'potencia':
-            calculo = valor1 * valor2;
-            resultado.innerHTML = `<p>Potência: ${calculo.toFixed(2)} W</p>`;
-            break;
-        case 'secao':
-            calculo = (valor1 * valor2 * 0.017) / 10; // Aproximação
-            resultado.innerHTML = `<p>Seção: ${calculo.toFixed(2)} mm²</p>`;
-            break;
-        case 'queda':
-            calculo = (valor1 * valor2 * 0.017) / 100;
-            resultado.innerHTML = `<p>Queda de Tensão: ${calculo.toFixed(2)} %</p>`;
-            break;
-    }
-}
-
 // Projeto Online
 function initProjetoOnline() {
-    if (document.getElementById('projeto-online')) {
-        ProjetoOnlineState.comodoCount = 0;
-        ProjetoOnlineState.tueCounts = [];
-        addComodoField();
-    }
+    ProjetoOnlineState.comodoCount = 0;
+    ProjetoOnlineState.tueCounts = [];
+    addComodoField();
 }
 
 function addComodoField() {
@@ -206,6 +162,7 @@ function resetProjetoOnlineForm() {
         addComodoField();
         document.getElementById('formProjetoOnline').reset();
         document.getElementById('resultadoProjetoOnline').innerHTML = '';
+        document.getElementById('resultadoRoseta').innerHTML = '';
     }
 }
 
@@ -322,36 +279,51 @@ function calcularProjetoOnline() {
     }
 }
 
-// Funções para projeto completo em index.html (não implementadas)
-function gerarCamposComodos() {
-    const numComodos = parseInt(document.getElementById('numComodos').value) || 1;
-    const containerComodos = document.getElementById('containerComodos');
-    containerComodos.innerHTML = '';
-    for (let i = 0; i < numComodos; i++) {
-        addComodoField();
+// Roseta
+function updateRosetaLabels() {
+    if (document.getElementById('projeto-online')) {
+        const tipo = document.getElementById('tipoCalculo').value;
+        const labels = {
+            corrente: ['Potência (W)', 'Tensão (V)'],
+            potencia: ['Corrente (A)', 'Tensão (V)'],
+            secao: ['Corrente (A)', 'Comprimento (m)'],
+            queda: ['Corrente (A)', 'Tensão (V)']
+        };
+        document.getElementById('labelValor1').textContent = labels[tipo][0] + ':';
+        document.getElementById('labelValor2').textContent = labels[tipo][1] + ':';
     }
 }
 
-function calcularDimensionamentoCompleto() {
-    // Reutiliza a lógica de calcularProjetoOnline com ajustes
-    calcularProjetoOnline(); // Temporário até integração completa
+function calcularRoseta() {
+    if (document.getElementById('projeto-online')) {
+        const tipo = document.getElementById('tipoCalculo').value;
+        const valor1 = parseFloat(document.getElementById('rosetaInput1').value) || 0;
+        const valor2 = parseFloat(document.getElementById('rosetaInput2').value) || 0;
+        const resultado = document.getElementById('resultadoRoseta');
+
+        let calculo;
+        switch (tipo) {
+            case 'corrente':
+                calculo = valor1 / valor2;
+                resultado.innerHTML = `<p>Corrente: ${calculo.toFixed(2)} A</p>`;
+                break;
+            case 'potencia':
+                calculo = valor1 * valor2;
+                resultado.innerHTML = `<p>Potência: ${calculo.toFixed(2)} W</p>`;
+                break;
+            case 'secao':
+                calculo = (valor1 * valor2 * 0.017) / 10; // Aproximação
+                resultado.innerHTML = `<p>Seção: ${calculo.toFixed(2)} mm²</p>`;
+                break;
+            case 'queda':
+                calculo = (valor1 * valor2 * 0.017) / 100;
+                resultado.innerHTML = `<p>Queda de Tensão: ${calculo.toFixed(2)} %</p>`;
+                break;
+        }
+    }
 }
 
-function resetProjetoCompletoForm() {
-    document.getElementById('tensaoPrincipalProjeto').value = '220';
-    document.getElementById('numComodos').value = '1';
-    document.getElementById('containerComodos').innerHTML = '';
-    addComodoField();
-    document.getElementById('resultadoCompleto').innerHTML = '';
-}
-
-// Inicialização
-document.addEventListener('DOMContentLoaded', () => {
-    initProjetoOnline();
-    updateRosetaLabels(); // Inicializa labels da roseta
-});
-
-// Mock para DimensionadorEletrico (se não definido)
+// Mock para DimensionadorEletrico
 if (typeof DimensionadorEletrico === 'undefined') {
     console.warn('DimensionadorEletrico não definido. Usando mock para depuração.');
     window.DimensionadorEletrico = {
