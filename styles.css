@@ -1,248 +1,12 @@
-:root {
-    --cor-primaria: #005bb5;
-    --cor-secundaria: #f9f9f9;
-    --cor-texto: #222;
-    --fonte-principal: 'Arial', sans-serif;
-}
+/* styles.css - Adições para projeto-online.html */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: var(--fonte-principal);
-    background-color: var(--cor-secundaria);
-    color: var(--cor-texto);
-    line-height: 1.6;
-}
-
-header {
-    background-color: var(--cor-primaria);
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    position: relative;
-}
-
-.menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    z-index: 1000;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    background-color: #333;
-    padding: 1rem;
-}
-
-nav ul li {
-    margin: 0 1rem;
-}
-
-nav ul a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    padding: 0.5rem 0;
-    display: block;
-}
-
-nav ul a[aria-current="page"] {
-    font-weight: bold;
-    border-bottom: 2px solid var(--cor-primaria);
-}
-
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-section {
+/* Estilo para o formulário de projeto online */
+#formProjetoOnline {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-bottom: 2rem;
-}
-
-h2 {
-    color: var(--cor-primaria);
-    margin-bottom: 1rem;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1rem 0;
-    font-size: 0.95rem;
-}
-
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    text-align: center;
-}
-
-.table-note {
-    font-size: 0.85rem;
-    color: #666;
-    margin-top: -0.5rem;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.calculator, .roseta {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 1rem;
-}
-
-.calculator label, .roseta label {
-    display: block;
-    margin: 0.5rem 0 0.2rem;
-    font-weight: bold;
-}
-
-.calculator input, .calculator select, .roseta input, .roseta select {
-    width: 100%;
-    padding: 0.6rem;
-    margin-bottom: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn, .add-comodo-btn {
-    background-color: var(--cor-primaria);
-    color: white;
-    border: none;
-    padding: 0.7rem 1.2rem;
-    margin: 0.5rem 0.2rem 0.5rem 0;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.calculator button:hover, .roseta button:hover, .add-tue-btn:hover, .remove-tue-btn:hover, .remove-comodo-btn:hover, .add-comodo-btn:hover {
-    background-color: #004494;
-}
-
-.add-tue-btn, .add-comodo-btn {
-    background-color: #28a745;
-}
-
-.add-tue-btn:hover, .add-comodo-btn:hover {
-    background-color: #218838;
-}
-
-.remove-tue-btn, .remove-comodo-btn {
-    background-color: #dc3545;
-    margin-left: 0.5rem;
-}
-
-.remove-tue-btn:hover, .remove-comodo-btn:hover {
-    background-color: #c82333;
-}
-
-.roseta svg {
-    display: block;
-    margin: 1rem auto;
-    max-width: 100%;
-    height: auto;
-}
-
-.error {
-    color: red;
-    font-size: 0.9rem;
-    margin-top: -0.5rem;
-    margin-bottom: 0.5rem;
-    display: block;
-    animation: fadeIn 0.3s ease-in;
-}
-
-.tabs {
-    margin: 1rem 0;
-}
-
-.tab-button {
-    background-color: #f1f1f1;
-    border: 1px solid #ddd;
-    padding: 0.7rem 1.2rem;
-    cursor: pointer;
-    margin-right: 0.2rem;
-    border-radius: 4px 4px 0 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.tab-button[aria-selected="true"] {
-    background-color: var(--cor-primaria);
-    color: white;
-    border-color: var(--cor-primaria);
-}
-
-.tab-content {
-    display: none;
-    padding: 1.5rem;
-    border: 1px solid #ddd;
-    border-top: none;
-    background-color: white;
-    border-radius: 0 0 8px 8px;
-    animation: fadeIn 0.3s ease-in;
-}
-
-.tab-content:not([aria-hidden="true"]) {
-    display: block;
-}
-
-aside {
-    background-color: #f1f1f1;
-    padding: 1.5rem;
-    margin: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-aside h3 {
-    color: var(--cor-primaria);
-    margin-bottom: 0.8rem;
-}
-
-aside ul {
-    list-style: disc inside;
-    padding-left: 1rem;
-}
-
-aside li {
-    margin-bottom: 0.5rem;
-}
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
-    font-size: 0.9rem;
-}
-
-#containerComodos {
-    border: 1px dashed #ccc;
-    padding: 1rem;
-    margin-top: 1rem;
-    border-radius: 8px;
-    background-color: #fdfdfd;
 }
 
 .comodo-item {
@@ -251,15 +15,12 @@ footer {
     margin-bottom: 1rem;
     border-radius: 6px;
     background-color: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    position: relative;
+    transition: transform 0.2s ease;
 }
 
-.comodo-item h4 {
-    color: var(--cor-primaria);
-    margin-top: 0;
-    margin-bottom: 0.8rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 0.5rem;
+.comodo-item:hover {
+    transform: translateY(-3px);
 }
 
 .tue-container {
@@ -268,255 +29,74 @@ footer {
     border-top: 1px dashed #ddd;
 }
 
-.tue-container h5 {
-    margin-top: 0;
-    margin-bottom: 0.8rem;
-    color: #555;
-}
-
 .tue-item {
     background-color: #f9f9f9;
     border: 1px solid #eee;
     padding: 0.8rem;
     margin-bottom: 0.8rem;
     border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
 }
 
-.circuit-details {
+.tue-item input {
+    flex: 1;
+    min-width: 150px;
+}
+
+.tue-item button {
+    flex-shrink: 0;
+}
+
+.result-box table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.result-box th, .result-box td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.result-box th {
+    background-color: var(--cor-primaria);
+    color: white;
+}
+
+.result-box details {
     margin-bottom: 0.5rem;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    background-color: #fdfdfd;
 }
 
-.circuit-details summary {
-    padding: 0.8rem;
-    background-color: #e9e9e9;
-    border-bottom: 1px solid #ddd;
+.result-box summary {
     cursor: pointer;
-    font-weight: bold;
+    padding: 0.5rem;
+    background-color: #e9e9e9;
     border-radius: 4px;
 }
 
-.circuit-details ul {
-    padding: 1rem;
+.result-box ul {
     list-style: none;
+    padding: 0.5rem 1rem;
 }
 
-.circuit-details li {
+.result-box li {
     margin-bottom: 0.3rem;
 }
 
-/* Animações */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
-}
-
-/* Video Grid */
-.video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
-}
-
-.video-card {
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.video-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.video-card a {
-    text-decoration: none;
-    color: var(--cor-texto);
-    display: block;
-}
-
-.video-placeholder {
-    height: 150px;
-    background-size: cover;
-    background-position: center;
-}
-
-.video-card h4 {
-    margin: 0.8rem;
-    font-size: 1.1rem;
-    color: var(--cor-primaria);
-}
-
-.video-card p {
-    margin: 0 0.8rem 1rem;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-/* Tooltips */
-[data-tooltip] {
-    position: relative;
-    cursor: help;
-}
-
-[data-tooltip]:after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: white;
-    padding: 0.5rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    z-index: 1000;
-}
-
-[data-tooltip]:hover:after {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Button Group */
-.button-group {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-/* Result Box */
-.result-box {
-    background-color: #e9f7ff;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-top: 1rem;
-    border: 1px solid var(--cor-primaria);
-    animation: fadeIn 0.3s ease-in;
-}
-
-/* Back to Top */
-.back-to-top {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background-color: var(--cor-primaria);
-    color: white;
-    border: none;
-    padding: 0.8rem;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: opacity 0.3s ease;
-}
-
-.back-to-top.show {
-    display: block;
-}
-
-/* Media Queries */
+/* Responsividade */
 @media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-    nav ul {
-        display: none;
-        flex-direction: column;
-        background-color: #333;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        z-index: 999;
-    }
-    nav ul.active {
-        display: flex;
-        animation: slideIn 0.3s ease-out;
-    }
-    nav ul li {
-        margin: 0.5rem 0;
-        text-align: center;
-    }
-    nav ul a {
-        padding: 0.8rem 0;
-    }
-    .content {
-        padding: 1rem;
-    }
-    table {
-        font-size: 0.8rem;
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-        border: none;
-    }
-    table thead {
-        display: none;
-    }
-    table tbody {
-        display: block;
-        width: 100%;
-    }
-    table tr {
-        display: block;
-        margin-bottom: 0.8rem;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-    table th, table td {
-        text-align: left;
-        display: block;
-        padding: 0.5rem 1rem;
-        border: none;
-        position: relative;
-    }
-    table td:before {
-        content: attr(data-label);
-        font-weight: bold;
-        display: inline-block;
-        width: 120px;
-        min-width: 120px;
-        margin-right: 1rem;
-        color: var(--cor-primaria);
-    }
-    .roseta svg {
-        width: 100%;
-        height: auto;
-    }
-    .calculator input, .calculator select, .roseta input, .roseta select {
-        font-size: 0.95rem;
-    }
-    .calculator button, .roseta button, .add-tue-btn, .remove-tue-btn, .remove-comodo-btn, .add-comodo-btn {
-        width: 100%;
-        margin: 0.5rem 0;
-    }
-    .comodo-item, .tue-item {
+    .comodo-item {
         padding: 0.8rem;
-        margin-bottom: 0.8rem;
     }
-}
-
-@media (min-width: 769px) {
-    .menu-toggle {
-        display: none;
+    .tue-item {
+        flex-direction: column;
+        align-items: stretch;
     }
-    nav ul.active {
-        display: flex;
+    .tue-item input, .tue-item button {
+        width: 100%;
     }
 }
