@@ -79,91 +79,80 @@
                 <p class="table-note"><strong>Nota:</strong> Para outras condições de instalação (tipo de condutor, temperatura, agrupamento), consulte a NBR 5410 completa. Esta tabela é um guia simplificado.</p>
             </section>
 
-            <section id="calculadora" aria-labelledby="calculadora-heading">
+            <section id="calculadora" aria-labelledby="calculadora-heading" class="form-container">
                 <h2 id="calculadora-heading">Calculadora de Dimensionamento</h2>
 
                 <h3>Cálculo Simplificado de Circuito</h3>
                 <form class="calculator" aria-label="Formulário de dimensionamento de cabos">
-                    <label for="sistema">Tipo de Sistema (Circuito):</label>
-                    <select id="sistema" required>
-                        <option value="monofasico">Monofásico</option>
-                        <option value="trifasico">Trifásico</option>
-                    </select>
-                    <label for="potencia">Potência do Equipamento (W):</label>
-                    <input type="number" id="potencia" min="0" step="1" required aria-describedby="potencia-error">
-                    <span id="potencia-error" class="error" aria-live="polite"></span>
-                    <label for="tensao">Tensão (V):</label>
-                    <input type="number" id="tensao" min="0" value="220" step="1" required>
-                    <label for="comprimento">Comprimento do Circuito (m):</label>
-                    <input type="number" id="comprimento" min="0" step="0.1" required>
-                    <button type="button" onclick="calcularDimensionamento()">Calcular Circuito</button>
-                    <button type="button" onclick="resetForm()">Limpar</button>
-                    <div id="resultado" aria-live="assertive"></div>
+                    <div class="form-group">
+                        <label for="sistema">Tipo de Sistema (Circuito):</label>
+                        <select id="sistema" required>
+                            <option value="monofasico">Monofásico</option>
+                            <option value="trifasico">Trifásico</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="potencia">Potência do Equipamento (W):</label>
+                        <input type="number" id="potencia" min="0" step="1" required aria-describedby="potencia-error">
+                        <span id="potencia-error" class="error" aria-live="polite"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="tensao">Tensão (V):</label>
+                        <input type="number" id="tensao" min="0" value="220" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="comprimento">Comprimento do Circuito (m):</label>
+                        <input type="number" id="comprimento" min="0" step="0.1" required>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" onclick="calcularDimensionamento()">Calcular Circuito</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Limpar</button>
+                    </div>
+                    <div id="resultado" class="result-box" aria-live="assertive"></div>
                 </form>
 
                 <h3>Gerar Projeto Elétrico Completo</h3>
                 <form class="calculator" id="formProjetoCompleto" aria-label="Formulário de Projeto Elétrico Completo">
-                    <label for="tensaoPrincipalProjeto">Tensão Principal da Instalação (V):</label>
-                    <input type="number" id="tensaoPrincipalProjeto" min="0" value="220" step="1" required>
-
-                    <label for="numComodos">Número de Cômodos/Áreas:</label>
-                    <input type="number" id="numComodos" min="1" step="1" value="1" required onchange="gerarCamposComodos()">
-                    <button type="button" onclick="addComodoField()">+ Adicionar Cômodo</button>
-
-                    <div id="containerComodos">
-                        <div class="comodo-item">
-                            <h4>Cômodo 1</h4>
-                            <label for="nomeComodo_0">Nome do Cômodo (Ex: Sala, Cozinha):</label>
-                            <input type="text" id="nomeComodo_0" value="Sala" required>
-
-                            <label for="tipoComodo_0">Tipo de Cômodo:</label>
-                            <select id="tipoComodo_0" required>
-                                <option value="sala">Sala</option>
-                                <option value="quarto">Quarto</option>
-                                <option value="cozinha">Cozinha</option>
-                                <option value="banheiro">Banheiro</option>
-                                <option value="areaServico">Área de Serviço</option>
-                                <option value="circulacao">Corredor/Hall</option>
-                                <option value="garagem">Garagem</option>
-                                <option value="outro">Outro</option>
-                            </select>
-
-                            <label for="areaComodo_0">Área (m²):</label>
-                            <input type="number" id="areaComodo_0" min="1" step="0.1" value="15" required>
-
-                            <label for="perimetroComodo_0">Perímetro (m):</label>
-                            <input type="number" id="perimetroComodo_0" min="1" step="0.1" value="15" required>
-
-                            <div class="tue-container">
-                                <h5>Tomadas de Uso Específico (TUEs) neste cômodo:</h5>
-                                <button type="button" class="add-tue-btn" onclick="addTUEField(0)">+ Adicionar TUE</button>
-                                <div id="tueFields_0">
-                                    </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="tensaoPrincipalProjeto">Tensão Principal da Instalação (V):</label>
+                        <input type="number" id="tensaoPrincipalProjeto" min="0" value="220" step="1" required>
                     </div>
-
-                    <button type="button" onclick="calcularDimensionamentoCompleto()">Gerar Projeto Elétrico</button>
-                    <button type="button" onclick="resetProjetoCompletoForm()">Limpar Projeto</button>
-                    <div id="resultadoCompleto" aria-live="assertive"></div>
+                    <div class="form-group">
+                        <label for="numComodos">Número de Cômodos/Áreas:</label>
+                        <input type="number" id="numComodos" min="1" step="1" value="1" required onchange="gerarCamposComodos()">
+                    </div>
+                    <button type="button" class="btn btn-add" onclick="addComodoField()">+ Adicionar Cômodo</button>
+                    <div id="containerComodos" class="comodos-container"></div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" onclick="calcularDimensionamentoCompleto()">Gerar Projeto Elétrico</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetProjetoCompletoForm()">Limpar Projeto</button>
+                    </div>
+                    <div id="resultadoCompleto" class="result-box" aria-live="assertive"></div>
                 </form>
 
-
                 <h3>Roseta de Cálculos</h3>
-                <div class="roseta">
-                    <label for="tipoCalculo">Tipo de Cálculo:</label>
-                    <select id="tipoCalculo" onchange="updateRosetaLabels()">
-                        <option value="corrente">Corrente (A)</option>
-                        <option value="potencia">Potência (W)</option>
-                        <option value="secao">Seção do Cabo (mm²)</option>
-                        <option value="queda">Queda de Tensão (%)</option>
-                    </select>
-                    <label for="rosetaInput1" id="labelValor1">Potência (W):</label>
-                    <input type="number" id="rosetaInput1" min="0" step="0.1" required>
-                    <label for="rosetaInput2" id="labelValor2">Tensão (V):</label>
-                    <input type="number" id="rosetaInput2" min="0" step="0.1" required>
-                    <button type="button" onclick="calcularRoseta()">Calcular</button>
-                    <div id="resultadoRoseta" aria-live="assertive"></div>
+                <div class="roseta form-container">
+                    <div class="form-group">
+                        <label for="tipoCalculo">Tipo de Cálculo:</label>
+                        <select id="tipoCalculo" onchange="updateRosetaLabels()">
+                            <option value="corrente">Corrente (A)</option>
+                            <option value="potencia">Potência (W)</option>
+                            <option value="secao">Seção do Cabo (mm²)</option>
+                            <option value="queda">Queda de Tensão (%)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rosetaInput1" id="labelValor1">Potência (W):</label>
+                        <input type="number" id="rosetaInput1" min="0" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rosetaInput2" id="labelValor2">Tensão (V):</label>
+                        <input type="number" id="rosetaInput2" min="0" step="0.1" required>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" onclick="calcularRoseta()">Calcular</button>
+                    </div>
+                    <div id="resultadoRoseta" class="result-box" aria-live="assertive"></div>
                     <svg id="rosetaSvg" width="300" height="300" xmlns="http://www.w3.org/2000/svg" aria-labelledby="roseta-title">
                         <title id="roseta-title">Diagrama da roseta de cálculos elétricos</title>
                         <circle cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="2"/>
@@ -188,7 +177,7 @@
     </main>
 
     <footer role="contentinfo">
-        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-14">14/06/2025</time></p>
+        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-15">15/06/2025</time></p>
     </footer>
 
     <script src="script.js"></script>
