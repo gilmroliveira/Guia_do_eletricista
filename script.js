@@ -1,18 +1,20 @@
-// script.js - Script completo e integrado para projeto-online.html
+// script.js - Versão revisada e isolada
 
-// Estado global para o projeto online
-const projetoOnline = {
+// Estado global para o projeto online (isolado)
+const ProjetoOnlineState = {
     comodoCount: 0,
     tueCounts: []
 };
 
-// Inicializar o formulário ao carregar a página
+// Função para inicializar o projeto online
 function initProjetoOnline() {
-    projetoOnline.comodoCount = 0;
-    projetoOnline.tueCounts = [];
-    addComodoField(); // Cria o primeiro cômodo
-    document.getElementById('formProjetoOnline').reset();
-    document.getElementById('resultadoProjetoOnline').innerHTML = '';
+    if (document.getElementById('projeto-online')) { // Só inicializa em projeto-online.html
+        ProjetoOnlineState.comodoCount = 0;
+        ProjetoOnlineState.tueCounts = [];
+        addComodoField();
+        document.getElementById('formProjetoOnline').reset();
+        document.getElementById('resultadoProjetoOnline').innerHTML = '';
+    }
 }
 
 // Adicionar campo de TUE
@@ -20,8 +22,8 @@ function addTUEField(comodoIndex) {
     const tueFields = document.getElementById(`tueFields_${comodoIndex}`);
     if (!tueFields) return;
 
-    const tueIndex = projetoOnline.tueCounts[comodoIndex] || 0;
-    projetoOnline.tueCounts[comodoIndex] = tueIndex + 1;
+    const tueIndex = ProjetoOnlineState.tueCounts[comodoIndex] || 0;
+    ProjetoOnlineState.tueCounts[comodoIndex] = tueIndex + 1;
 
     const tueItem = document.createElement('div');
     tueItem.className = 'tue-item';
@@ -43,7 +45,7 @@ function addTUEField(comodoIndex) {
 function removeTUEField(comodoIndex, button) {
     if (button.parentElement) {
         button.parentElement.remove();
-        projetoOnline.tueCounts[comodoIndex]--;
+        ProjetoOnlineState.tueCounts[comodoIndex]--;
     }
 }
 
@@ -54,16 +56,16 @@ function addComodoField() {
 
     const comodoItem = document.createElement('div');
     comodoItem.className = 'comodo-item';
-    comodoItem.dataset.comodoId = projetoOnline.comodoCount;
+    comodoItem.dataset.comodoId = ProjetoOnlineState.comodoCount;
     comodoItem.innerHTML = `
-        <h3>Cômodo ${projetoOnline.comodoCount + 1}</h3>
+        <h3>Cômodo ${ProjetoOnlineState.comodoCount + 1}</h3>
         <div class="form-group">
-            <label for="nomeComodo_${projetoOnline.comodoCount}">Nome do Cômodo:</label>
-            <input type="text" id="nomeComodo_${projetoOnline.comodoCount}" value="Cômodo ${projetoOnline.comodoCount + 1}" required placeholder="Ex.: Sala">
+            <label for="nomeComodo_${ProjetoOnlineState.comodoCount}">Nome do Cômodo:</label>
+            <input type="text" id="nomeComodo_${ProjetoOnlineState.comodoCount}" value="Cômodo ${ProjetoOnlineState.comodoCount + 1}" required placeholder="Ex.: Sala">
         </div>
         <div class="form-group">
-            <label for="tipoComodo_${projetoOnline.comodoCount}">Tipo de Cômodo:</label>
-            <select id="tipoComodo_${projetoOnline.comodoCount}" required>
+            <label for="tipoComodo_${ProjetoOnlineState.comodoCount}">Tipo de Cômodo:</label>
+            <select id="tipoComodo_${ProjetoOnlineState.comodoCount}" required>
                 <option value="sala">Sala</option>
                 <option value="quarto">Quarto</option>
                 <option value="cozinha">Cozinha</option>
@@ -75,31 +77,30 @@ function addComodoField() {
             </select>
         </div>
         <div class="form-group">
-            <label for="areaComodo_${projetoOnline.comodoCount}">Área (m²):</label>
-            <input type="number" id="areaComodo_${projetoOnline.comodoCount}" min="1" step="0.1" value="15" required placeholder="Ex.: 15">
+            <label for="areaComodo_${ProjetoOnlineState.comodoCount}">Área (m²):</label>
+            <input type="number" id="areaComodo_${ProjetoOnlineState.comodoCount}" min="1" step="0.1" value="15" required placeholder="Ex.: 15">
         </div>
         <div class="form-group">
-            <label for="perimetroComodo_${projetoOnline.comodoCount}">Perímetro (m):</label>
-            <input type="number" id="perimetroComodo_${projetoOnline.comodoCount}" min="1" step="0.1" value="15" required placeholder="Ex.: 15">
+            <label for="perimetroComodo_${ProjetoOnlineState.comodoCount}">Perímetro (m):</label>
+            <input type="number" id="perimetroComodo_${ProjetoOnlineState.comodoCount}" min="1" step="0.1" value="15" required placeholder="Ex.: 15">
         </div>
         <div class="tue-container">
             <h4>Tomadas de Uso Específico (TUEs):</h4>
-            <button type="button" class="btn btn-add" onclick="addTUEField(${projetoOnline.comodoCount})">+ Adicionar TUE</button>
-            <div id="tueFields_${projetoOnline.comodoCount}"></div>
+            <button type="button" class="btn btn-add" onclick="addTUEField(${ProjetoOnlineState.comodoCount})">+ Adicionar TUE</button>
+            <div id="tueFields_${ProjetoOnlineState.comodoCount}"></div>
         </div>
         <button type="button" class="btn btn-remove" onclick="removeComodoField(this)">- Remover Cômodo</button>
     `;
     containerComodos.appendChild(comodoItem);
-    projetoOnline.tueCounts[projetoOnline.comodoCount] = 0;
-    projetoOnline.comodoCount++;
+    ProjetoOnlineState.tueCounts[ProjetoOnlineState.comodoCount] = 0;
+    ProjetoOnlineState.comodoCount++;
 }
 
 // Remover cômodo
 function removeComodoField(button) {
     if (button.parentElement) {
         button.parentElement.remove();
-        projetoOnline.comodoCount--;
-        // Ajustar tueCounts se necessário (não é crítico aqui, mas pode ser otimizado)
+        ProjetoOnlineState.comodoCount--;
     }
 }
 
@@ -115,7 +116,7 @@ function calcularProjetoOnline() {
         return;
     }
 
-    for (let i = 0; i < projetoOnline.comodoCount; i++) {
+    for (let i = 0; i < ProjetoOnlineState.comodoCount; i++) {
         const nome = document.getElementById(`nomeComodo_${i}`)?.value;
         if (!nome) continue;
 
@@ -125,7 +126,6 @@ function calcularProjetoOnline() {
         const tueFields = document.getElementById(`tueFields_${i}`)?.children || [];
         const tue = [];
 
-        // Validação de cômodo
         if (isNaN(area) || isNaN(perimetro) || area <= 0 || perimetro <= 0) {
             resultadoDiv.innerHTML = '<p class="error">Verifique os valores de área e perímetro do cômodo.</p>';
             return;
@@ -147,14 +147,12 @@ function calcularProjetoOnline() {
         return;
     }
 
-    // Depuração
     console.log('Projeto enviado para dimensionamento:', { tensaoPrincipal, comodos });
 
     try {
         const projeto = { tensaoPrincipal, comodos };
         const relatorio = DimensionadorEletrico.dimensionar(projeto);
 
-        // Depuração do relatorio recebido
         console.log('Relatório retornado:', relatorio);
 
         if (!relatorio || typeof relatorio !== 'object') {
@@ -223,18 +221,49 @@ function calcularProjetoOnline() {
 
 // Resetar formulário
 function resetProjetoOnlineForm() {
-    projetoOnline.comodoCount = 0;
-    projetoOnline.tueCounts = [];
-    const containerComodos = document.getElementById('containerComodos');
-    if (containerComodos) {
-        containerComodos.innerHTML = '';
-        addComodoField(); // Recria o primeiro cômodo
+    if (document.getElementById('projeto-online')) {
+        ProjetoOnlineState.comodoCount = 0;
+        ProjetoOnlineState.tueCounts = [];
+        const containerComodos = document.getElementById('containerComodos');
+        if (containerComodos) {
+            containerComodos.innerHTML = '';
+            addComodoField();
+        }
+        const resultadoDiv = document.getElementById('resultadoProjetoOnline');
+        if (resultadoDiv) resultadoDiv.innerHTML = '';
+        const form = document.getElementById('formProjetoOnline');
+        if (form) form.reset();
     }
-    const resultadoDiv = document.getElementById('resultadoProjetoOnline');
-    if (resultadoDiv) resultadoDiv.innerHTML = '';
-    const form = document.getElementById('formProjetoOnline');
-    if (form) form.reset();
 }
 
-// Inicializar ao carregar a página
+// Inicializar ao carregar (só para projeto-online.html)
 document.addEventListener('DOMContentLoaded', initProjetoOnline);
+
+// Exemplo hipotético de DimensionadorEletrico (se não estiver definido)
+if (typeof DimensionadorEletrico === 'undefined') {
+    console.warn('DimensionadorEletrico não definido. Usando mock para depuração.');
+    window.DimensionadorEletrico = {
+        dimensionar: function(projeto) {
+            console.log('Mock dimensionar chamado com:', projeto);
+            return {
+                tensaoPrincipal: projeto.tensaoPrincipal,
+                tipoSistemaNecessario: 'Bifásico',
+                demandaTotalVA: 6000, // Exemplo
+                correnteTotalA: 27.27, // Exemplo: 6000 / 220
+                circuitos: [{
+                    nome: projeto.comodos[0].nome,
+                    tipo: projeto.comodos[0].tipo,
+                    potenciaVA: 5400,
+                    correnteA: 24.55,
+                    bitolaFio: '2.5 mm²',
+                    disjuntorRecomendadoA: 25,
+                    eletrodutoMm: 20,
+                    quedaTensaoPercentual: 2.5
+                }],
+                recomendacoesFioGeral: { bitolaMm2: '4 mm²', tipoFio: 'Fio de Cobre' },
+                recomendacoesEletrodutoGeral: { diametroMm: 25 },
+                automacaoRecomendada: { observacoes: ['Instalar disjuntor DR'] }
+            };
+        }
+    };
+}
