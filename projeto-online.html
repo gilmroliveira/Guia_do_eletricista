@@ -22,6 +22,7 @@
             <li><a href="projetos.html">Projetos</a></li>
             <li><a href="atualizacoes.html">Atualizações</a></li>
             <li><a href="projeto-online.html" aria-current="page">Projeto Online</a></li>
+            <li><a href="projeto-imagem.html">Projeto com Imagem</a></li>
         </ul>
     </nav>
 
@@ -48,15 +49,47 @@
                     </div>
                     <div id="resultadoProjetoOnline" class="result-box" aria-live="polite"></div>
                 </form>
+
+                <h3>Roseta de Cálculos</h3>
+                <div class="roseta form-container">
+                    <div class="form-group">
+                        <label for="tipoCalculo">Tipo de Cálculo:</label>
+                        <select id="tipoCalculo" onchange="updateRosetaLabels()">
+                            <option value="corrente">Corrente (A)</option>
+                            <option value="potencia">Potência (W)</option>
+                            <option value="secao">Seção do Cabo (mm²)</option>
+                            <option value="queda">Queda de Tensão (%)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rosetaInput1" id="labelValor1">Potência (W):</label>
+                        <input type="number" id="rosetaInput1" min="0" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rosetaInput2" id="labelValor2">Tensão (V):</label>
+                        <input type="number" id="rosetaInput2" min="0" step="0.1" required>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" onclick="calcularRoseta()">Calcular</button>
+                    </div>
+                    <div id="resultadoRoseta" class="result-box" aria-live="assertive"></div>
+                    <svg id="rosetaSvg" width="300" height="300" xmlns="http://www.w3.org/2000/svg" aria-labelledby="roseta-title">
+                        <title id="roseta-title">Diagrama da roseta de cálculos elétricos</title>
+                        <circle cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="2"/>
+                        <text x="140" y="50" font-size="12">Corrente</text>
+                        <text x="240" y="150" font-size="12">Potência</text>
+                        <text x="140" y="250" font-size="12">Seção</text>
+                        <text x="40" y="150" font-size="12">Queda</text>
+                        <circle cx="150" cy="150" r="10" fill="blue"/>
+                    </svg>
+                </div>
             </section>
         </div>
     </main>
 
     <footer role="contentinfo">
         <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-15">15/06/2025</time></p>
-        <p><small>Os cálculos são baseados na NBR 5410 e destinam-se a fins educacionais. Consulte um eletricista.</small></p>
-        <p>José Gilmar (88)9 2145-9439 </b>
-           Marcello (88)9 9293-0027 </p>
+        <p><small>Os cálculos são baseados na NBR 5410 e destinam-se a fins educacionais. Consulte um engenheiro eletricista.</small></p>
     </footer>
 
     <script src="script.js"></script>
