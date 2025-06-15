@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Crie projetos elétricos residenciais online de forma rápida e conforme a NBR 5410.">
+    <meta name="description" content="Crie projetos elétricos residenciais online conforme a NBR 5410.">
     <title>Projeto Elétrico Online - Guia do Eletricista</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -30,49 +30,24 @@
         <div class="content">
             <section id="projeto-online" aria-labelledby="projeto-online-heading">
                 <h2 id="projeto-online-heading">Crie Seu Projeto Elétrico</h2>
-                <p>Insira os dados do seu projeto residencial e obtenha um dimensionamento completo conforme a NBR 5410.</p>
-                <form id="formProjetoOnline" aria-label="Formulário de projeto elétrico online">
-                    <label for="tensaoPrincipalProjeto">Tensão Principal (V):</label>
-                    <select id="tensaoPrincipalProjeto" required>
-                        <option value="" disabled selected>Selecione a tensão</option>
-                        <option value="127">127V (Monofásico)</option>
-                        <option value="220">220V (Bifásico/Trifásico)</option>
-                        <option value="380">380V (Trifásico)</option>
-                    </select>
-                    <div id="containerComodos">
-                        <div class="comodo-item" data-comodo-id="0">
-                            <h3>Cômodo 1</h3>
-                            <label for="nomeComodo_0">Nome do Cômodo:</label>
-                            <input type="text" id="nomeComodo_0" value="Sala" required placeholder="Ex.: Sala">
-                            <label for="tipoComodo_0">Tipo de Cômodo:</label>
-                            <select id="tipoComodo_0" required>
-                                <option value="sala">Sala</option>
-                                <option value="quarto">Quarto</option>
-                                <option value="cozinha">Cozinha</option>
-                                <option value="banheiro">Banheiro</option>
-                                <option value="areaServico">Área de Serviço</option>
-                                <option value="circulacao">Corredor/Hall</option>
-                                <option value="garagem">Garagem</option>
-                                <option value="outro">Outro</option>
-                            </select>
-                            <label for="areaComodo_0">Área (m²):</label>
-                            <input type="number" id="areaComodo_0" min="1" step="0.1" value="15" required placeholder="Ex.: 15">
-                            <label for="perimetroComodo_0">Perímetro (m):</label>
-                            <input type="number" id="perimetroComodo_0" min="1" step="0.1" value="15" required placeholder="Ex.: 15">
-                            <div class="tue-container">
-                                <h4>Tomadas de Uso Específico (TUEs):</h4>
-                                <button type="button" class="add-tue-btn" onclick="addTUEField(0)">+ Adicionar TUE</button>
-                                <div id="tueFields_0"></div>
-                            </div>
-                            <button type="button" class="remove-comodo-btn" onclick="removeComodoField(this)">- Remover Cômodo</button>
-                        </div>
+                <p>Insira os dados do projeto residencial para dimensionamento conforme a NBR 5410.</p>
+                <form id="formProjetoOnline" class="form-container" aria-label="Formulário de projeto elétrico">
+                    <div class="form-group">
+                        <label for="tensaoPrincipalProjeto">Tensão Principal (V):</label>
+                        <select id="tensaoPrincipalProjeto" required>
+                            <option value="" disabled selected>Selecione a tensão</option>
+                            <option value="127">127V (Monofásico)</option>
+                            <option value="220">220V (Bifásico/Trifásico)</option>
+                            <option value="380">380V (Trifásico)</option>
+                        </select>
                     </div>
+                    <div id="containerComodos" class="comodos-container"></div>
                     <div class="button-group">
-                        <button type="button" class="add-comodo-btn" onclick="addComodoField()">+ Adicionar Cômodo</button>
-                        <button type="button" onclick="calcularProjetoOnline()">Calcular Projeto</button>
-                        <button type="button" onclick="resetProjetoOnlineForm()">Limpar</button>
+                        <button type="button" class="btn btn-add" onclick="addComodoField()">+ Adicionar Cômodo</button>
+                        <button type="button" class="btn btn-primary" onclick="calcularProjetoOnline()">Calcular Projeto</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetProjetoOnlineForm()">Limpar</button>
                     </div>
-                    <div id="resultadoProjetoOnline" class="result-box" aria-live="assertive"></div>
+                    <div id="resultadoProjetoOnline" class="result-box" aria-live="polite"></div>
                 </form>
             </section>
         </div>
@@ -80,7 +55,7 @@
 
     <footer role="contentinfo">
         <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-15">15/06/2025</time></p>
-        <p><small>Os cálculos fornecidos são baseados na NBR 5410 e destinam-se a fins educacionais. Consulte um engenheiro eletricista para projetos reais.</small></p>
+        <p><small>Os cálculos são baseados na NBR 5410 e destinam-se a fins educacionais. Consulte um engenheiro eletricista.</small></p>
     </footer>
 
     <script src="script.js"></script>
