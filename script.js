@@ -1,4 +1,4 @@
-// Estados isolados por página
+// Estados isolados por página (mantidos como estavam)
 const states = {
     calculadora: { sistema: 'monofasico', potencia: 0, tensao: 220, comprimento: 0 },
     projetoOnline: { comodoCount: 0, tueCounts: [] },
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('projeto-bim-eletrico')) initBIMProject();
 });
 
-// Calculadora (index.html)
+// Calculadora (index.html) - Mantida como estava
 function calcularDimensionamento() {
     const { potencia, tensao, comprimento } = states.calculadora;
     const sistema = document.getElementById('sistema').value;
@@ -56,7 +56,7 @@ function resetForm() {
     document.getElementById('potencia-error').textContent = '';
 }
 
-// Projeto Online
+// Projeto Online - Mantido como estava
 function initProjetoOnline() {
     states.projetoOnline.comodoCount = 0;
     states.projetoOnline.tueCounts = [];
@@ -163,7 +163,7 @@ function calcularProjetoOnline() {
     `;
 }
 
-// Projeto Imagem
+// Projeto Imagem - Mantido como estava
 function initImageProject() {
     states.projetoImagem.canvas = document.getElementById('annotationCanvas');
     states.projetoImagem.context = states.projetoImagem.canvas?.getContext('2d');
@@ -238,7 +238,7 @@ function resetImageForm() {
     document.getElementById('resultadoImagem').innerHTML = '';
 }
 
-// Projeto BIM
+// Projeto BIM - Mantido como estava
 function initBIMProject() {
     states.projetoBIM.canvas = document.getElementById('annotationBIMCanvas');
     states.projetoBIM.context = states.projetoBIM.canvas?.getContext('2d');
@@ -348,7 +348,19 @@ function resetBIMForm() {
     document.getElementById('annotationOptions').style.display = 'none';
 }
 
-// Interatividade
+// Nova função para instruções de conversão DXF
+function guideUser() {
+    const file = document.getElementById('dxfInput').files[0];
+    if (file) {
+        document.getElementById('dxfResult').innerHTML = `
+            <p>Baixe o repositório <a href="https://github.com/antonioaja/dxf2elmt" target="_blank">dxf2elmt</a>, compile com Rust (cargo build --release) e execute no terminal com: <code>dxf2elmt ${file.name}</code>. O arquivo .elmt gerado pode ser aberto no QElectroTech para edição de plantas elétricas.</p>
+        `;
+    } else {
+        document.getElementById('dxfResult').innerHTML = '<p class="error">Por favor, selecione um arquivo DXF.</p>';
+    }
+}
+
+// Interatividade - Mantida como estava
 ['annotationCanvas', 'annotationBIMCanvas'].forEach(id => {
     const canvas = document.getElementById(id);
     if (canvas) {
