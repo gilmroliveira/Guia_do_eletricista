@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Crie projetos elétricos residenciais online conforme a NBR 5410.">
-    <title>Projeto Elétrico Online - Guia do Eletricista</title>
+    <meta name="description" content="Crie projetos elétricos online conforme NBR 5410.">
+    <title>Projeto Elétrico Online</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -23,7 +23,7 @@
             <li><a href="atualizacoes.html">Atualizações</a></li>
             <li><a href="projeto-online.html" aria-current="page">Projeto Online</a></li>
             <li><a href="projeto-imagem.html">Projeto com Imagem</a></li>
-                        <li><a href="projeto-bim-eletrico.html" aria-current="page">Projeto BIM Elétrico</a></li>
+            <li><a href="projeto-bim-eletrico.html">Projeto BIM Elétrico</a></li>
         </ul>
     </nav>
 
@@ -31,66 +31,30 @@
         <div class="content">
             <section id="projeto-online" aria-labelledby="projeto-online-heading">
                 <h2 id="projeto-online-heading">Crie Seu Projeto Elétrico</h2>
-                <p>Insira os dados do projeto residencial para dimensionamento conforme a NBR 5410.</p>
-                <form id="formProjetoOnline" class="form-container" aria-label="Formulário de projeto elétrico">
+                <form id="formProjetoOnline" class="form-container">
                     <div class="form-group">
-                        <label for="tensaoPrincipalProjeto">Tensão Principal (V):</label>
-                        <select id="tensaoPrincipalProjeto" required>
-                            <option value="" disabled selected>Selecione a tensão</option>
-                            <option value="127">127V (Monofásico)</option>
-                            <option value="220">220V (Bifásico/Trifásico)</option>
-                            <option value="380">380V (Trifásico)</option>
+                        <label for="tensaoPrincipal">Tensão Principal (V):</label>
+                        <select id="tensaoPrincipal" required>
+                            <option value="127">127V</option>
+                            <option value="220" selected>220V</option>
+                            <option value="380">380V</option>
                         </select>
                     </div>
                     <div id="containerComodos" class="comodos-container"></div>
                     <div class="button-group">
-                        <button type="button" class="btn btn-add" onclick="addComodoField()">+ Adicionar Cômodo</button>
-                        <button type="button" class="btn btn-primary" onclick="calcularProjetoOnline()">Calcular Projeto</button>
+                        <button type="button" class="btn btn-add" onclick="addComodoField()">+ Cômodo</button>
+                        <button type="button" class="btn btn-primary" onclick="calcularProjetoOnline()">Calcular</button>
                         <button type="button" class="btn btn-secondary" onclick="resetProjetoOnlineForm()">Limpar</button>
                     </div>
-                    <div id="resultadoProjetoOnline" class="result-box" aria-live="polite"></div>
+                    <div id="resultadoProjetoOnline" class="result-box"></div>
                 </form>
-
-                <h3>Roseta de Cálculos</h3>
-                <div class="roseta form-container">
-                    <div class="form-group">
-                        <label for="tipoCalculo">Tipo de Cálculo:</label>
-                        <select id="tipoCalculo" onchange="updateRosetaLabels()">
-                            <option value="corrente">Corrente (A)</option>
-                            <option value="potencia">Potência (W)</option>
-                            <option value="secao">Seção do Cabo (mm²)</option>
-                            <option value="queda">Queda de Tensão (%)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="rosetaInput1" id="labelValor1">Potência (W):</label>
-                        <input type="number" id="rosetaInput1" min="0" step="0.1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="rosetaInput2" id="labelValor2">Tensão (V):</label>
-                        <input type="number" id="rosetaInput2" min="0" step="0.1" required>
-                    </div>
-                    <div class="button-group">
-                        <button type="button" class="btn btn-primary" onclick="calcularRoseta()">Calcular</button>
-                    </div>
-                    <div id="resultadoRoseta" class="result-box" aria-live="assertive"></div>
-                    <svg id="rosetaSvg" width="300" height="300" xmlns="http://www.w3.org/2000/svg" aria-labelledby="roseta-title">
-                        <title id="roseta-title">Diagrama da roseta de cálculos elétricos</title>
-                        <circle cx="150" cy="150" r="100" fill="none" stroke="black" stroke-width="2"/>
-                        <text x="140" y="50" font-size="12">Corrente</text>
-                        <text x="240" y="150" font-size="12">Potência</text>
-                        <text x="140" y="250" font-size="12">Seção</text>
-                        <text x="40" y="150" font-size="12">Queda</text>
-                        <circle cx="150" cy="150" r="10" fill="blue"/>
-                    </svg>
-                </div>
             </section>
         </div>
     </main>
 
     <footer role="contentinfo">
-        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-15">15/06/2025</time></p>
-        <p><small>Os cálculos são baseados na NBR 5410 e destinam-se a fins educacionais. Consulte um engenheiro eletricista.</small></p>
+        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-16">16/06/2025</time></p>
+        <p><small>Baseado em NBR 5410. Consulte um engenheiro.</small></p>
     </footer>
 
     <script src="script.js"></script>
