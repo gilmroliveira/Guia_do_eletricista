@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Crie projetos elétricos BIM com upload de plantas e anotações conforme NBR 5410.">
-    <title>Projeto Elétrico BIM - Guia do Eletricista</title>
+    <meta name="description" content="Crie projetos elétricos BIM com plantas e anotações.">
+    <title>Projeto BIM Elétrico</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header role="banner">
-        <h1>Projeto Elétrico BIM</h1>
+        <h1>Projeto BIM Elétrico</h1>
         <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
     </header>
 
@@ -31,19 +31,17 @@
         <div class="content">
             <section id="projeto-bim-eletrico" aria-labelledby="projeto-bim-heading">
                 <h2 id="projeto-bim-heading">Crie Seu Projeto Elétrico BIM</h2>
-                <p>Carregue uma planta, adicione anotações e gere um relatório conforme NBR 5410.</p>
-                <form id="formProjetoBIM" class="form-container" aria-label="Formulário de projeto BIM elétrico">
+                <form id="formProjetoBIM" class="form-container">
                     <div class="form-group">
-                        <label for="plantaBIMUpload">Carregar Planta (Imagem):</label>
+                        <label for="plantaBIMUpload">Carregar Planta:</label>
                         <input type="file" id="plantaBIMUpload" accept="image/*" required onchange="loadBIMImage()">
                     </div>
                     <div class="form-group">
-                        <label for="tensaoBIM">Tensão Principal (V):</label>
+                        <label for="tensaoBIM">Tensão (V):</label>
                         <select id="tensaoBIM" required>
-                            <option value="" disabled selected>Selecione a tensão</option>
-                            <option value="127">127V (Monofásico)</option>
-                            <option value="220">220V (Bifásico/Trifásico)</option>
-                            <option value="380">380V (Trifásico)</option>
+                            <option value="127">127V</option>
+                            <option value="220" selected>220V</option>
+                            <option value="380">380V</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -57,27 +55,50 @@
                     </div>
                     <div id="annotationOptions" class="form-group" style="display: none;">
                         <label for="annotationPower">Potência (W):</label>
-                        <input type="number" id="annotationPower" min="0" step="1" placeholder="Ex.: 5400">
+                        <input type="number" id="annotationPower" min="0" step="1">
                     </div>
                     <div class="button-group">
-                        <button type="button" class="btn btn-add" onclick="addBIMAnnotation()">+ Adicionar Anotação</button>
-                        <button type="button" class="btn btn-primary" onclick="generateBIMProject()">Gerar Projeto</button>
-                        <button type="button" class="btn btn-secondary" onclick="exportBIMReport()">Exportar Relatório</button>
+                        <button type="button" class="btn btn-add" onclick="addBIMAnnotation()">+ Anotação</button>
+                        <button type="button" class="btn btn-primary" onclick="generateBIMProject()">Gerar</button>
+                        <button type="button" class="btn btn-secondary" onclick="exportBIMReport()">Exportar</button>
                         <button type="button" class="btn btn-secondary" onclick="resetBIMForm()">Limpar</button>
                     </div>
                     <div id="canvasBIMContainer" class="canvas-container">
                         <img id="plantaBIMImagem" style="max-width: 100%; display: none;">
-                        <canvas id="annotationBIMCanvas" style="position: absolute; top: 0; left: 0; z-index: 1;"></canvas>
+                        <canvas id="annotationBIMCanvas"></canvas>
                     </div>
-                    <div id="resultadoBIM" class="result-box" aria-live="polite"></div>
+                    <div id="resultadoBIM" class="result-box"></div>
                 </form>
+                <section aria-labelledby="ferramentas-heading">
+                    <h3 id="ferramentas-heading">Ferramentas Gratuitas para Projetos Elétricos</h3>
+                    <p>Existem várias ferramentas online gratuitas para criação de projetos elétricos, tanto para estudantes quanto para profissionais. O Lucidchart e o Canva são exemplos de plataformas que oferecem recursos para diagramação de circuitos elétricos, incluindo bibliotecas de símbolos e ferramentas de desenho. Além disso, existem softwares como o QElectroTech e o CADe SIMU, que são gratuitos e específicos para projetos elétricos.</p>
+                    <h4>Ferramentas Online Gratuitas:</h4>
+                    <ul>
+                        <li><strong>Lucidchart:</strong> Conta gratuita com recursos para diagramas de circuito e biblioteca de símbolos elétricos.</li>
+                        <li><strong>Canva:</strong> Criador de diagramas com conectores automáticos e símbolos elétricos.</li>
+                        <li><strong>QElectroTech:</strong> Software gratuito para diagramas elétricos.</li>
+                        <li><strong>CADe SIMU:</strong> Software gratuito para simulação de diagramas elétricos.</li>
+                        <li><strong>Visual Paradigm Online:</strong> Criador de diagramas elétricos básicos online.</li>
+                        <li><strong>WOCA:</strong> Ferramenta online para projetos elétricos, focada em simplicidade e apresentação.</li>
+                    </ul>
+                    <h4>Ferramentas para Estudantes:</h4>
+                    <ul>
+                        <li><strong>Siemens Capital X Panel Designer:</strong> Software gratuito para estudantes e educadores, com colaboração e automação.</li>
+                    </ul>
+                    <h4>Outras Opções:</h4>
+                    <ul>
+                        <li><strong>Edraw:</strong> Software profissional com modelos e ferramentas para projetos detalhados.</li>
+                        <li><strong>App Elétrico:</strong> Aplicativo para plantas baixas e relatórios.</li>
+                    </ul>
+                    <p>Verifique os recursos e limitações de cada ferramenta antes de escolher a mais adequada.</p>
+                </section>
             </section>
         </div>
     </main>
 
     <footer role="contentinfo">
-        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-15">15/06/2025</time></p>
-        <p><small>Os projetos são baseados na NBR 5410 e destinam-se a fins educacionais. Consulte um engenheiro eletricista.</small></p>
+        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-16">16/06/2025</time></p>
+        <p><small>Baseado em NBR 5410. Consulte um engenheiro.</small></p>
     </footer>
 
     <script src="script.js"></script>
