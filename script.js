@@ -1,56 +1,49 @@
-// script.js - Script integrado para todas as páginas
-
-// Estado para projeto online
-const ProjetoOnlineState = {
-    comodoCount: 0,
-    tueCounts: []
+// Estados isolados por página
+const states = {
+    calculadora: { sistema: 'monofasico', potencia: 0, tensao: 220, comprimento: 0 },
+    projetoOnline: { comodoCount: 0, tueCounts: [] },
+    projetoImagem: { annotations: [], canvas: null, context: null, image: null, isDrawing: false, draggingIndex: null },
+    projetoBIM: { annotations: [], canvas: null, context: null, image: null, isDrawing: false, draggingIndex: null }
 };
 
-// Funções para tabs (normas)
 document.addEventListener('DOMContentLoaded', () => {
+    const page = document.body.id || 'index';
     const tabButtons = document.querySelectorAll('.tab-button');
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             tabButtons.forEach(btn => btn.setAttribute('aria-selected', 'false'));
             button.setAttribute('aria-selected', 'true');
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.setAttribute('aria-hidden', 'true');
-            });
+            document.querySelectorAll('.tab-content').forEach(content => content.setAttribute('aria-hidden', 'true'));
             document.getElementById(button.dataset.tab).setAttribute('aria-hidden', 'false');
         });
     });
 
-    // Inicializa projeto online apenas na página correspondente
-    if (document.getElementById('projeto-online')) {
-        initProjetoOnline();
-        updateRosetaLabels(); // Inicializa labels da roseta
-    }
+    if (document.getElementById('projeto-online')) initProjetoOnline();
+    if (document.getElementById('projeto-imagem')) initImageProject();
+    if (document.getElementById('projeto-bim-eletrico')) initBIMProject();
 });
 
-// Calculadora Simplificada (index.html)
+// Calculadora (index.html)
 function calcularDimensionamento() {
-    const potencia = parseFloat(document.getElementById('potencia').value) || 0;
-    const tensao = parseFloat(document.getElementById('tensao').value) || 220;
-    const comprimento = parseFloat(document.getElementById('comprimento').value) || 0;
+    const { potencia, tensao, comprimento } = states.calculadora;
     const sistema = document.getElementById('sistema').value;
     const resultado = document.getElementById('resultado');
 
-    if (potencia <= 0 || tensao <= 0) {
-        document.getElementById('potencia-error').textContent = 'Potência e tensão devem ser maiores que zero.';
+    const p = parseFloat(document.getElementById('potencia').value) || 0;
+    const t = parseFloat(document.getElementById('tensao').value) || 220;
+    const c = parseFloat(document.getElementById('comprimento').value) || 0;
+
+    if (p <= 0 || t <= 0) {
+        document.getElementById('potencia-error').textContent = 'Valores inválidos.';
         resultado.innerHTML = '';
         return;
     }
 
-    const corrente = (sistema === 'monofasico') ? potencia / tensao : potencia / (tensao * Math.sqrt(3));
-    const quedaTensao = (2 * corrente * comprimento * 0.017) / tensao * 100; // Aproximação com R = 0.017 Ω/mm²
-    const bitolaMinima = Math.ceil(corrente / 10) * 2.5; // Regra simplificada
+    const corrente = (sistema === 'monofasico') ? p / t : p / (t * Math.sqrt(3));
+    const quedaTensao = (2 * corrente * c * 0.017) / t * 100;
+    const bitolaMinima = Math.ceil(corrente / 10) * 2.5;
 
-    resultado.innerHTML = `
-        <p><strong>Corrente:</strong> ${corrente.toFixed(2)} A</p>
-        <p><strong>Queda de Tensão:</strong> ${quedaTensao.toFixed(2)} %</p>
-        <p><strong>Bitola Mínima Sugerida:</strong> ${bitolaMinima} mm²</p>
-        <p class="error">Nota: Consulte NBR 5410 para validação.</p>
-    `;
+    resultado.innerHTML = `<p>Corrente: ${corrente.toFixed(2)} A</p><p>Queda: ${quedaTensao.toFixed(2)} %</p><p>Bitola: ${bitolaMinima} mm²</p><p class="error">Consulte NBR 5410.</p>`;
     document.getElementById('potencia-error').textContent = '';
 }
 
@@ -65,322 +58,132 @@ function resetForm() {
 
 // Projeto Online
 function initProjetoOnline() {
-    ProjetoOnlineState.comodoCount = 0;
-    ProjetoOnlineState.tueCounts = [];
+    states.projetoOnline.comodoCount = 0;
+    states.projetoOnline.tueCounts = [];
     addComodoField();
 }
 
 function addComodoField() {
-    const containerComodos = document.getElementById('containerComodos');
-    if (!containerComodos) return;
+    const container = document.getElementById('containerComodos');
+    if (!container) return;
 
-    const comodoItem = document.createElement('div');
-    comodoItem.className = 'comodo-item';
-    comodoItem.dataset.comodoId = ProjetoOnlineState.comodoCount;
-    comodoItem.innerHTML = `
-        <h3>Cômodo ${ProjetoOnlineState.comodoCount + 1}</h3>
-        <div class="form-group">
-            <label for="nomeComodo_${ProjetoOnlineState.comodoCount}">Nome do Cômodo:</label>
-            <input type="text" id="nomeComodo_${ProjetoOnlineState.comodoCount}" value="Cômodo ${ProjetoOnlineState.comodoCount + 1}" required>
-        </div>
-        <div class="form-group">
-            <label for="tipoComodo_${ProjetoOnlineState.comodoCount}">Tipo de Cômodo:</label>
-            <select id="tipoComodo_${ProjetoOnlineState.comodoCount}" required>
-                <option value="sala">Sala</option>
-                <option value="quarto">Quarto</option>
-                <option value="cozinha">Cozinha</option>
-                <option value="banheiro">Banheiro</option>
-                <option value="areaServico">Área de Serviço</option>
-                <option value="circulacao">Corredor/Hall</option>
-                <option value="garagem">Garagem</option>
-                <option value="outro">Outro</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="areaComodo_${ProjetoOnlineState.comodoCount}">Área (m²):</label>
-            <input type="number" id="areaComodo_${ProjetoOnlineState.comodoCount}" min="1" step="0.1" value="15" required>
-        </div>
-        <div class="form-group">
-            <label for="perimetroComodo_${ProjetoOnlineState.comodoCount}">Perímetro (m):</label>
-            <input type="number" id="perimetroComodo_${ProjetoOnlineState.comodoCount}" min="1" step="0.1" value="15" required>
-        </div>
-        <div class="tue-container">
-            <h4>Tomadas de Uso Específico (TUEs):</h4>
-            <button type="button" class="btn btn-add" onclick="addTUEField(${ProjetoOnlineState.comodoCount})">+ Adicionar TUE</button>
-            <div id="tueFields_${ProjetoOnlineState.comodoCount}"></div>
-        </div>
-        <button type="button" class="btn btn-remove" onclick="removeComodoField(this)">- Remover Cômodo</button>
+    const item = document.createElement('div');
+    item.className = 'comodo-item';
+    item.dataset.id = states.projetoOnline.comodoCount;
+    item.innerHTML = `
+        <h3>Cômodo ${states.projetoOnline.comodoCount + 1}</h3>
+        <div class="form-group"><label for="nome_${states.projetoOnline.comodoCount}">Nome:</label><input type="text" id="nome_${states.projetoOnline.comodoCount}" value="Cômodo ${states.projetoOnline.comodoCount + 1}" required></div>
+        <div class="form-group"><label for="tipo_${states.projetoOnline.comodoCount}">Tipo:</label><select id="tipo_${states.projetoOnline.comodoCount}"><option value="sala">Sala</option><option value="quarto">Quarto</option></select></div>
+        <div class="form-group"><label for="area_${states.projetoOnline.comodoCount}">Área (m²):</label><input type="number" id="area_${states.projetoOnline.comodoCount}" min="1" value="15" required></div>
+        <div class="tue-container"><button type="button" class="btn btn-add" onclick="addTUEField(${states.projetoOnline.comodoCount})">+ TUE</button><div id="tue_${states.projetoOnline.comodoCount}"></div></div>
+        <button type="button" class="btn btn-remove" onclick="removeComodoField(this)">- Remover</button>
     `;
-    containerComodos.appendChild(comodoItem);
-    ProjetoOnlineState.tueCounts[ProjetoOnlineState.comodoCount] = 0;
-    ProjetoOnlineState.comodoCount++;
+    container.appendChild(item);
+    states.projetoOnline.tueCounts[states.projetoOnline.comodoCount] = 0;
+    states.projetoOnline.comodoCount++;
 }
 
-function addTUEField(comodoIndex) {
-    const tueFields = document.getElementById(`tueFields_${comodoIndex}`);
-    if (!tueFields) return;
+function addTUEField(comodoId) {
+    const tueContainer = document.getElementById(`tue_${comodoId}`);
+    if (!tueContainer) return;
 
-    const tueIndex = ProjetoOnlineState.tueCounts[comodoIndex] || 0;
-    ProjetoOnlineState.tueCounts[comodoIndex] = tueIndex + 1;
-
+    const tueIndex = states.projetoOnline.tueCounts[comodoId]++;
     const tueItem = document.createElement('div');
     tueItem.className = 'tue-item';
     tueItem.innerHTML = `
-        <div class="form-group">
-            <label for="tueNome_${comodoIndex}_${tueIndex}">Nome da TUE:</label>
-            <input type="text" id="tueNome_${comodoIndex}_${tueIndex}" required placeholder="Ex.: Chuveiro">
-        </div>
-        <div class="form-group">
-            <label for="tuePotencia_${comodoIndex}_${tueIndex}">Potência (W):</label>
-            <input type="number" id="tuePotencia_${comodoIndex}_${tueIndex}" min="0" step="1" required placeholder="Ex.: 5400">
-        </div>
-        <button type="button" class="btn btn-remove" onclick="removeTUEField(${comodoIndex}, this)">- Remover TUE</button>
+        <div class="form-group"><label for="tueNome_${comodoId}_${tueIndex}">Nome:</label><input type="text" id="tueNome_${comodoId}_${tueIndex}" placeholder="Ex.: Chuveiro"></div>
+        <div class="form-group"><label for="tuePot_${comodoId}_${tueIndex}">Potência (W):</label><input type="number" id="tuePot_${comodoId}_${tueIndex}" min="0" placeholder="Ex.: 5400"></div>
+        <button type="button" class="btn btn-remove" onclick="removeTUEField(${comodoId}, this)">- Remover</button>
     `;
-    tueFields.appendChild(tueItem);
+    tueContainer.appendChild(tueItem);
 }
 
-function removeTUEField(comodoIndex, button) {
-    if (button.parentElement) {
-        button.parentElement.remove();
-        ProjetoOnlineState.tueCounts[comodoIndex]--;
-    }
+function removeTUEField(comodoId, button) {
+    if (button.parentElement) button.parentElement.remove();
 }
 
 function removeComodoField(button) {
-    if (button.parentElement) {
-        button.parentElement.remove();
-        ProjetoOnlineState.comodoCount--;
-    }
+    if (button.parentElement) button.parentElement.remove();
+    states.projetoOnline.comodoCount--;
 }
 
 function resetProjetoOnlineForm() {
-    if (document.getElementById('projeto-online')) {
-        ProjetoOnlineState.comodoCount = 0;
-        ProjetoOnlineState.tueCounts = [];
-        const containerComodos = document.getElementById('containerComodos');
-        if (containerComodos) containerComodos.innerHTML = '';
-        addComodoField();
-        document.getElementById('formProjetoOnline').reset();
-        document.getElementById('resultadoProjetoOnline').innerHTML = '';
-        document.getElementById('resultadoRoseta').innerHTML = '';
-    }
+    const container = document.getElementById('containerComodos');
+    if (container) container.innerHTML = '';
+    states.projetoOnline.comodoCount = 0;
+    states.projetoOnline.tueCounts = [];
+    initProjetoOnline();
+    document.getElementById('resultadoProjetoOnline').innerHTML = '';
 }
 
 function calcularProjetoOnline() {
-    const tensaoPrincipal = parseFloat(document.getElementById('tensaoPrincipalProjeto').value);
+    const tensao = parseFloat(document.getElementById('tensaoPrincipal').value);
     const comodos = [];
-    const resultadoDiv = document.getElementById('resultadoProjetoOnline');
+    const resultado = document.getElementById('resultadoProjetoOnline');
 
-    if (!tensaoPrincipal || isNaN(tensaoPrincipal)) {
-        resultadoDiv.innerHTML = '<p class="error">Selecione uma tensão principal válida.</p>';
+    if (!tensao) {
+        resultado.innerHTML = '<p class="error">Selecione uma tensão.</p>';
         return;
     }
 
-    for (let i = 0; i < ProjetoOnlineState.comodoCount; i++) {
-        const nome = document.getElementById(`nomeComodo_${i}`)?.value;
-        if (!nome) continue;
-
-        const tipo = document.getElementById(`tipoComodo_${i}`)?.value;
-        const area = parseFloat(document.getElementById(`areaComodo_${i}`)?.value);
-        const perimetro = parseFloat(document.getElementById(`perimetroComodo_${i}`)?.value);
-        const tueFields = document.getElementById(`tueFields_${i}`)?.children || [];
+    for (let i = 0; i < states.projetoOnline.comodoCount; i++) {
+        const nome = document.getElementById(`nome_${i}`)?.value;
+        const tipo = document.getElementById(`tipo_${i}`)?.value;
+        const area = parseFloat(document.getElementById(`area_${i}`)?.value) || 0;
+        const tueContainer = document.getElementById(`tue_${i}`)?.children || [];
         const tue = [];
 
-        if (isNaN(area) || isNaN(perimetro) || area <= 0 || perimetro <= 0) {
-            resultadoDiv.innerHTML = '<p class="error">Verifique os valores de área e perímetro do cômodo.</p>';
-            return;
-        }
+        if (!nome || area <= 0) continue;
 
-        for (let j = 0; j < tueFields.length; j++) {
+        for (let j = 0; j < tueContainer.length; j++) {
             const tueNome = document.getElementById(`tueNome_${i}_${j}`)?.value;
-            const tuePotencia = parseFloat(document.getElementById(`tuePotencia_${i}_${j}`)?.value);
-            if (tueNome && !isNaN(tuePotencia) && tuePotencia > 0) {
-                tue.push({ nome: tueNome, potencia: tuePotencia });
-            }
+            const tuePot = parseFloat(document.getElementById(`tuePot_${i}_${j}`)?.value) || 0;
+            if (tueNome && tuePot > 0) tue.push({ nome: tueNome, potencia: tuePot });
         }
 
-        comodos.push({ nome, tipo, area, perimetro, tue });
+        comodos.push({ nome, tipo, area, tue });
     }
 
-    if (comodos.length === 0) {
-        resultadoDiv.innerHTML = '<p class="error">Adicione pelo menos um cômodo.</p>';
+    if (!comodos.length) {
+        resultado.innerHTML = '<p class="error">Adicione um cômodo.</p>';
         return;
     }
 
-    console.log('Projeto enviado:', { tensaoPrincipal, comodos });
+    const totalPotencia = comodos.reduce((sum, c) => sum + c.tue.reduce((s, t) => s + t.potencia, 0), 0);
+    const correnteTotal = totalPotencia / tensao;
+    const bitolaMinima = Math.ceil(correnteTotal / 10) * 2.5;
 
-    try {
-        const projeto = { tensaoPrincipal, comodos };
-        const relatorio = DimensionadorEletrico.dimensionar(projeto);
-
-        console.log('Relatório retornado:', relatorio);
-
-        if (!relatorio || typeof relatorio !== 'object') {
-            throw new Error('Relatório inválido retornado por DimensionadorEletrico');
-        }
-
-        let html = `
-            <h3>Relatório do Projeto Elétrico</h3>
-            <p><strong>Tensão Principal:</strong> ${relatorio.tensaoPrincipal || tensaoPrincipal} V</p>
-            <p><strong>Tipo de Sistema:</strong> ${relatorio.tipoSistemaNecessario || 'Não especificado'}</p>
-            <p><strong>Demanda Total:</strong> ${(relatorio.demandaTotalVA / 1000 || 0).toFixed(2)} kVA</p>
-            <p><strong>Corrente Total:</strong> ${relatorio.correnteTotalA?.toFixed(2) || 'N/A'} A</p>
-            <h4>Circuitos:</h4>
-            <table aria-label="Resumo dos circuitos">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Tipo</th>
-                        <th>Potência (VA)</th>
-                        <th>Corrente (A)</th>
-                        <th>Bitola (mm²)</th>
-                        <th>Disjuntor (A)</th>
-                        <th>Eletroduto (mm)</th>
-                        <th>Queda de Tensão (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        if (Array.isArray(relatorio.circuitos)) {
-            relatorio.circuitos.forEach(circuito => {
-                html += `
-                    <tr>
-                        <td>${circuito.nome || 'N/A'}</td>
-                        <td>${circuito.tipo || 'N/A'}</td>
-                        <td>${circuito.potenciaVA || 0}</td>
-                        <td>${(circuito.correnteA || 0).toFixed(2)}</td>
-                        <td>${circuito.bitolaFio || 'N/A'}</td>
-                        <td>${circuito.disjuntorRecomendadoA || 'N/A'}</td>
-                        <td>${circuito.eletrodutoMm || 'Consultar'}</td>
-                        <td>${(circuito.quedaTensaoPercentual || 0).toFixed(2)}</td>
-                    </tr>
-                `;
-            });
-        } else {
-            html += '<tr><td colspan="8">Nenhum circuito calculado.</td></tr>';
-        }
-
-        html += `
-                </tbody>
-            </table>
-            <h4>Recomendações Gerais:</h4>
-            <ul>
-                <li><strong>Bitola do Alimentador:</strong> ${relatorio.recomendacoesFioGeral?.bitolaMm2 || 'N/A'} mm² (${relatorio.recomendacoesFioGeral?.tipoFio || 'N/A'})</li>
-                <li><strong>Eletroduto Principal:</strong> ${relatorio.recomendacoesEletrodutoGeral?.diametroMm || 'N/A'} mm</li>
-            </ul>
-            ${relatorio.automacaoRecomendada?.observacoes?.length > 0 ? `<p><strong>Automação Recomendada:</strong> ${relatorio.automacaoRecomendada.observacoes.join(' ')}</p>` : ''}
-            <p class="error">Nota: Consulte um engenheiro eletricista para validar o projeto (NBR 5410).</p>
-        `;
-        resultadoDiv.innerHTML = html;
-    } catch (error) {
-        console.error('Erro ao calcular projeto:', error);
-        resultadoDiv.innerHTML = '<p class="error">Erro ao processar o projeto. Verifique os dados e tente novamente. Detalhes no console.</p>';
-    }
+    resultado.innerHTML = `
+        <h3>Relatório</h3>
+        <p>Tensão: ${tensao} V</p>
+        <p>Demanda Total: ${(totalPotencia / 1000).toFixed(2)} kVA</p>
+        <p>Corrente Total: ${correnteTotal.toFixed(2)} A</p>
+        <p>Bitola Mínima: ${bitolaMinima} mm²</p>
+        <p class="error">Consulte NBR 5410 e um engenheiro.</p>
+    `;
 }
 
-// Roseta
-function updateRosetaLabels() {
-    if (document.getElementById('projeto-online')) {
-        const tipo = document.getElementById('tipoCalculo').value;
-        const labels = {
-            corrente: ['Potência (W)', 'Tensão (V)'],
-            potencia: ['Corrente (A)', 'Tensão (V)'],
-            secao: ['Corrente (A)', 'Comprimento (m)'],
-            queda: ['Corrente (A)', 'Tensão (V)']
-        };
-        document.getElementById('labelValor1').textContent = labels[tipo][0] + ':';
-        document.getElementById('labelValor2').textContent = labels[tipo][1] + ':';
-    }
+// Projeto Imagem
+function initImageProject() {
+    states.projetoImagem.canvas = document.getElementById('annotationCanvas');
+    states.projetoImagem.context = states.projetoImagem.canvas?.getContext('2d');
 }
 
-function calcularRoseta() {
-    if (document.getElementById('projeto-online')) {
-        const tipo = document.getElementById('tipoCalculo').value;
-        const valor1 = parseFloat(document.getElementById('rosetaInput1').value) || 0;
-        const valor2 = parseFloat(document.getElementById('rosetaInput2').value) || 0;
-        const resultado = document.getElementById('resultadoRoseta');
-
-        let calculo;
-        switch (tipo) {
-            case 'corrente':
-                calculo = valor1 / valor2;
-                resultado.innerHTML = `<p>Corrente: ${calculo.toFixed(2)} A</p>`;
-                break;
-            case 'potencia':
-                calculo = valor1 * valor2;
-                resultado.innerHTML = `<p>Potência: ${calculo.toFixed(2)} W</p>`;
-                break;
-            case 'secao':
-                calculo = (valor1 * valor2 * 0.017) / 10; // Aproximação
-                resultado.innerHTML = `<p>Seção: ${calculo.toFixed(2)} mm²</p>`;
-                break;
-            case 'queda':
-                calculo = (valor1 * valor2 * 0.017) / 100;
-                resultado.innerHTML = `<p>Queda de Tensão: ${calculo.toFixed(2)} %</p>`;
-                break;
-        }
-    }
-}
-
-// Mock para DimensionadorEletrico
-if (typeof DimensionadorEletrico === 'undefined') {
-    console.warn('DimensionadorEletrico não definido. Usando mock para depuração.');
-    window.DimensionadorEletrico = {
-        dimensionar: function(projeto) {
-            const totalPotencia = projeto.comodos.reduce((sum, comodo) => sum + comodo.tue.reduce((s, t) => s + t.potencia, 0), 0);
-            const correnteTotal = totalPotencia / projeto.tensaoPrincipal;
-            return {
-                tensaoPrincipal: projeto.tensaoPrincipal,
-                tipoSistemaNecessario: 'Bifásico',
-                demandaTotalVA: totalPotencia,
-                correnteTotalA: correnteTotal,
-                circuitos: projeto.comodos.map(comodo => ({
-                    nome: comodo.nome,
-                    tipo: comodo.tipo,
-                    potenciaVA: comodo.tue.reduce((s, t) => s + t.potencia, 0),
-                    correnteA: comodo.tue.reduce((s, t) => s + t.potencia, 0) / projeto.tensaoPrincipal,
-                    bitolaFio: '2.5 mm²', // Aproximação
-                    disjuntorRecomendadoA: 20, // Aproximação
-                    eletrodutoMm: 20,
-                    quedaTensaoPercentual: 2.5
-                })),
-                recomendacoesFioGeral: { bitolaMm2: '4 mm²', tipoFio: 'Fio de Cobre' },
-                recomendacoesEletrodutoGeral: { diametroMm: 25 },
-                automacaoRecomendada: { observacoes: ['Instalar disjuntor DR'] }
-            };
-        }
-    };
-}
-// Adicionar ao final de script.js
-
-// Estado para projeto com imagem
-const ImageProjectState = {
-    annotations: [],
-    canvas: null,
-    context: null,
-    image: null,
-    isDrawing: false
-};
-
-// Funções para projeto com imagem
 function loadImage() {
     const file = document.getElementById('plantaUpload').files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = (e) => {
             const img = new Image();
-            img.onload = function() {
-                ImageProjectState.image = img;
-                const canvas = document.getElementById('annotationCanvas');
+            img.onload = () => {
+                states.projetoImagem.image = img;
+                const canvas = states.projetoImagem.canvas;
                 const container = document.getElementById('canvasContainer');
                 canvas.width = container.offsetWidth;
                 canvas.height = img.height * (container.offsetWidth / img.width);
-                ImageProjectState.canvas = canvas;
-                ImageProjectState.context = canvas.getContext('2d');
                 document.getElementById('plantaImagem').src = e.target.result;
                 document.getElementById('plantaImagem').style.display = 'block';
-                redrawCanvas();
+                redrawImageCanvas();
             };
             img.src = e.target.result;
         };
@@ -389,22 +192,21 @@ function loadImage() {
 }
 
 function addAnnotation() {
-    if (ImageProjectState.canvas && ImageProjectState.image) {
-        const canvas = ImageProjectState.canvas;
-        const rect = canvas.getBoundingClientRect();
-        const x = (canvas.width / 2) - (rect.left + rect.right) / 2 + rect.width / 2;
-        const y = (canvas.height / 2) - (rect.top + rect.bottom) / 2 + rect.height / 2;
-        ImageProjectState.annotations.push({ x, y, type: 'ponto', label: 'Ponto de Luz' });
-        redrawCanvas();
+    if (states.projetoImagem.canvas && states.projetoImagem.image) {
+        const rect = states.projetoImagem.canvas.getBoundingClientRect();
+        const x = rect.width / 2;
+        const y = rect.height / 2;
+        states.projetoImagem.annotations.push({ x, y, type: 'ponto', label: 'Ponto' });
+        redrawImageCanvas();
     }
 }
 
-function redrawCanvas() {
-    if (ImageProjectState.context && ImageProjectState.image) {
-        const ctx = ImageProjectState.context;
-        ctx.clearRect(0, 0, ImageProjectState.canvas.width, ImageProjectState.canvas.height);
-        ctx.drawImage(ImageProjectState.image, 0, 0, ImageProjectState.canvas.width, ImageProjectState.canvas.height);
-        ImageProjectState.annotations.forEach((ann, index) => {
+function redrawImageCanvas() {
+    if (states.projetoImagem.context && states.projetoImagem.image) {
+        const ctx = states.projetoImagem.context;
+        ctx.clearRect(0, 0, states.projetoImagem.canvas.width, states.projetoImagem.canvas.height);
+        ctx.drawImage(states.projetoImagem.image, 0, 0, states.projetoImagem.canvas.width, states.projetoImagem.canvas.height);
+        states.projetoImagem.annotations.forEach(ann => {
             ctx.beginPath();
             ctx.arc(ann.x, ann.y, 5, 0, 2 * Math.PI);
             ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
@@ -419,100 +221,41 @@ function generateImageProject() {
     const tensao = parseFloat(document.getElementById('tensaoImagem').value);
     const resultado = document.getElementById('resultadoImagem');
 
-    if (!tensao || isNaN(tensao)) {
-        resultado.innerHTML = '<p class="error">Selecione uma tensão principal válida.</p>';
+    if (!tensao) {
+        resultado.innerHTML = '<p class="error">Selecione uma tensão.</p>';
         return;
     }
 
-    if (!ImageProjectState.annotations.length) {
-        resultado.innerHTML = '<p class="error">Adicione pelo menos uma anotação.</p>';
-        return;
-    }
-
-    const totalPotencia = 0; // Placeholder, a ser calculado com base nas anotações
-    const correnteTotal = totalPotencia / tensao;
-
-    resultado.innerHTML = `
-        <h3>Relatório do Projeto com Imagem</h3>
-        <p><strong>Tensão Principal:</strong> ${tensao} V</p>
-        <p><strong>Número de Anotações:</strong> ${ImageProjectState.annotations.length}</p>
-        <p><strong>Corrente Total (Estimada):</strong> ${correnteTotal.toFixed(2)} A</p>
-        <p class="error">Nota: Consulte um engenheiro eletricista para validação (NBR 5410).</p>
-    `;
+    resultado.innerHTML = `<p>Tensão: ${tensao} V</p><p>Anotações: ${states.projetoImagem.annotations.length}</p><p class="error">Consulte NBR 5410.</p>`;
 }
 
 function resetImageForm() {
-    if (document.getElementById('projeto-imagem')) {
-        document.getElementById('plantaUpload').value = '';
-        document.getElementById('tensaoImagem').value = '';
-        document.getElementById('plantaImagem').style.display = 'none';
-        document.getElementById('annotationCanvas').width = 0;
-        document.getElementById('annotationCanvas').height = 0;
-        ImageProjectState.annotations = [];
-        document.getElementById('resultadoImagem').innerHTML = '';
-    }
+    document.getElementById('plantaUpload').value = '';
+    document.getElementById('tensaoImagem').value = '';
+    document.getElementById('plantaImagem').style.display = 'none';
+    states.projetoImagem.canvas.width = 0;
+    states.projetoImagem.annotations = [];
+    document.getElementById('resultadoImagem').innerHTML = '';
 }
 
-// Interatividade (drag and drop)
-document.getElementById('annotationCanvas')?.addEventListener('mousedown', (e) => {
-    const rect = ImageProjectState.canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    ImageProjectState.annotations.forEach((ann, index) => {
-        if (Math.hypot(x - ann.x, y - ann.y) < 10) {
-            ImageProjectState.isDrawing = true;
-            ImageProjectState.draggingIndex = index;
-        }
-    });
-});
+// Projeto BIM
+function initBIMProject() {
+    states.projetoBIM.canvas = document.getElementById('annotationBIMCanvas');
+    states.projetoBIM.context = states.projetoBIM.canvas?.getContext('2d');
+}
 
-document.getElementById('annotationCanvas')?.addEventListener('mousemove', (e) => {
-    if (ImageProjectState.isDrawing && ImageProjectState.draggingIndex !== undefined) {
-        const rect = ImageProjectState.canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        ImageProjectState.annotations[ImageProjectState.draggingIndex].x = x;
-        ImageProjectState.annotations[ImageProjectState.draggingIndex].y = y;
-        redrawCanvas();
-    }
-});
-
-document.getElementById('annotationCanvas')?.addEventListener('mouseup', () => {
-    ImageProjectState.isDrawing = false;
-    ImageProjectState.draggingIndex = undefined;
-});
-
-document.getElementById('annotationCanvas')?.addEventListener('mouseleave', () => {
-    ImageProjectState.isDrawing = false;
-    ImageProjectState.draggingIndex = undefined;
-});
-// Adicionar ao final de script.js
-
-// Estado para projeto BIM elétrico
-const BIMProjectState = {
-    annotations: [],
-    canvas: null,
-    context: null,
-    image: null,
-    isDrawing: false,
-    draggingIndex: null
-};
-
-// Funções para projeto BIM elétrico
 function loadBIMImage() {
     const file = document.getElementById('plantaBIMUpload').files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = (e) => {
             const img = new Image();
-            img.onload = function() {
-                BIMProjectState.image = img;
-                const canvas = document.getElementById('annotationBIMCanvas');
+            img.onload = () => {
+                states.projetoBIM.image = img;
+                const canvas = states.projetoBIM.canvas;
                 const container = document.getElementById('canvasBIMContainer');
                 canvas.width = container.offsetWidth;
                 canvas.height = img.height * (container.offsetWidth / img.width);
-                BIMProjectState.canvas = canvas;
-                BIMProjectState.context = canvas.getContext('2d');
                 document.getElementById('plantaBIMImagem').src = e.target.result;
                 document.getElementById('plantaBIMImagem').style.display = 'block';
                 redrawBIMCanvas();
@@ -525,33 +268,27 @@ function loadBIMImage() {
 
 function updateAnnotationOptions() {
     const type = document.getElementById('annotationType').value;
-    const options = document.getElementById('annotationOptions');
-    if (type === 'pontoLuz' || type === 'tomada' || type === 'disjuntor') {
-        options.style.display = 'block';
-    } else {
-        options.style.display = 'none';
-    }
+    document.getElementById('annotationOptions').style.display = ['cabos', 'outro'].includes(type) ? 'none' : 'block';
 }
 
 function addBIMAnnotation() {
-    if (BIMProjectState.canvas && BIMProjectState.image) {
+    if (states.projetoBIM.canvas && states.projetoBIM.image) {
         const type = document.getElementById('annotationType').value;
         const power = parseFloat(document.getElementById('annotationPower').value) || 0;
-        const canvas = BIMProjectState.canvas;
-        const rect = canvas.getBoundingClientRect();
-        const x = (canvas.width / 2) - (rect.left + rect.right) / 2 + rect.width / 2;
-        const y = (canvas.height / 2) - (rect.top + rect.bottom) / 2 + rect.height / 2;
-        BIMProjectState.annotations.push({ x, y, type, power, label: `${type} (${power}W)` });
+        const rect = states.projetoBIM.canvas.getBoundingClientRect();
+        const x = rect.width / 2;
+        const y = rect.height / 2;
+        states.projetoBIM.annotations.push({ x, y, type, power, label: `${type} (${power}W)` });
         redrawBIMCanvas();
     }
 }
 
 function redrawBIMCanvas() {
-    if (BIMProjectState.context && BIMProjectState.image) {
-        const ctx = BIMProjectState.context;
-        ctx.clearRect(0, 0, BIMProjectState.canvas.width, BIMProjectState.canvas.height);
-        ctx.drawImage(BIMProjectState.image, 0, 0, BIMProjectState.canvas.width, BIMProjectState.canvas.height);
-        BIMProjectState.annotations.forEach((ann, index) => {
+    if (states.projetoBIM.context && states.projetoBIM.image) {
+        const ctx = states.projetoBIM.context;
+        ctx.clearRect(0, 0, states.projetoBIM.canvas.width, states.projetoBIM.canvas.height);
+        ctx.drawImage(states.projetoBIM.image, 0, 0, states.projetoBIM.canvas.width, states.projetoBIM.canvas.height);
+        states.projetoBIM.annotations.forEach(ann => {
             ctx.beginPath();
             ctx.arc(ann.x, ann.y, 5, 0, 2 * Math.PI);
             ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
@@ -566,32 +303,24 @@ function generateBIMProject() {
     const tensao = parseFloat(document.getElementById('tensaoBIM').value);
     const resultado = document.getElementById('resultadoBIM');
 
-    if (!tensao || isNaN(tensao)) {
-        resultado.innerHTML = '<p class="error">Selecione uma tensão principal válida.</p>';
+    if (!tensao) {
+        resultado.innerHTML = '<p class="error">Selecione uma tensão.</p>';
         return;
     }
 
-    if (!BIMProjectState.annotations.length) {
-        resultado.innerHTML = '<p class="error">Adicione pelo menos uma anotação.</p>';
-        return;
-    }
-
-    const totalPotencia = BIMProjectState.annotations.reduce((sum, ann) => sum + (ann.power || 0), 0);
+    const totalPotencia = states.projetoBIM.annotations.reduce((sum, ann) => sum + (ann.power || 0), 0);
     const correnteTotal = totalPotencia / tensao;
-    const bitolaMinima = Math.ceil(correnteTotal / 10) * 2.5; // Regra simplificada NBR 5410
+    const bitolaMinima = Math.ceil(correnteTotal / 10) * 2.5;
 
     resultado.innerHTML = `
         <div class="bim-report">
-            <h3>Relatório do Projeto Elétrico BIM</h3>
-            <p><strong>Tensão Principal:</strong> ${tensao} V</p>
-            <p><strong>Demanda Total:</strong> ${(totalPotencia / 1000).toFixed(2)} kVA</p>
-            <p><strong>Corrente Total:</strong> ${correnteTotal.toFixed(2)} A</p>
-            <p><strong>Bitola Mínima Sugerida:</strong> ${bitolaMinima} mm²</p>
-            <h4>Anotações:</h4>
-            <ul>
-                ${BIMProjectState.annotations.map(ann => `<li>${ann.label}</li>`).join('')}
-            </ul>
-            <p class="error">Nota: Consulte NBR 5410 e um engenheiro eletricista para validação.</p>
+            <h3>Relatório BIM</h3>
+            <p>Tensão: ${tensao} V</p>
+            <p>Demanda: ${(totalPotencia / 1000).toFixed(2)} kVA</p>
+            <p>Corrente: ${correnteTotal.toFixed(2)} A</p>
+            <p>Bitola: ${bitolaMinima} mm²</p>
+            <ul>${states.projetoBIM.annotations.map(ann => `<li>${ann.label}</li>`).join('')}</ul>
+            <p class="error">Consulte NBR 5410.</p>
         </div>
     `;
 }
@@ -602,58 +331,63 @@ function exportBIMReport() {
         const blob = new Blob([resultado], { type: 'text/html' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `relatorio_bim_eletrico_${new Date().toISOString().slice(0, 10)}.html`;
+        link.download = `relatorio_bim_${new Date().toISOString().slice(0, 10)}.html`;
         link.click();
-    } else {
-        alert('Gerar o projeto antes de exportar!');
     }
 }
 
 function resetBIMForm() {
-    if (document.getElementById('projeto-bim-eletrico')) {
-        document.getElementById('plantaBIMUpload').value = '';
-        document.getElementById('tensaoBIM').value = '';
-        document.getElementById('annotationType').value = 'pontoLuz';
-        document.getElementById('annotationPower').value = '';
-        document.getElementById('plantaBIMImagem').style.display = 'none';
-        document.getElementById('annotationBIMCanvas').width = 0;
-        document.getElementById('annotationBIMCanvas').height = 0;
-        BIMProjectState.annotations = [];
-        document.getElementById('resultadoBIM').innerHTML = '';
-        document.getElementById('annotationOptions').style.display = 'none';
-    }
+    document.getElementById('plantaBIMUpload').value = '';
+    document.getElementById('tensaoBIM').value = '';
+    document.getElementById('annotationType').value = 'pontoLuz';
+    document.getElementById('annotationPower').value = '';
+    document.getElementById('plantaBIMImagem').style.display = 'none';
+    states.projetoBIM.canvas.width = 0;
+    states.projetoBIM.annotations = [];
+    document.getElementById('resultadoBIM').innerHTML = '';
+    document.getElementById('annotationOptions').style.display = 'none';
 }
 
-// Interatividade (drag and drop)
-document.getElementById('annotationBIMCanvas')?.addEventListener('mousedown', (e) => {
-    const rect = BIMProjectState.canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    BIMProjectState.annotations.forEach((ann, index) => {
-        if (Math.hypot(x - ann.x, y - ann.y) < 10) {
-            BIMProjectState.isDrawing = true;
-            BIMProjectState.draggingIndex = index;
-        }
-    });
-});
+// Interatividade
+['annotationCanvas', 'annotationBIMCanvas'].forEach(id => {
+    const canvas = document.getElementById(id);
+    if (canvas) {
+        canvas.addEventListener('mousedown', (e) => {
+            const state = id === 'annotationCanvas' ? states.projetoImagem : states.projetoBIM;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            state.annotations.forEach((ann, index) => {
+                if (Math.hypot(x - ann.x, y - ann.y) < 10) {
+                    state.isDrawing = true;
+                    state.draggingIndex = index;
+                }
+            });
+        });
 
-document.getElementById('annotationBIMCanvas')?.addEventListener('mousemove', (e) => {
-    if (BIMProjectState.isDrawing && BIMProjectState.draggingIndex !== undefined) {
-        const rect = BIMProjectState.canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        BIMProjectState.annotations[BIMProjectState.draggingIndex].x = x;
-        BIMProjectState.annotations[BIMProjectState.draggingIndex].y = y;
-        redrawBIMCanvas();
+        canvas.addEventListener('mousemove', (e) => {
+            const state = id === 'annotationCanvas' ? states.projetoImagem : states.projetoBIM;
+            if (state.isDrawing && state.draggingIndex !== undefined) {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                state.annotations[state.draggingIndex].x = x;
+                state.annotations[state.draggingIndex].y = y;
+                redrawImageCanvas();
+                redrawBIMCanvas();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            const state = id === 'annotationCanvas' ? states.projetoImagem : states.projetoBIM;
+            state.isDrawing = false;
+            state.draggingIndex = undefined;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            const state = id === 'annotationCanvas' ? states.projetoImagem : states.projetoBIM;
+            state.isDrawing = false;
+            state.draggingIndex = undefined;
+        });
     }
-});
-
-document.getElementById('annotationBIMCanvas')?.addEventListener('mouseup', () => {
-    BIMProjectState.isDrawing = false;
-    BIMProjectState.draggingIndex = undefined;
-});
-
-document.getElementById('annotationBIMCanvas')?.addEventListener('mouseleave', () => {
-    BIMProjectState.isDrawing = false;
-    BIMProjectState.draggingIndex = undefined;
 });
