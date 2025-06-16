@@ -33,12 +33,12 @@
                 <h2 id="projeto-bim-heading">Crie Seu Projeto Elétrico BIM</h2>
                 <form id="formProjetoBIM" class="form-container">
                     <div class="form-group">
-                        <label for="plantaBIMUpload">Carregar Planta:</label>
-                        <input type="file" id="plantaBIMUpload" accept="image/*" required onchange="loadBIMImage()">
+                        <label for="plantaBIMUpload">Carregar Planta (Imagem):</label>
+                        <input type="file" id="plantaBIMUpload" accept="image/*" onchange="loadBIMImage()">
                     </div>
                     <div class="form-group">
                         <label for="tensaoBIM">Tensão (V):</label>
-                        <select id="tensaoBIM" required>
+                        <select id="tensaoBIM">
                             <option value="127">127V</option>
                             <option value="220" selected>220V</option>
                             <option value="380">380V</option>
@@ -88,6 +88,25 @@
                     </form>
                     <div id="dxfResult"></div>
                 </section>
+                <section id="cadEditor" aria-labelledby="cad-heading">
+                    <h3 id="cad-heading">Editor CAD Web para Plantas Elétricas</h3>
+                    <p>Crie e edite plantas elétricas diretamente no navegador.</p>
+                    <div class="form-group">
+                        <label for="dxfUploadCAD">Carregar DXF:</label>
+                        <input type="file" id="dxfUploadCAD" accept=".dxf" onchange="loadDXF()">
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-add" onclick="addElement('line')">Desenhar Linha</button>
+                        <button type="button" class="btn btn-add" onclick="addElement('rect')">Desenhar Retângulo</button>
+                        <button type="button" class="btn btn-add" onclick="addElement('pontoLuz')">Adicionar Ponto de Luz</button>
+                        <button type="button" class="btn btn-primary" onclick="exportCAD()">Exportar como SVG</button>
+                        <button type="button" class="btn btn-secondary" onclick="clearCAD()">Limpar</button>
+                    </div>
+                    <div id="cadCanvasContainer" class="canvas-container">
+                        <canvas id="cadCanvas" width="800" height="600"></canvas>
+                    </div>
+                    <div id="cadResult" class="result-box"></div>
+                </section>
             </section>
         </div>
     </main>
@@ -97,6 +116,7 @@
         <p><small>Baseado em NBR 5410. Consulte um engenheiro.</small></p>
     </footer>
 
+    <script src="https://unpkg.com/dxf-parser/dist/dxf-parser.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
