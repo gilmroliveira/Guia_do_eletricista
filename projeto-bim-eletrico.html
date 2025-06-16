@@ -96,11 +96,11 @@
                         <input type="file" id="dxfUploadCAD" accept=".dxf" onchange="loadDXF()">
                     </div>
                     <div class="button-group">
-                        <button type="button" class="btn btn-add" onclick="addElement('line')">Desenhar Linha</button>
-                        <button type="button" class="btn btn-add" onclick="addElement('rect')">Desenhar Retângulo</button>
-                        <button type="button" class="btn btn-add" onclick="addElement('pontoLuz')">Adicionar Ponto de Luz</button>
-                        <button type="button" class="btn btn-primary" onclick="exportCAD()">Exportar como SVG</button>
-                        <button type="button" class="btn btn-secondary" onclick="clearCAD()">Limpar</button>
+                        <button type="button" class="btn btn-add" id="btnLine">Desenhar Linha</button>
+                        <button type="button" class="btn btn-add" id="btnRect">Desenhar Retângulo</button>
+                        <button type="button" class="btn btn-add" id="btnPontoLuz">Adicionar Ponto de Luz</button>
+                        <button type="button" class="btn btn-primary" id="btnExport">Exportar como SVG</button>
+                        <button type="button" class="btn btn-secondary" id="btnClear">Limpar</button>
                     </div>
                     <div id="cadCanvasContainer" class="canvas-container">
                         <canvas id="cadCanvas" width="800" height="600"></canvas>
