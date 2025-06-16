@@ -68,12 +68,17 @@ function loadDXF() {
                 const dxf = parser.parseSync(e.target.result);
                 states.cadEditor.elements = dxf.entities.map(entity => {
                     if (entity.type === 'LINE') {
-                        return { type: 'line', x1: entity.vertices[0].x, y1: entity.vertices[0].y, x2: entity.vertices[1].x, y2: entity.vertices[1].y };
+                        return { type: 'line', x1: entity.vertices[0].x / 10, y1: entity.vertices[0].y / 10, x2: entity.vertices[1].x / 10, y2: entity.vertices[1].y / 10 }; // Ajuste de escala
                     }
                     return null;
                 }).filter(e => e);
+                // Adicionar elementos elétricos iniciais
+                const canvasWidth = states.cadEditor.canvas.width;
+                const canvasHeight = states.cadEditor.canvas.height;
+                states.cadEditor.elements.push({ type: 'circle', x: canvasWidth / 4, y: canvasHeight / 4, radius: 5, label: 'Ponto de Luz (60W)', power: 60 });
+                states.cadEditor.elements.push({ type: 'rect', x: canvasWidth / 2 - 10, y: canvasHeight / 2 - 10, width: 20, height: 20, label: 'Tomada (1000W)', power: 1000 });
                 redrawCADCanvas();
-                document.getElementById('cadResult').innerHTML = '<p>DXF carregado com sucesso.</p>';
+                document.getElementById('cadResult').innerHTML = '<p>DXF carregado com sucesso. Elementos elétricos adicionados.</p>';
             } catch (error) {
                 document.getElementById('cadResult').innerHTML = `<p class="error">Erro ao carregar DXF: ${error.message}</p>`;
             }
@@ -129,7 +134,7 @@ function stopDrawing(e) {
         const rect = states.cadEditor.canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        states.cadEditor.elements.push({ type: 'circle', x, y, radius: 5, label: 'Ponto de Luz' });
+        states.cadEditor.elements.push({ type: 'circle', x, y, radius: 5, label: 'Ponto de Luz (60W)', power: 60 });
         redrawCADCanvas();
     }
 }
@@ -175,6 +180,13 @@ function exportCAD() {
     link.download = `planta_eletrica_${new Date().toISOString().slice(0, 10)}.png`;
     link.click();
     document.getElementById('cadResult').innerHTML = '<p>Exportado como PNG.</p>';
+
+    // Cálculo básico
+    const tensao = parseFloat(document.getElementById('tensaoBIM').value) || 220;
+    const totalPotencia = states.cadEditor.elements.reduce((sum, el) => sum + (el.power || 0), 0);
+    const correnteTotal = totalPotencia / tensao;
+    const bitolaMinima = Math.ceil(correnteTotal / 10) * 2.5;
+    document.getElementById('cadResult').innerHTML += `<p>Demanda: ${(totalPotencia / 1000).toFixed(2)} kVA | Corrente: ${correnteTotal.toFixed(2)} A | Bitola: ${bitolaMinima} mm²</p>`;
 }
 
 function clearCAD() {
