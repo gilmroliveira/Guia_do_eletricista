@@ -4,7 +4,7 @@ const states = {
     projetoOnline: { comodoCount: 0, tueCounts: [] },
     projetoImagem: { annotations: [], canvas: null, context: null, image: null, isDrawing: false, draggingIndex: null },
     projetoBIM: { annotations: [], canvas: null, context: null, image: null, isDrawing: false, draggingIndex: null },
-    cadEditor: { elements: [], canvas: null, context: null, isDrawing: false, startX: 0, startY: 0 }
+    cadEditor: { elements: [], canvas: null, context: null, isDrawing: false, startX: 0, startY: 0, currentTool: null }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -37,11 +37,25 @@ document.addEventListener('DOMContentLoaded', () => {
 function initCADEditor() {
     states.cadEditor.canvas = document.getElementById('cadCanvas');
     states.cadEditor.context = states.cadEditor.canvas.getContext('2d');
+
+    // Vincular eventos aos botões
+    document.getElementById('btnLine').addEventListener('click', () => setTool('line'));
+    document.getElementById('btnRect').addEventListener('click', () => setTool('rect'));
+    document.getElementById('btnPontoLuz').addEventListener('click', () => setTool('pontoLuz'));
+    document.getElementById('btnExport').addEventListener('click', exportCAD);
+    document.getElementById('btnClear').addEventListener('click', clearCAD);
+
     states.cadEditor.canvas.addEventListener('mousedown', startDrawing);
     states.cadEditor.canvas.addEventListener('mousemove', draw);
     states.cadEditor.canvas.addEventListener('mouseup', stopDrawing);
     states.cadEditor.canvas.addEventListener('mouseleave', stopDrawing);
     redrawCADCanvas();
+}
+
+function setTool(tool) {
+    states.cadEditor.currentTool = tool;
+    states.cadEditor.isDrawing = false;
+    document.getElementById('cadResult').innerHTML = `<p>Ferramenta selecionada: ${tool}</p>`;
 }
 
 function loadDXF() {
@@ -59,6 +73,7 @@ function loadDXF() {
                     return null;
                 }).filter(e => e);
                 redrawCADCanvas();
+                document.getElementById('cadResult').innerHTML = '<p>DXF carregado com sucesso.</p>';
             } catch (error) {
                 document.getElementById('cadResult').innerHTML = `<p class="error">Erro ao carregar DXF: ${error.message}</p>`;
             }
@@ -68,7 +83,7 @@ function loadDXF() {
 }
 
 function startDrawing(e) {
-    if (!states.cadEditor.isDrawing) {
+    if (states.cadEditor.currentTool && ['line', 'rect'].includes(states.cadEditor.currentTool)) {
         const rect = states.cadEditor.canvas.getBoundingClientRect();
         states.cadEditor.startX = e.clientX - rect.left;
         states.cadEditor.startY = e.clientY - rect.top;
@@ -77,41 +92,55 @@ function startDrawing(e) {
 }
 
 function draw(e) {
-    if (states.cadEditor.isDrawing) {
+    if (states.cadEditor.isDrawing && states.cadEditor.currentTool) {
         const rect = states.cadEditor.canvas.getBoundingClientRect();
         const currentX = e.clientX - rect.left;
         const currentY = e.clientY - rect.top;
         redrawCADCanvas();
         states.cadEditor.context.beginPath();
-        states.cadEditor.context.moveTo(states.cadEditor.startX, states.cadEditor.startY);
-        states.cadEditor.context.lineTo(currentX, currentY);
+        if (states.cadEditor.currentTool === 'line') {
+            states.cadEditor.context.moveTo(states.cadEditor.startX, states.cadEditor.startY);
+            states.cadEditor.context.lineTo(currentX, currentY);
+        } else if (states.cadEditor.currentTool === 'rect') {
+            const width = currentX - states.cadEditor.startX;
+            const height = currentY - states.cadEditor.startY;
+            states.cadEditor.context.rect(states.cadEditor.startX, states.cadEditor.startY, width, height);
+        }
         states.cadEditor.context.strokeStyle = 'blue';
         states.cadEditor.context.stroke();
     }
 }
 
 function stopDrawing(e) {
-    if (states.cadEditor.isDrawing) {
+    if (states.cadEditor.isDrawing && states.cadEditor.currentTool) {
         const rect = states.cadEditor.canvas.getBoundingClientRect();
         const endX = e.clientX - rect.left;
         const endY = e.clientY - rect.top;
-        states.cadEditor.elements.push({ type: 'line', x1: states.cadEditor.startX, y1: states.cadEditor.startY, x2: endX, y2: endY });
+        if (states.cadEditor.currentTool === 'line') {
+            states.cadEditor.elements.push({ type: 'line', x1: states.cadEditor.startX, y1: states.cadEditor.startY, x2: endX, y2: endY });
+        } else if (states.cadEditor.currentTool === 'rect') {
+            const width = endX - states.cadEditor.startX;
+            const height = endY - states.cadEditor.startY;
+            states.cadEditor.elements.push({ type: 'rect', x: states.cadEditor.startX, y: states.cadEditor.startY, width, height });
+        }
         states.cadEditor.isDrawing = false;
+        redrawCADCanvas();
+    } else if (states.cadEditor.currentTool === 'pontoLuz') {
+        const rect = states.cadEditor.canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        states.cadEditor.elements.push({ type: 'circle', x, y, radius: 5, label: 'Ponto de Luz' });
         redrawCADCanvas();
     }
 }
 
 function addElement(type) {
-    const canvas = states.cadEditor.canvas;
-    const rect = canvas.getBoundingClientRect();
-    const x = canvas.width / 2;
-    const y = canvas.height / 2;
-    if (type === 'rect') {
-        states.cadEditor.elements.push({ type: 'rect', x: x - 25, y: y - 25, width: 50, height: 50 });
-    } else if (type === 'pontoLuz') {
-        states.cadEditor.elements.push({ type: 'circle', x, y, radius: 5, label: 'Ponto de Luz' });
+    states.cadEditor.currentTool = type;
+    document.getElementById('cadResult').innerHTML = `<p>Ferramenta selecionada: ${type}</p>`;
+    if (type === 'pontoLuz') {
+        states.cadEditor.canvas.dispatchEvent(new Event('mousedown'));
+        states.cadEditor.canvas.dispatchEvent(new Event('mouseup'));
     }
-    redrawCADCanvas();
 }
 
 function redrawCADCanvas() {
@@ -145,12 +174,14 @@ function exportCAD() {
     link.href = dataURL;
     link.download = `planta_eletrica_${new Date().toISOString().slice(0, 10)}.png`;
     link.click();
+    document.getElementById('cadResult').innerHTML = '<p>Exportado como PNG.</p>';
 }
 
 function clearCAD() {
     states.cadEditor.elements = [];
+    states.cadEditor.currentTool = null;
     redrawCADCanvas();
-    document.getElementById('cadResult').innerHTML = '';
+    document.getElementById('cadResult').innerHTML = '<p>Canvas limpo.</p>';
 }
 
 // Função de instruções DXF - Mantida como estava
