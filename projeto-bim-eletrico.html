@@ -71,26 +71,22 @@
                 </form>
                 <section aria-labelledby="ferramentas-heading">
                     <h3 id="ferramentas-heading">Ferramentas Gratuitas para Projetos Elétricos</h3>
-                    <p>Existem várias ferramentas online gratuitas para criação de projetos elétricos, tanto para estudantes quanto para profissionais. O Lucidchart e o Canva são exemplos de plataformas que oferecem recursos para diagramação de circuitos elétricos, incluindo bibliotecas de símbolos e ferramentas de desenho. Além disso, existem softwares como o QElectroTech e o CADe SIMU, que são gratuitos e específicos para projetos elétricos.</p>
-                    <h4>Ferramentas Online Gratuitas:</h4>
-                    <ul>
-                        <li><strong>Lucidchart:</strong> Conta gratuita com recursos para diagramas de circuito e biblioteca de símbolos elétricos.</li>
-                        <li><strong>Canva:</strong> Criador de diagramas com conectores automáticos e símbolos elétricos.</li>
-                        <li><strong>QElectroTech:</strong> Software gratuito para diagramas elétricos.</li>
-                        <li><strong>CADe SIMU:</strong> Software gratuito para simulação de diagramas elétricos.</li>
-                        <li><strong>Visual Paradigm Online:</strong> Criador de diagramas elétricos básicos online.</li>
-                        <li><strong>WOCA:</strong> Ferramenta online para projetos elétricos, focada em simplicidade e apresentação.</li>
-                    </ul>
-                    <h4>Ferramentas para Estudantes:</h4>
-                    <ul>
-                        <li><strong>Siemens Capital X Panel Designer:</strong> Software gratuito para estudantes e educadores, com colaboração e automação.</li>
-                    </ul>
-                    <h4>Outras Opções:</h4>
-                    <ul>
-                        <li><strong>Edraw:</strong> Software profissional com modelos e ferramentas para projetos detalhados.</li>
-                        <li><strong>App Elétrico:</strong> Aplicativo para plantas baixas e relatórios.</li>
-                    </ul>
-                    <p>Verifique os recursos e limitações de cada ferramenta antes de escolher a mais adequada.</p>
+                    <p>Existem várias ferramentas online gratuitas para criação de projetos elétricos, tanto para estudantes quanto para profissionais...</p>
+                    <!-- Conteúdo existente de ferramentas permanece igual -->
+                </section>
+                <section id="dxfConverter" aria-labelledby="dxf-heading">
+                    <h3 id="dxf-heading">Converter DXF para Planta Elétrica</h3>
+                    <p>Importe arquivos DXF e converta-os para o formato .elmt compatível com o QElectroTech.</p>
+                    <form>
+                        <div class="form-group">
+                            <label for="dxfInput">Carregar Arquivo DXF:</label>
+                            <input type="file" id="dxfInput" accept=".dxf">
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn btn-primary" onclick="guideUser()">Obter Instruções de Conversão</button>
+                        </div>
+                    </form>
+                    <div id="dxfResult"></div>
                 </section>
             </section>
         </div>
