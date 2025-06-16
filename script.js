@@ -486,3 +486,174 @@ document.getElementById('annotationCanvas')?.addEventListener('mouseleave', () =
     ImageProjectState.isDrawing = false;
     ImageProjectState.draggingIndex = undefined;
 });
+// Adicionar ao final de script.js
+
+// Estado para projeto BIM elétrico
+const BIMProjectState = {
+    annotations: [],
+    canvas: null,
+    context: null,
+    image: null,
+    isDrawing: false,
+    draggingIndex: null
+};
+
+// Funções para projeto BIM elétrico
+function loadBIMImage() {
+    const file = document.getElementById('plantaBIMUpload').files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                BIMProjectState.image = img;
+                const canvas = document.getElementById('annotationBIMCanvas');
+                const container = document.getElementById('canvasBIMContainer');
+                canvas.width = container.offsetWidth;
+                canvas.height = img.height * (container.offsetWidth / img.width);
+                BIMProjectState.canvas = canvas;
+                BIMProjectState.context = canvas.getContext('2d');
+                document.getElementById('plantaBIMImagem').src = e.target.result;
+                document.getElementById('plantaBIMImagem').style.display = 'block';
+                redrawBIMCanvas();
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function updateAnnotationOptions() {
+    const type = document.getElementById('annotationType').value;
+    const options = document.getElementById('annotationOptions');
+    if (type === 'pontoLuz' || type === 'tomada' || type === 'disjuntor') {
+        options.style.display = 'block';
+    } else {
+        options.style.display = 'none';
+    }
+}
+
+function addBIMAnnotation() {
+    if (BIMProjectState.canvas && BIMProjectState.image) {
+        const type = document.getElementById('annotationType').value;
+        const power = parseFloat(document.getElementById('annotationPower').value) || 0;
+        const canvas = BIMProjectState.canvas;
+        const rect = canvas.getBoundingClientRect();
+        const x = (canvas.width / 2) - (rect.left + rect.right) / 2 + rect.width / 2;
+        const y = (canvas.height / 2) - (rect.top + rect.bottom) / 2 + rect.height / 2;
+        BIMProjectState.annotations.push({ x, y, type, power, label: `${type} (${power}W)` });
+        redrawBIMCanvas();
+    }
+}
+
+function redrawBIMCanvas() {
+    if (BIMProjectState.context && BIMProjectState.image) {
+        const ctx = BIMProjectState.context;
+        ctx.clearRect(0, 0, BIMProjectState.canvas.width, BIMProjectState.canvas.height);
+        ctx.drawImage(BIMProjectState.image, 0, 0, BIMProjectState.canvas.width, BIMProjectState.canvas.height);
+        BIMProjectState.annotations.forEach((ann, index) => {
+            ctx.beginPath();
+            ctx.arc(ann.x, ann.y, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
+            ctx.fill();
+            ctx.fillStyle = 'black';
+            ctx.fillText(ann.label, ann.x + 10, ann.y - 5);
+        });
+    }
+}
+
+function generateBIMProject() {
+    const tensao = parseFloat(document.getElementById('tensaoBIM').value);
+    const resultado = document.getElementById('resultadoBIM');
+
+    if (!tensao || isNaN(tensao)) {
+        resultado.innerHTML = '<p class="error">Selecione uma tensão principal válida.</p>';
+        return;
+    }
+
+    if (!BIMProjectState.annotations.length) {
+        resultado.innerHTML = '<p class="error">Adicione pelo menos uma anotação.</p>';
+        return;
+    }
+
+    const totalPotencia = BIMProjectState.annotations.reduce((sum, ann) => sum + (ann.power || 0), 0);
+    const correnteTotal = totalPotencia / tensao;
+    const bitolaMinima = Math.ceil(correnteTotal / 10) * 2.5; // Regra simplificada NBR 5410
+
+    resultado.innerHTML = `
+        <div class="bim-report">
+            <h3>Relatório do Projeto Elétrico BIM</h3>
+            <p><strong>Tensão Principal:</strong> ${tensao} V</p>
+            <p><strong>Demanda Total:</strong> ${(totalPotencia / 1000).toFixed(2)} kVA</p>
+            <p><strong>Corrente Total:</strong> ${correnteTotal.toFixed(2)} A</p>
+            <p><strong>Bitola Mínima Sugerida:</strong> ${bitolaMinima} mm²</p>
+            <h4>Anotações:</h4>
+            <ul>
+                ${BIMProjectState.annotations.map(ann => `<li>${ann.label}</li>`).join('')}
+            </ul>
+            <p class="error">Nota: Consulte NBR 5410 e um engenheiro eletricista para validação.</p>
+        </div>
+    `;
+}
+
+function exportBIMReport() {
+    const resultado = document.getElementById('resultadoBIM').innerHTML;
+    if (resultado) {
+        const blob = new Blob([resultado], { type: 'text/html' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `relatorio_bim_eletrico_${new Date().toISOString().slice(0, 10)}.html`;
+        link.click();
+    } else {
+        alert('Gerar o projeto antes de exportar!');
+    }
+}
+
+function resetBIMForm() {
+    if (document.getElementById('projeto-bim-eletrico')) {
+        document.getElementById('plantaBIMUpload').value = '';
+        document.getElementById('tensaoBIM').value = '';
+        document.getElementById('annotationType').value = 'pontoLuz';
+        document.getElementById('annotationPower').value = '';
+        document.getElementById('plantaBIMImagem').style.display = 'none';
+        document.getElementById('annotationBIMCanvas').width = 0;
+        document.getElementById('annotationBIMCanvas').height = 0;
+        BIMProjectState.annotations = [];
+        document.getElementById('resultadoBIM').innerHTML = '';
+        document.getElementById('annotationOptions').style.display = 'none';
+    }
+}
+
+// Interatividade (drag and drop)
+document.getElementById('annotationBIMCanvas')?.addEventListener('mousedown', (e) => {
+    const rect = BIMProjectState.canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    BIMProjectState.annotations.forEach((ann, index) => {
+        if (Math.hypot(x - ann.x, y - ann.y) < 10) {
+            BIMProjectState.isDrawing = true;
+            BIMProjectState.draggingIndex = index;
+        }
+    });
+});
+
+document.getElementById('annotationBIMCanvas')?.addEventListener('mousemove', (e) => {
+    if (BIMProjectState.isDrawing && BIMProjectState.draggingIndex !== undefined) {
+        const rect = BIMProjectState.canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        BIMProjectState.annotations[BIMProjectState.draggingIndex].x = x;
+        BIMProjectState.annotations[BIMProjectState.draggingIndex].y = y;
+        redrawBIMCanvas();
+    }
+});
+
+document.getElementById('annotationBIMCanvas')?.addEventListener('mouseup', () => {
+    BIMProjectState.isDrawing = false;
+    BIMProjectState.draggingIndex = undefined;
+});
+
+document.getElementById('annotationBIMCanvas')?.addEventListener('mouseleave', () => {
+    BIMProjectState.isDrawing = false;
+    BIMProjectState.draggingIndex = undefined;
+});
