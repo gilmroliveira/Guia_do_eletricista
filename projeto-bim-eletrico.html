@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Crie projetos elétricos BIM com upload de plantas e anotações conforme NBR 5410.">
+    <title>Projeto Elétrico BIM - Guia do Eletricista</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>Projeto Elétrico BIM</h1>
+        <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    </header>
+
+    <nav role="navigation" aria-label="Menu principal" id="main-nav">
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="index.html#normas">Normas</a></li>
+            <li><a href="index.html#calculadora">Calculadora</a></li>
+            <li><a href="tutoriais.html">Tutoriais</a></li>
+            <li><a href="projetos.html">Projetos</a></li>
+            <li><a href="atualizacoes.html">Atualizações</a></li>
+            <li><a href="projeto-online.html">Projeto Online</a></li>
+            <li><a href="projeto-imagem.html">Projeto com Imagem</a></li>
+            <li><a href="projeto-bim-eletrico.html" aria-current="page">Projeto BIM Elétrico</a></li>
+        </ul>
+    </nav>
+
+    <main role="main">
+        <div class="content">
+            <section id="projeto-bim-eletrico" aria-labelledby="projeto-bim-heading">
+                <h2 id="projeto-bim-heading">Crie Seu Projeto Elétrico BIM</h2>
+                <p>Carregue uma planta, adicione anotações e gere um relatório conforme NBR 5410.</p>
+                <form id="formProjetoBIM" class="form-container" aria-label="Formulário de projeto BIM elétrico">
+                    <div class="form-group">
+                        <label for="plantaBIMUpload">Carregar Planta (Imagem):</label>
+                        <input type="file" id="plantaBIMUpload" accept="image/*" required onchange="loadBIMImage()">
+                    </div>
+                    <div class="form-group">
+                        <label for="tensaoBIM">Tensão Principal (V):</label>
+                        <select id="tensaoBIM" required>
+                            <option value="" disabled selected>Selecione a tensão</option>
+                            <option value="127">127V (Monofásico)</option>
+                            <option value="220">220V (Bifásico/Trifásico)</option>
+                            <option value="380">380V (Trifásico)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="annotationType">Tipo de Anotação:</label>
+                        <select id="annotationType" onchange="updateAnnotationOptions()">
+                            <option value="pontoLuz">Ponto de Luz</option>
+                            <option value="tomada">Tomada</option>
+                            <option value="disjuntor">Disjuntor</option>
+                            <option value="cabos">Cabo</option>
+                        </select>
+                    </div>
+                    <div id="annotationOptions" class="form-group" style="display: none;">
+                        <label for="annotationPower">Potência (W):</label>
+                        <input type="number" id="annotationPower" min="0" step="1" placeholder="Ex.: 5400">
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-add" onclick="addBIMAnnotation()">+ Adicionar Anotação</button>
+                        <button type="button" class="btn btn-primary" onclick="generateBIMProject()">Gerar Projeto</button>
+                        <button type="button" class="btn btn-secondary" onclick="exportBIMReport()">Exportar Relatório</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetBIMForm()">Limpar</button>
+                    </div>
+                    <div id="canvasBIMContainer" class="canvas-container">
+                        <img id="plantaBIMImagem" style="max-width: 100%; display: none;">
+                        <canvas id="annotationBIMCanvas" style="position: absolute; top: 0; left: 0; z-index: 1;"></canvas>
+                    </div>
+                    <div id="resultadoBIM" class="result-box" aria-live="polite"></div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-15">15/06/2025</time></p>
+        <p><small>Os projetos são baseados na NBR 5410 e destinam-se a fins educacionais. Consulte um engenheiro eletricista.</small></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
