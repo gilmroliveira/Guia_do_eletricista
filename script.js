@@ -45,10 +45,23 @@ function initCADEditor() {
     document.getElementById('btnExport').addEventListener('click', exportCAD);
     document.getElementById('btnClear').addEventListener('click', clearCAD);
 
+    // Adicionar botão para texto (simulando funcionalidade do LibreCAD)
+    const textButton = document.createElement('button');
+    textButton.type = 'button';
+    textButton.className = 'btn btn-add';
+    textButton.id = 'btnText';
+    textButton.textContent = 'Adicionar Texto';
+    textButton.addEventListener('click', () => setTool('text'));
+    document.querySelector('.button-group').appendChild(textButton);
+
     states.cadEditor.canvas.addEventListener('mousedown', startDrawing);
     states.cadEditor.canvas.addEventListener('mousemove', draw);
     states.cadEditor.canvas.addEventListener('mouseup', stopDrawing);
     states.cadEditor.canvas.addEventListener('mouseleave', stopDrawing);
+    states.cadEditor.canvas.addEventListener('dblclick', addText); // Duplo clique para texto
+
+    // Carregar modelo DXF padrão ao iniciar
+    loadDefaultDXF();
     redrawCADCanvas();
 }
 
@@ -56,6 +69,33 @@ function setTool(tool) {
     states.cadEditor.currentTool = tool;
     states.cadEditor.isDrawing = false;
     document.getElementById('cadResult').innerHTML = `<p>Ferramenta selecionada: ${tool}</p>`;
+}
+
+function loadDefaultDXF() {
+    const defaultDXF = 'Planta de Apartamento - 12292.dxf';
+    fetch(defaultDXF)
+        .then(response => response.text())
+        .then(dxfText => {
+            const parser = new DXFParser();
+            try {
+                const dxf = parser.parseSync(dxfText);
+                states.cadEditor.elements = dxf.entities.map(entity => {
+                    if (entity.type === 'LINE') {
+                        return { type: 'line', x1: entity.vertices[0].x / 10, y1: entity.vertices[0].y / 10, x2: entity.vertices[1].x / 10, y2: entity.vertices[1].y / 10 };
+                    }
+                    return null;
+                }).filter(e => e);
+                states.cadEditor.elements.push({ type: 'circle', x: 200, y: 200, radius: 5, label: 'Ponto de Luz (60W)', power: 60 });
+                states.cadEditor.elements.push({ type: 'rect', x: 400, y: 400, width: 20, height: 20, label: 'Tomada (1000W)', power: 1000 });
+                redrawCADCanvas();
+                document.getElementById('cadResult').innerHTML = '<p>Modelo DXF padrão carregado com sucesso. Elementos elétricos adicionados.</p>';
+            } catch (error) {
+                document.getElementById('cadResult').innerHTML = `<p class="error">Erro ao carregar o modelo DXF padrão: ${error.message}. Use o upload manual.</p>`;
+            }
+        })
+        .catch(error => {
+            document.getElementById('cadResult').innerHTML = `<p class="error">Arquivo DXF padrão não encontrado. Certifique-se de que 'Planta de Apartamento - 12292.dxf' está na pasta do projeto ou use o upload manual.</p>`;
+        });
 }
 
 function loadDXF() {
@@ -68,17 +108,12 @@ function loadDXF() {
                 const dxf = parser.parseSync(e.target.result);
                 states.cadEditor.elements = dxf.entities.map(entity => {
                     if (entity.type === 'LINE') {
-                        return { type: 'line', x1: entity.vertices[0].x / 10, y1: entity.vertices[0].y / 10, x2: entity.vertices[1].x / 10, y2: entity.vertices[1].y / 10 }; // Ajuste de escala
+                        return { type: 'line', x1: entity.vertices[0].x / 10, y1: entity.vertices[0].y / 10, x2: entity.vertices[1].x / 10, y2: entity.vertices[1].y / 10 };
                     }
                     return null;
                 }).filter(e => e);
-                // Adicionar elementos elétricos iniciais
-                const canvasWidth = states.cadEditor.canvas.width;
-                const canvasHeight = states.cadEditor.canvas.height;
-                states.cadEditor.elements.push({ type: 'circle', x: canvasWidth / 4, y: canvasHeight / 4, radius: 5, label: 'Ponto de Luz (60W)', power: 60 });
-                states.cadEditor.elements.push({ type: 'rect', x: canvasWidth / 2 - 10, y: canvasHeight / 2 - 10, width: 20, height: 20, label: 'Tomada (1000W)', power: 1000 });
                 redrawCADCanvas();
-                document.getElementById('cadResult').innerHTML = '<p>DXF carregado com sucesso. Elementos elétricos adicionados.</p>';
+                document.getElementById('cadResult').innerHTML = '<p>DXF carregado com sucesso.</p>';
             } catch (error) {
                 document.getElementById('cadResult').innerHTML = `<p class="error">Erro ao carregar DXF: ${error.message}</p>`;
             }
@@ -139,6 +174,19 @@ function stopDrawing(e) {
     }
 }
 
+function addText(e) {
+    if (states.cadEditor.currentTool === 'text') {
+        const rect = states.cadEditor.canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const text = prompt('Digite o texto:', 'Nota');
+        if (text) {
+            states.cadEditor.elements.push({ type: 'text', x, y, content: text });
+            redrawCADCanvas();
+        }
+    }
+}
+
 function addElement(type) {
     states.cadEditor.currentTool = type;
     document.getElementById('cadResult').innerHTML = `<p>Ferramenta selecionada: ${type}</p>`;
@@ -168,6 +216,9 @@ function redrawCADCanvas() {
             ctx.fill();
             ctx.fillStyle = 'black';
             ctx.fillText(element.label, element.x + 10, element.y - 5);
+        } else if (element.type === 'text') {
+            ctx.fillStyle = 'black';
+            ctx.fillText(element.content, element.x, element.y);
         }
     });
 }
@@ -181,7 +232,6 @@ function exportCAD() {
     link.click();
     document.getElementById('cadResult').innerHTML = '<p>Exportado como PNG.</p>';
 
-    // Cálculo básico
     const tensao = parseFloat(document.getElementById('tensaoBIM').value) || 220;
     const totalPotencia = states.cadEditor.elements.reduce((sum, el) => sum + (el.power || 0), 0);
     const correnteTotal = totalPotencia / tensao;
