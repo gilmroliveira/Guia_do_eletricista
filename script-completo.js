@@ -155,3 +155,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 });
+// Sistema de Tabs Atualizado
+document.querySelectorAll('.tab-button').forEach(button => {
+  button.addEventListener('click', () => {
+    // Remove classes ativas
+    document.querySelectorAll('.tab-button, .tab-content').forEach(el => {
+      el.classList.remove('active');
+    });
+    
+    // Ativa a tab clicada
+    button.classList.add('active');
+    const tabId = button.getAttribute('data-tab');
+    document.getElementById(tabId).classList.add('active');
+  });
+});
