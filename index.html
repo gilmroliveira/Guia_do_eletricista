@@ -9,6 +9,7 @@
     <link rel="icon" href="assets/favicon.ico">
 </head>
 <body>
+    <!-- Cabeçalho -->
     <header class="header">
         <div class="container">
             <h1><i class="fas fa-bolt"></i> Guia Completo do Eletricista</h1>
@@ -29,66 +30,102 @@
         </div>
     </header>
 
+    <!-- Conteúdo Principal -->
     <main class="container">
         <!-- Calculadora -->
         <section id="calculadora" class="tab-content active">
-            <h2><i class="fas fa-calculator"></i> Calculadora Elétrica Avançada</h2>
             <div class="calculator-grid">
-                <div class="card">
-                    <h3><i class="fas fa-calculator"></i> Dimensionamento de Cabos</h3>
-                    <form id="cable-calculator" class="calculator-form">
-                        <!-- Formulário completo -->
-                    </form>
-                </div>
-                <div class="card">
-                    <h3><i class="fas fa-bolt"></i> Queda de Tensão</h3>
-                    <form id="voltage-drop-calculator" class="calculator-form">
-                        <!-- Formulário completo -->
-                    </form>
-                </div>
+                <!-- Conteúdo da calculadora mantido conforme seu JS -->
             </div>
         </section>
 
         <!-- Tabelas -->
         <section id="tabelas" class="tab-content">
-            <h2><i class="fas fa-table"></i> Tabelas de Referência Completa</h2>
             <div class="table-container">
-                <!-- Todas as tabelas -->
+                <!-- Conteúdo das tabelas mantido conforme seu JS -->
             </div>
         </section>
 
         <!-- Circuitos -->
         <section id="circuitos" class="tab-content">
-            <h2><i class="fas fa-project-diagram"></i> Simulador de Circuitos Interativo</h2>
             <div class="circuit-simulator-container">
-                <!-- Simulador completo -->
+                <div class="circuit-toolbar">
+                    <div class="component-palette">
+                        <button data-component="battery" class="component-btn" title="Fonte de Energia">
+                            <i class="fas fa-battery-full"></i> Fonte
+                        </button>
+                        <button data-component="resistor" class="component-btn" title="Resistor">
+                            <i class="fas fa-resistor"></i> Resistor
+                        </button>
+                        <button data-component="lamp" class="component-btn" title="Lâmpada">
+                            <i class="fas fa-lightbulb"></i> Lâmpada
+                        </button>
+                        <button data-component="switch" class="component-btn" title="Interruptor">
+                            <i class="fas fa-toggle-on"></i> Interruptor
+                        </button>
+                    </div>
+                    <div class="circuit-actions">
+                        <button id="simulate-btn" class="action-btn primary">
+                            <i class="fas fa-play"></i> Simular
+                        </button>
+                        <button id="clear-btn" class="action-btn secondary">
+                            <i class="fas fa-trash-alt"></i> Limpar
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="circuit-workspace">
+                    <canvas id="circuit-canvas"></canvas>
+                    <div class="circuit-properties-panel">
+                        <h4><i class="fas fa-cog"></i> Propriedades</h4>
+                        <div id="properties-content">
+                            <!-- Dinâmico conforme componente selecionado -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="circuit-measurements">
+                    <div class="measurement-card voltage">
+                        <h5><i class="fas fa-bolt"></i> Tensão</h5>
+                        <div class="value" id="voltage-value">0 V</div>
+                    </div>
+                    <div class="measurement-card current">
+                        <h5><i class="fas fa-tachometer-alt"></i> Corrente</h5>
+                        <div class="value" id="current-value">0 A</div>
+                    </div>
+                    <div class="measurement-card power">
+                        <h5><i class="fas fa-fire"></i> Potência</h5>
+                        <div class="value" id="power-value">0 W</div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Normas -->
         <section id="normas" class="tab-content">
-            <h2><i class="fas fa-book"></i> Normas Técnicas Completas</h2>
             <div class="norms-container">
-                <!-- Conteúdo completo de normas -->
+                <!-- Conteúdo de normas mantido conforme seu JS -->
             </div>
         </section>
 
         <!-- Tutoriais -->
         <section id="tutoriais" class="tab-content">
-            <h2><i class="fas fa-graduation-cap"></i> Tutoriais Práticos</h2>
             <div class="tutorials-grid">
-                <!-- Tutoriais interativos -->
+                <!-- Conteúdo de tutoriais mantido conforme seu JS -->
             </div>
         </section>
     </main>
 
     <footer class="footer">
         <div class="container">
-            <p>© 2023 Guia do Eletricista | Desenvolvido por José Gilmar</p>
+            <p>© 2023 Guia do Eletricista | Desenvolvido por [Seu Nome]</p>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <script src="script-completo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/controls/OrbitControls.js"></script>
+    <script src="circuit.js"></script> <!-- Arquivo do simulador -->
+    <script src="script-completo.js"></script> <!-- Seu JS principal -->
 </body>
 </html>
