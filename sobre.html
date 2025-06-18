@@ -3,59 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="José Gilmar - Desenvolvedor Web e entusiasta de tecnologia">
-    <meta name="keywords" content="desenvolvedor, programador, tecnologia, portfólio">
-    <title>José Gilmar - Sobre Mim</title>
-    <link rel="stylesheet" href="styless2.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Roboto&display=swap" rel="stylesheet">
-    //sqlite
+    <meta name="description" content="Sobre o Guia Completo do Eletricista - Normas, cálculos e recursos para profissionais">
+    <meta name="keywords" content="eletricista, sobre, normas NBR, NR-10, projeto elétrico">
+    <title>Sobre - Guia Completo do Eletricista</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
-    <header>
-        <h1>José Gilmar</h1>
-        <p>Desenvolvedor Web | Estudante de Tecnologia</p>
+<body id="sobre">
+    <header role="banner">
+        <h1><i class="fas fa-bolt"></i> Guia Completo do Eletricista</h1>
+        <p>Normas, Cálculos e Recursos para Profissionais</p>
+        <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
     </header>
 
-    <section class="main-content">
-        <div class="about-me">
-            <h2>Sobre Mim</h2>
-     <img src="IMG_20250317_171316700~2.jpg" alt="José Gilmar" class="profile-img">
-    <p>Olá! Meu nome é José Gilmar...</p>
-            <p> Sou estudante de tecnologia no IFCE e apaixonado por desenvolvimento web. Gosto de criar soluções criativas e funcionais, trabalhando com HTML, CSS, JavaScript e outras tecnologias modernas. Estou sempre aprendendo e buscando novos desafios para crescer como desenvolvedor.</p>
-        </div>
+    <nav role="navigation" aria-label="Menu principal" id="main-nav">
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+            <li><a href="sobre.html" aria-current="page"><i class="fas fa-info-circle"></i> Sobre</a></li>
+            <li><a href="normas.html"><i class="fas fa-book"></i> Normas</a></li>
+            <li><a href="calculadoras.html"><i class="fas fa-calculator"></i> Calculadoras</a></li>
+            <li><a href="tutoriais.html"><i class="fas fa-graduation-cap"></i> Tutoriais</a></li>
+        </ul>
+    </nav>
 
-        <div class="contact-info">
-            <h2>Entre em Contato</h2>
-            <p>Você pode me encontrar nas seguintes plataformas:</p>
-            <ul>
-                <li><strong>Instagram:</strong> <a href="https://www.instagram.com/gilmroliveira/" target="_blank">@gilmroliveira</a></li>
-                <li><strong>Email:</strong> <a href="mailto:jose.gilmar05@aluno.ifce.edu.br">jose.gilmar05@aluno.ifce.edu.br</a></li>
-                <li><strong>WhatsApp:</strong> <a href="https://wa.me/5588921459439" target="_blank">+55 88 9 2145-9439</a></li>
-            </ul>
-        </div>
+    <main role="main">
+        <div class="about-container">
+            <!-- Seção de Missão (Existente) -->
+            <section class="about-section card">
+                <h2><i class="fas fa-bullseye"></i> Nossa Missão</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>O Guia Completo do Eletricista foi criado em 2020 com o objetivo de centralizar informações técnicas confiáveis para profissionais da área elétrica.</p>
+                        
+                        <h3><i class="fas fa-history"></i> Nossa História</h3>
+                        <p>Começou como uma coleção pessoal de anotações e fórmulas, transformando-se em uma referência completa para eletricistas de todo o Brasil.</p>
+                        
+                        <h3><i class="fas fa-chart-line"></i> Crescimento</h3>
+                        <p>Hoje atendemos mais de 5.000 profissionais mensalmente, com conteúdo sempre atualizado conforme as normas.</p>
+                    </div>
+                    
+                    <div class="about-image">
+                        <img src="images/electrician-team.jpg" alt="Equipe de eletricistas trabalhando" class="responsive-img">
+                    </div>
+                </div>
+            </section>
 
-        <div class="skills">
-            <h2>Habilidades</h2>
-            <ul>
-                <li>HTML5 & CSS3</li>
-                <li>JavaScript</li>
-                <li>Design Responsivo</li>
-            </ul>
-        </div>
+            <!-- Seção de Equipe (Melhoria Adicionada) -->
+            <section class="team-section card">
+                <h2><i class="fas fa-users"></i> Nossa Equipe</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <img src="images/team-member1.jpg" alt="Fundador Gilmar Oliveira">
+                        </div>
+                        <h3>Gilmar Oliveira</h3>
+                        <p class="role">Fundador e Eletricista Sênior</p>
+                        <p>25 anos de experiência em instalações industriais</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <img src="images/team-member2.jpg" alt="Engenheira Carla Santos">
+                        </div>
+                        <h3>Carla Santos</h3>
+                        <p class="role">Engenheira Eletricista</p>
+                        <p>Especialista em normas técnicas e projetos</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <div class="projects">
-            <h2>Projetos</h2>
-            <p>Aqui estão alguns dos meus projetos:</p>
-            <ul>
-                <li><a href="https://gilmroliveira.github.io/emcontrucao/" target="_blank">Fogueira na Casa da Vovó - Página para evento junino</a></li>
-            </ul>
-        </div>
-    </section>
+            <!-- Seção de Valores (Existente) -->
+            <section class="values-section card">
+                <h2><i class="fas fa-star"></i> Nossos Valores</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Segurança</h3>
+                        <p>Priorizamos as melhores práticas de segurança elétrica em todos os conteúdos</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="fas fa-balance-scale"></i>
+                        <h3>Conformidade</h3>
+                        <p>Todas as informações estão em conformidade com as normas vigentes</p>
+                    </div>
+                    <div class="value-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Educação</h3>
+                        <p>Comprometidos com a formação continuada dos profissionais</p>
+                    </div>
+                </div>
+            </section>
 
-    <footer>
-        <p>Feito com ❤️ por José Gilmar</p>
+            <!-- Seção de Parceiros (Existente) -->
+            <section class="partners-section card">
+                <h2><i class="fas fa-handshake"></i> Parceiros</h2>
+                <div class="partners-grid">
+                    <img src="images/logo-abnt.png" alt="ABNT" class="partner-logo">
+                    <img src="images/logo-crea.png" alt="CREA" class="partner-logo">
+                    <img src="images/logo-abracopel.png" alt="ABRACOPEL" class="partner-logo">
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <p>© 2025 Guia Completo do Eletricista | <time datetime="2025-06-16">16/06/2025</time></p>
+            <p>Todas as informações são baseadas nas normas NBR e NR vigentes</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
     </footer>
 
-    <script src="script2.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/about.js"></script>
 </body>
 </html>
