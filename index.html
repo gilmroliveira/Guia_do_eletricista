@@ -7,7 +7,7 @@
     <meta name="keywords" content="eletricista, normas NBR, NR-10, dimensionamento, cálculos elétricos">
     <meta name="author" content="Guia Completo do Eletricista">
     <title>Guia Completo do Eletricista</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -19,19 +19,20 @@
 
     <nav role="navigation" aria-label="Menu principal" id="main-nav">
         <ul>
-            <li><a href="index.html" aria-current="page">Início</a></li>
-            <li><a href="#normas">Normas</a></li>
-            <li><a href="#calculadora">Calculadora</a></li>
-            <li><a href="tutoriais.html">Tutoriais</a></li>
-            <li><a href="projetos.html">Projetos</a></li>
-            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="index.html" aria-current="page"><i class="fas fa-home"></i> Início</a></li>
+            <li><a href="sobre.html"><i class="fas fa-info-circle"></i> Sobre</a></li>
+            <li><a href="normas.html"><i class="fas fa-book"></i> Normas</a></li>
+            <li><a href="calculadoras.html"><i class="fas fa-calculator"></i> Calculadoras</a></li>
+            <li><a href="tutoriais.html"><i class="fas fa-graduation-cap"></i> Tutoriais</a></li>
+            <li><a href="projetos.html"><i class="fas fa-project-diagram"></i> Projetos</a></li>
         </ul>
     </nav>
 
     <main role="main">
         <div class="content">
+            <!-- Seção de Normas (Existente) -->
             <section id="normas" aria-labelledby="normas-heading" class="card">
-                <h2 id="normas-heading"><i class="fas fa-book"></i> Normas NBR e NR</h2>
+                <h2 id="normas-heading"><i class="fas fa-book-open"></i> Normas NBR e NR</h2>
                 <p>Principais normas para eletricistas:</p>
                 <div class="tabs">
                     <button class="tab-button active" data-tab="nbr5410">NBR 5410</button>
@@ -40,15 +41,15 @@
                 </div>
                 <div class="tab-content active" id="nbr5410">
                     <p><strong>NBR 5410 (2015):</strong> Instalações elétricas de baixa tensão (até 1000V CA ou 1500V CC). Exige disjuntores residuais (DR) em áreas molhadas.</p>
-                    <a href="https://www.abnt.org.br/nbr-5410" target="_blank" rel="noopener" class="btn-link">Acesse a norma</a>
+                    <a href="https://www.abnt.org.br/nbr-5410" target="_blank" rel="noopener" class="btn-link"><i class="fas fa-external-link-alt"></i> Acesse a norma</a>
                 </div>
                 <div class="tab-content" id="nr10">
                     <p><strong>NR-10:</strong> Segurança em instalações e serviços em eletricidade. Requer treinamento e EPIs.</p>
-                    <a href="https://www.gov.br/trabalho/pt-br/normas-regulamentadoras/nr-10" target="_blank" rel="noopener" class="btn-link">Acesse a norma</a>
+                    <a href="https://www.gov.br/trabalho/pt-br/normas-regulamentadoras/nr-10" target="_blank" rel="noopener" class="btn-link"><i class="fas fa-external-link-alt"></i> Acesse a norma</a>
                 </div>
                 <div class="tab-content" id="nbr5419">
                     <p><strong>NBR 5419:</strong> Proteção contra descargas atmosféricas (SPDA).</p>
-                    <a href="https://www.abnt.org.br/nbr-5419" target="_blank" rel="noopener" class="btn-link">Acesse a norma</a>
+                    <a href="https://www.abnt.org.br/nbr-5419" target="_blank" rel="noopener" class="btn-link"><i class="fas fa-external-link-alt"></i> Acesse a norma</a>
                 </div>
                 
                 <h3><i class="fas fa-table"></i> Tabelas de Dimensionamento (NBR 5410)</h3>
@@ -69,6 +70,7 @@
                 <p class="table-note">Nota: Consulte NBR 5410 para condições específicas.</p>
             </section>
 
+            <!-- Seção de Calculadora (Existente) -->
             <section id="calculadora" aria-labelledby="calculadora-heading" class="card">
                 <h2 id="calculadora-heading"><i class="fas fa-calculator"></i> Calculadora de Dimensionamento</h2>
                 <form id="electrical-calculator" class="calculator" aria-label="Formulário de dimensionamento">
@@ -93,44 +95,49 @@
                         <input type="number" id="comprimento" min="0" step="0.1" required>
                     </div>
                     <div class="button-group">
-                        <button type="button" class="btn btn-primary" id="btn-calcular">Calcular</button>
-                        <button type="button" class="btn btn-secondary" id="btn-limpar">Limpar</button>
+                        <button type="button" class="btn btn-primary" id="btn-calcular"><i class="fas fa-calculator"></i> Calcular</button>
+                        <button type="button" class="btn btn-secondary" id="btn-limpar"><i class="fas fa-broom"></i> Limpar</button>
                     </div>
                     <div id="resultado" class="result-box" aria-live="assertive"></div>
                 </form>
             </section>
 
+            <!-- Nova Seção de Aterramento (Melhoria Adicionada) -->
             <section id="aterramento" class="card">
                 <h2><i class="fas fa-plug"></i> Sistemas de Aterramento</h2>
                 <div class="grid-container">
                     <div class="system-card">
-                        <h3>TT</h3>
+                        <h3><i class="fas fa-project-diagram"></i> TT</h3>
                         <p><i class="fas fa-info-circle"></i> Neutro aterrado na fonte e massa aterrada independentemente</p>
                         <ul class="system-features">
                             <li><i class="fas fa-check-circle"></i> Exige DR</li>
                             <li><i class="fas fa-check-circle"></i> Comum em instalações rurais</li>
+                            <li><i class="fas fa-check-circle"></i> NBR 5410:2015</li>
                         </ul>
                     </div>
                     <div class="system-card">
-                        <h3>TN-S</h3>
+                        <h3><i class="fas fa-project-diagram"></i> TN-S</h3>
                         <p><i class="fas fa-info-circle"></i> Condutores de neutro e proteção separados</p>
                         <ul class="system-features">
                             <li><i class="fas fa-check-circle"></i> Mais seguro</li>
                             <li><i class="fas fa-check-circle"></i> Custo mais elevado</li>
+                            <li><i class="fas fa-check-circle"></i> NBR 5410:2015</li>
                         </ul>
                     </div>
                     <div class="system-card">
-                        <h3>TN-C-S</h3>
+                        <h3><i class="fas fa-project-diagram"></i> TN-C-S</h3>
                         <p><i class="fas fa-info-circle"></i> Condutores combinados em parte da instalação</p>
                         <ul class="system-features">
                             <li><i class="fas fa-check-circle"></i> Econômico</li>
                             <li><i class="fas fa-check-circle"></i> Requer cuidados especiais</li>
+                            <li><i class="fas fa-check-circle"></i> NBR 5410:2015</li>
                         </ul>
                     </div>
                 </div>
             </section>
         </div>
 
+        <!-- Barra Lateral de Dicas (Existente) -->
         <aside aria-label="Dicas rápidas" class="card tips-card">
             <h3><i class="fas fa-lightbulb"></i> Dicas Rápidas</h3>
             <ul class="tips-list">
@@ -138,6 +145,7 @@
                 <li><i class="fas fa-check"></i> Consulte a NBR 5410 para instalações</li>
                 <li><i class="fas fa-check"></i> Use EPIs conforme NR-10</li>
                 <li><i class="fas fa-check"></i> Mantenha suas certificações atualizadas</li>
+                <li><i class="fas fa-check"></i> Faça cálculos antes de qualquer instalação</li>
             </ul>
         </aside>
     </main>
@@ -150,10 +158,11 @@
                 <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
                 <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
