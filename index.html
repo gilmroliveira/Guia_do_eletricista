@@ -7,6 +7,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="assets/favicon.ico">
+<!-- Adicione no <head> -->
+<script src="https://unpkg.com/lunr/lunr.js"></script>
+
+<!-- Adicione no <body> -->
+<div class="container my-4">
+  <input type="text" id="search" class="form-control" placeholder="Pesquise no Guia do Eletricista...">
+  <div id="results" class="mt-3"></div>
+</div>
+
+<script>
+  // Índice de pesquisa (substitua com o conteúdo real do seu guia)
+  const documents = [
+    { id: 1, title: "Segurança Elétrica", content: "Siga as normas NR10 para instalações seguras." },
+    { id: 2, title: "Dimensionamento de Fios", content: "Calcule a bitola correta com base na corrente." },
+    { id: 3, title: "Diagramas de Circuitos", content: "Aprenda a ler esquemas elétricos." }
+  ];
+
+  const idx = lunr(function () {
+    this.ref('id');
+    this.field('title');
+    this.field('content');
+    documents.forEach(doc => this.add(doc));
+  });
+
+  document.getElementById('search').addEventListener('input', function(e) {
+    const results = idx.search(e.target.value);
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = results.length
+      ? results.map(r => `<p><strong>${documents.find(d => d.id == r.ref).title}</strong>: ${documents.find(d => d.id == r.ref).content}</p>`).join('')
+      : '<p>Nenhum resultado encontrado.</p>';
+  });
+</script>
 </head>
 <body>
     <!-- Cabeçalho -->
