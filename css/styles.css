@@ -120,6 +120,8 @@ nav a:hover, nav a:focus {
 }
 
 .feature-card .icon {
+    font-size: 2.5rem;
+    color: #1a73e8;
     margin-bottom: 1rem;
 }
 
@@ -241,6 +243,10 @@ footer h3 {
         flex-direction: column;
         align-items: center;
         text-align: center;
+    }
+
+    .feature-card .icon {
+        font-size: 2rem;
     }
 }
 
