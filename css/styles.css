@@ -259,3 +259,138 @@ footer h3 {
         padding: 0.6rem 1rem;
     }
 }
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: #f9f9f9;
+}
+
+header {
+  background: #1a3c6e;
+  color: #fff;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav {
+  text-align: center;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+h1, h2, h3 {
+  color: #1a3c6e;
+  margin-bottom: 15px;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 1.8em;
+}
+
+h3 {
+  font-size: 1.4em;
+}
+
+p, ul, ol {
+  margin-bottom: 20px;
+}
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul[role="navigation"] a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+ul[role="navigation"] a:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  display: inline-block;
+  background: #007BFF;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #0056b3;
+}
+
+.diagram {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #1a3c6e;
+  color: #fff;
+  margin-top: 40px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  main {
+    padding: 0 10px;
+  }
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+  nav a {
+    display: block;
+    margin: 10px 0;
+  }
+}
+
+/* Acessibilidade: Alto contraste */
+@media (prefers-contrast: high) {
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .btn {
+    background: #000;
+    color: #fff;
+  }
+}
