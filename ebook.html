@@ -7,6 +7,7 @@
   <meta name="description" content="Guia completo para montagem de quadros elétricos residenciais, com normas técnicas e passo a passo.">
   <meta name="keywords" content="quadro elétrico, eletricista, instalações elétricas, NBR 5410, disjuntor, IDR, DPS">
   <meta name="robots" content="index, follow">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -16,6 +17,7 @@
       <a href="/ebook.html">E-book</a>
       <a href="/guias.html">Guias</a>
       <a href="/sobre.html">Sobre</a>
+      <input type="text" class="search-bar" placeholder="Pesquisar no e-book..." aria-label="Pesquisar no e-book">
     </nav>
   </header>
   <main>
@@ -44,15 +46,25 @@
         
         <h3>2.1 Interruptor Diferencial Residual (IDR)</h3>
         <p>O Interruptor Diferencial Residual (IDR) é um dispositivo de proteção crucial, projetado para detectar e interromper correntes de fuga para a terra, prevenindo choques elétricos. Ele monitora a diferença entre as correntes que entram e saem do circuito, desarmando em caso de discrepância. A norma NBR 5410 determina sua obrigatoriedade em circuitos de áreas molhadas, como banheiros e cozinhas.</p>
-        <img src="/assets/images/idr-instalacao.png" alt="Diagrama de instalação de um Interruptor Diferencial Residual (IDR)" class="diagram">
+        <svg <svg src="/assets/images/idr-diagram.svg" alt="Diagrama de instalação de um Interruptor Diferencial Residual (IDR)" class="diagram"></svg>
 
         <h3>2.2 Disjuntor Termomagnético (DTM)</h3>
         <p>O Disjuntor Termomagnético (DTM) protege os circuitos contra sobrecargas e curtos-circuitos, combinando funções térmica e magnética. A função térmica desarma o circuito em caso de sobrecarga, enquanto a magnética atua rapidamente em curtos-circuitos. Ele é fabricado em modelos monopolar, bipolar e tripolar, para correntes de 0,3 A a 125 A.</p>
-        <img src="/assets/images/dtm-instalacao.png" alt="Diagrama de instalação de um Disjuntor Termomagnético (DTM)" class="diagram">
+        <svg width="200" height="100" viewBox="0 0 200 100" aria-labelledby="dtm-diagram-title" class="diagram">
+          <title id="dtm-diagram-title">Diagrama de um DTM</title>
+          <rect x="10" y="10" width="180" height="80" fill="#e6f0ff" stroke="#333" />
+          <text x="20" y="50" font-size="12">DTM: Proteção Térmica/Magnética</text>
+          <circle cx="160" cy="50" r="10" fill="#007BFF" class="interactive" data-info="Ponto de conexão do DTM" />
+        </svg>
 
         <h3>2.3 Dispositivo de Proteção contra Surtos (DPS)</h3>
         <p>O Dispositivo de Proteção contra Surtos (DPS) protege equipamentos eletrônicos contra sobretensões causadas por raios ou manobras de circuito, desviando surtos de corrente para a terra. É essencial um sistema de aterramento eficiente para seu funcionamento, conforme a NBR 5410.</p>
-        <img src="/assets/images/dps-instalacao.png" alt="Diagrama de instalação de um Dispositivo de Proteção contra Surtos (DPS)" class="diagram">
+        <svg width="200" height="100" viewBox="0 0 200 100" aria-labelledby="dps-diagram-title" class="diagram">
+          <title id="dps-diagram-title">Diagrama de um DPS</title>
+          <rect x="10" y="10" width="180" height="80" fill="#e6f0ff" stroke="#333" />
+          <text x="20" y="50" font-size="12">DPS: Desvio de Surtos</text>
+          <circle cx="160" cy="50" r="10" fill="#007BFF" class="interactive" data-info="Ponto de conexão do DPS" />
+        </svg>
       </article>
 
       <article id="passo-a-passo" aria-labelledby="passo-a-passo-title">
@@ -81,13 +93,15 @@
       <article id="conclusao" aria-labelledby="conclusao-title">
         <h2 id="conclusao-title">4. Conclusão</h2>
         <p>Os quadros elétricos são fundamentais para o funcionamento seguro de instalações elétricas. Dominar sua montagem, seguindo a NBR 5410, é essencial para profissionais da área. Este guia oferece o conhecimento básico para iniciar sua jornada como eletricista, garantindo instalações seguras e eficientes.</p>
+        <p>Todas as instruções seguem a norma NBR 5410, garantindo conformidade com padrões brasileiros de segurança elétrica.</p>
       </article>
 
       <a href="/assets/ebook.pdf" class="btn" download>Baixar o E-book (PDF)</a>
-    </section >
+    </section>
   </main>
   <footer>
     <p>Guia do Eletricista © 2025</p>
   </footer>
+  <script src="/assets/js/scripts.js"></script>
 </body>
 </html>
