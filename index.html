@@ -1,118 +1,538 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Guia do Eletricista: Recursos gratuitos e tutoriais para eletricistas.">
-  <meta name="keywords" content="eletricista, elétrica, NR10, tutoriais, circuitos">
-  <title>Guia do Eletricista</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body { font-family: Arial, sans-serif; }
-    .hero { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; padding: 100px 0; text-align: center; }
-    .feature-card { padding: 20px; text-align: center; }
-    .cta-section { background: #f97316; color: white; padding: 50px 0; text-align: center; }
-    footer { background: #1e3a8a; color: white; padding: 20px; text-align: center; }
-    body.dark-mode { background-color: #1a1a1a; color: #ffffff; }
-    body.dark-mode .hero, body.dark-mode footer { background: #2c2c2c; }
-    body.dark-mode .cta-section { background: #e55a00; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalações Elétricas Residenciais - Tutoriais Completo</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            padding: 0.5rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background-color: var(--secondary);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1559302994-5a674e0cada5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 1rem;
+            font-weight: bold;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+        }
+        
+        .features {
+            padding: 3rem 0;
+            background-color: var(--light);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+        
+        .feature-card .icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .training {
+            padding: 3rem 0;
+        }
+        
+        .training-resources {
+            margin-top: 2rem;
+        }
+        
+        .resource-card {
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: var(--light);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .module {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .module h3 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+        
+        .step-by-step {
+            margin-top: 1rem;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background-color: var(--secondary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="#">Guia do Eletricista</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="./guide.html">Guia Completo</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./calculadora.html">Calculadora</a>
-          </li>
-          <li class="nav-item">
-            <button id="themeToggle" class="btn btn-outline-secondary">Alternar Modo Escuro</button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <h1 class="display-4">Torne-se um Eletricista Confiante</h1>
-      <p class="lead">Recursos gratuitos, tutoriais e ferramentas para dominar instalações elétricas.</p>
-      <a href="./guide.html" class="btn btn-light btn-lg">Explorar o Guia</a>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="py-5">
-    <div class="container">
-      <h2 class="text-center mb-4">Por Que Escolher Nosso Guia?</h2>
-      <div class="row">
-        <div class="col-md-4 feature-card">
-          <h3>Tutoriais Práticos</h3>
-          <p>Aprenda a ler projetos e instalar circuitos com instruções claras.</p>
+    <header>
+        <div class="container">
+            <h1>Instalações Elétricas Residenciais</h1>
+            <p>Tudo o que você precisa saber sobre instalações elétricas de acordo com as normas NBR 5410 e NR-10</p>
         </div>
-        <div class="col-md-4 feature-card">
-          <h3>Segurança NR10</h3>
-          <p>Dicas para seguir normas de segurança e proteger sua equipe.</p>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#tutoriais">Tutoriais</a></li>
+                <li><a href="#treinamento">Treinamento</a></li>
+                <li><a href="#normas">Normas</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
         </div>
-        <div class="col-md-4 feature-card">
-          <h3>Ferramentas Interativas</h3>
-          <p>Use calculadoras e simulações para praticar.</p>
+    </nav>
+    
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h2>Aprenda Instalações Elétricas de Forma Prática e Segura</h2>
+            <p>Guias completos desde a entrada padrão Enel até a instalação de lâmpadas, tomadas, chuveiros e sistemas de automação residencial.</p>
+            <a href="#tutoriais" class="btn">Comece Agora</a>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section class="py-5 bg-light">
-    <div class="container">
-      <h2 class="text-center mb-4">O Que Dizem os Eletricistas</h2>
-      <div class="row">
-        <div class="col-md-6">
-          <p>“Este guia mudou minha forma de trabalhar com circuitos!” – João, Eletricista</p>
+    </section>
+    
+    <section class="features" id="tutoriais">
+        <div class="container">
+            <h2>Tutoriais Passo a Passo</h2>
+            <p>Aprenda com nossos guias detalhados e ilustrados</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">💡</div>
+                    <h3>Instalação de Lâmpadas</h3>
+                    <p>Como instalar diferentes tipos de lâmpadas (LED, fluorescente, incandescente) e circuitos de iluminação.</p>
+                    <a href="#lampadas" class="btn">Ver Tutorial</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="icon">🔌</div>
+                    <h3>Instalação de Tomadas</h3>
+                    <p>Padrões de instalação, tipos de tomadas (TUG, TUE) e circuitos específicos conforme NBR 5410.</p>
+                    <a href="#tomadas" class="btn">Ver Tutorial</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="icon">🚿</div>
+                    <h3>Instalação de Chuveiros</h3>
+                    <p>Dimensionamento de circuitos, disjuntores e fiação para chuveiros elétricos de diferentes potências.</p>
+                    <a href="#chuveiros" class="btn">Ver Tutorial</a>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6">
-          <p>“As dicas práticas economizaram horas nos meus projetos.” – Maria, Aprendiz</p>
+    </section>
+    
+    <section class="training" id="treinamento">
+        <div class="container">
+            <h2>Treinamento e Cursos</h2>
+            <p>Recursos gratuitos para aprofundar seus conhecimentos em instalações elétricas</p>
+            
+            <div class="module">
+                <h3>Instalação Elétrica Completa - Do Padrão ENEL aos Circuitos</h3>
+                <div class="step-by-step">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h4>Padrão de Entrada ENEL</h4>
+                            <p>Como instalar o padrão de entrada de energia de acordo com as normas da concessionária.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h4>Quadro de Distribuição (QDC)</h4>
+                            <p>Montagem do quadro de distribuição, organização dos circuitos e barramentos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h4>Disjuntores e DR</h4>
+                            <p>Seleção e instalação de disjuntores e dispositivos DR para proteção dos circuitos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h4>Circuitos TUG e TUE</h4>
+                            <p>Dimensionamento e instalação de circuitos para tomadas de uso geral e específico.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div>
+                            <h4>Automação Residencial</h4>
+                            <p>Introdução à automação residencial com relés, temporizadores e sistemas inteligentes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Plataformas de Treinamento Gratuito</h3>
+            <div class="training-resources">
+                <div class="resource-card">
+                    <h4>NR-10 Básico - SENAI</h4>
+                    <p>Curso gratuito sobre segurança em instalações e serviços com eletricidade.</p>
+                    <a href="https://www.ead.senai.br" target="_blank" class="btn">Acessar</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h4>Instalações Elétricas - Fundação Bradesco</h4>
+                    <p>Curso online gratuito sobre princípios de instalações elétricas residenciais.</p>
+                    <a href="https://www.ev.org.br" target="_blank" class="btn">Acessar</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h4>NBR 5410 - ABNT</h4>
+                    <p>Informações sobre a norma brasileira de instalações elétricas de baixa tensão.</p>
+                    <a href="https://www.abnt.org.br" target="_blank" class="btn">Acessar</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="container">
-      <h2>Baixe o Checklist de Segurança Gratuito</h2>
-      <p>Obtenha nosso checklist compatível com NR10 para instalações seguras.</p>
-      <a href="./assets/checklist.pdf" class="btn btn-light">Baixar Agora</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>© 2025 Guia do Eletricista. <a href="https://github.com/gilmroliveira/Guia_do_eletricista">Ver no GitHub</a>.</p>
-      <p>Contato: <a href="https://wa.me/123456789">WhatsApp</a> | <a href="https://youtube.com">YouTube</a></p>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.getElementById('themeToggle').addEventListener('click', function() {
-      document.body.classList.toggle('dark-mode');
-      localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-    });
-    if (localStorage.getItem('theme') === 'dark') {
-      document.body.classList.add('dark-mode');
-    }
-  </script>
+    </section>
+    
+    <section class="features" id="normas">
+        <div class="container">
+            <h2>Normas Técnicas</h2>
+            <p>Conheça as principais normas que regulamentam as instalações elétricas no Brasil</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>NBR 5410</h3>
+                    <p>Instalações elétricas de baixa tensão - estabelece as condições adequadas para o funcionamento de instalações elétricas.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>NR-10</h3>
+                    <p>Norma Regulamentadora de Segurança em Instalações e Serviços em Eletricidade.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>NBR 14039</h3>
+                    <p>Instalações elétricas de média tensão de 1,0 kV a 36,2 kV.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="lampadas" class="training">
+        <div class="container">
+            <h2>Instalação de Lâmpadas</h2>
+            <div class="module">
+                <h3>Passo a Passo para Instalação de Iluminação</h3>
+                <div class="step-by-step">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h4>Planejamento do Circuito</h4>
+                            <p>Defina os pontos de iluminação e calcule a carga total do circuito.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h4>Seleção dos Materiais</h4>
+                            <p>Escolha fios, interruptores e luminárias adequados para o projeto.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h4>Instalação dos Eletrodutos</h4>
+                            <p>Passe os eletrodutos pelos locais planejados até os pontos de luz.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h4>Passagem dos Fios</h4>
+                            <p>Puxe os fios fase, neutro e retorno pelos eletrodutos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div>
+                            <h4>Instalação das Luminárias</h4>
+                            <p>Conecte os fios às luminárias seguindo as instruções do fabricante.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div>
+                            <h4>Teste do Circuito</h4>
+                            <p>Após concluir, teste todo o circuito antes de fechar as instalações.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="tomadas" class="training">
+        <div class="container">
+            <h2>Instalação de Tomadas</h2>
+            <div class="module">
+                <h3>Como Instalar Tomadas Residenciais</h3>
+                <div class="step-by-step">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h4>Definição dos Pontos</h4>
+                            <p>Planeje a localização das tomadas de acordo com a NBR 5410 (mínimo 1 tomada para cada 5m ou fração de perímetro).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h4>Circuitos Separados</h4>
+                            <p>Crie circuitos independentes para tomadas de uso geral (TUG) e específico (TUE).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h4>Instalação das Caixas</h4>
+                            <p>Fixar as caixas de embutir nas alturas adequadas (30cm do piso para tomadas e 110cm para interruptores).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h4>Conexão dos Fios</h4>
+                            <p>Conectar fase, neutro e terra às tomadas, observando os padrões de cores (fase: vermelho/pret; neutro: azul; terra: verde/amarelo).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div>
+                            <h4>Fixar as Tomadas</h4>
+                            <p>Prender as tomadas nas caixas e instalar os espelhos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div>
+                            <h4>Teste de Funcionamento</h4>
+                            <p>Testar cada tomada com um aparelho simples antes de finalizar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="chuveiros" class="training">
+        <div class="container">
+            <h2>Instalação de Chuveiros Elétricos</h2>
+            <div class="module">
+                <h3>Instalação Segura de Chuveiros</h3>
+                <div class="step-by-step">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h4>Dimensionamento</h4>
+                            <p>Verificar a potência do chuveiro (comum: 220V/3500W a 5500W) e calcular a corrente (I=P/V).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h4>Seleção dos Materiais</h4>
+                            <p>Escolher fios (mínimo 4mm² para 3500W), disjuntor (25A para 5500W) e seccionadora adequados.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h4>Circuito Exclusivo</h4>
+                            <p>Instalar um circuito exclusivo do QDC até o chuveiro, sem derivações.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h4>Instalação da Seccionadora</h4>
+                            <p>Instalar a seccionadora fora do boxe, em local seco e de fácil acesso.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div>
+                            <h4>Ligação do Chuveiro</h4>
+                            <p>Conectar os fios ao chuveiro (fase e neutro) e aterramento obrigatório.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div>
+                            <h4>Teste de Funcionamento</h4>
+                            <p>Testar todas as chaves e temperaturas antes do uso regular.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="contato">
+        <div class="container">
+            <h3>Instalações Elétricas Residenciais</h3>
+            <p>Tutoriais completos e gratuitos para instalações seguras e dentro das normas</p>
+            <p>© 2023 - Todos os direitos reservados</p>
+        </div>
+    </footer>
 </body>
 </html>
