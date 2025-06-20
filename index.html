@@ -39,6 +39,49 @@
       : '<p>Nenhum resultado encontrado.</p>';
   });
 </script>
+<!-- Adicione no <head> -->
+<style>
+  body.dark-mode {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+  body.dark-mode .container, body.dark-mode .navbar {
+    background-color: #2c2c2c;
+  }
+  body.dark-mode .btn-primary {
+    background-color: #f97316;
+    border-color: #f97316;
+  }
+</style>
+
+<!-- Adicione no <body>, ex.: dentro de uma navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Guia do Eletricista</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <button id="themeToggle" class="btn btn-outline-secondary">Alternar Modo Escuro</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.getElementById('themeToggle').addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+
+  // Carrega o tema salvo
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+  }
+</script>
 </head>
 <body>
     <!-- Cabeçalho -->
